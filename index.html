@@ -1,0 +1,883 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>𝒉𝒆𝒅𝒊𝒚𝒏𝒂𝒊𝒍𝒂𝒓𝒕 | رزرو وقت</title>
+
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Vazirmatn:wght@400;500;700;800&display=swap"
+    />
+  </head>
+  <body>
+    <div
+      id="app-toast"
+      class="app-toast app-hidden"
+      role="status"
+      aria-live="polite"
+    >
+      <div class="toast-content">
+        <span id="toast-icon" class="toast-icon" aria-hidden="true">
+          <i class="fa-solid fa-circle-info"></i>
+        </span>
+        <p id="toast-text" class="toast-text"></p>
+      </div>
+      <button
+        id="toast-close"
+        class="icon-button"
+        type="button"
+        aria-label="بستن پیام"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <header class="page-header">
+      <div class="brand-area">
+        <img src="nail-logo.png" class="brand-logo" />
+        <div class="brand-meta">
+          <div class="brand-title">𝒉𝒆𝒅𝒊𝒚𝒏𝒂𝒊𝒍𝒂𝒓𝒕</div>
+          <div class="brand-subtitle">رزرو حرفه‌ای خدمات ناخن</div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="focus-booking" class="soft-button" type="button">
+          رزرو
+        </button>
+        <button id="open-account" class="primary-button" type="button">
+          ورود
+        </button>
+      </div>
+    </header>
+
+    <nav class="social-bar" aria-label="شبکه‌های اجتماعی">
+      <a
+        class="social-link social-instagram"
+        href="https://www.instagram.com/hediynailart"
+        target="_blank"
+        rel="noopener"
+        aria-label="اینستاگرام"
+      >
+        <i class="fa-brands fa-instagram"></i>
+      </a>
+      <a
+        class="social-link social-whatsapp"
+        href="https://wa.me/989150667527"
+        target="_blank"
+        rel="noopener"
+        aria-label="واتساپ"
+      >
+        <i class="fa-brands fa-whatsapp"></i>
+      </a>
+      <a
+        class="social-link social-telegram"
+        href="https://t.me/+989150667527"
+        target="_blank"
+        rel="noopener"
+        aria-label="تلگرام"
+      >
+        <i class="fa-brands fa-telegram"></i>
+      </a>
+      <a
+        class="social-link social-phone"
+        href="tel:09150667527"
+        aria-label="تماس"
+      >
+        <i class="fa-solid fa-phone"></i>
+      </a>
+      <a
+        class="social-link social-location"
+        href="https://www.google.com/maps?q=%D8%AA%D9%87%D8%B1%D8%A7%D9%86%D8%8C%20%D8%B2%D8%B9%D9%81%D8%B1%D8%A7%D9%86%DB%8C%D9%87"
+        target="_blank"
+        rel="noopener"
+        aria-label="لوکیشن"
+      >
+        <i class="fa-solid fa-location-dot"></i>
+      </a>
+    </nav>
+
+    <main class="page-main">
+      <section class="works-gallery" aria-label="نمونه کارهای انجام شده">
+        <h2 class="panel-title">نمونه کارهای انجام شده</h2>
+
+        <div class="gallery-frame">
+          <button
+            id="gallery-prev"
+            class="icon-button gallery-nav-button"
+            type="button"
+            aria-label="نمایش مورد قبلی"
+          >
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+
+          <div class="gallery-card">
+            <img
+              id="gallery-image"
+              class="gallery-image"
+              src=""
+              alt="نمونه کار ناخن"
+              loading="lazy"
+            />
+            <div class="gallery-meta">
+              <strong id="gallery-title" class="gallery-title">—</strong>
+              <p id="gallery-comment" class="gallery-comment">—</p>
+              <span id="gallery-user" class="gallery-user">—</span>
+            </div>
+          </div>
+
+          <button
+            id="gallery-next"
+            class="icon-button gallery-nav-button"
+            type="button"
+            aria-label="نمایش مورد بعدی"
+          >
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+        </div>
+      </section>
+
+      <section class="booking-panel">
+        <div class="section-head">
+          <h1 class="section-title">رزرو وقت آنلاین</h1>
+          <button id="toggle-help" class="link-button" type="button">
+            راهنما
+          </button>
+        </div>
+
+        <div id="help-panel" class="help-panel app-hidden">
+          <h2 class="panel-title">راهنما</h2>
+          <ul class="help-list">
+            <li>فقط تاریخ و ساعت‌های آزاد نمایش داده می‌شوند.</li>
+            <li>چند خدمت را همزمان انتخاب کن؛ زمان و مبلغ جمع می‌شود.</li>
+            <li>ثبت رزرو بعد از پرداخت موفق انجام می‌شود (پرداخت آزمایشی).</li>
+            <li>لغو توسط کاربر تا ۳ ساعت قبل از موعد ممکن است.</li>
+          </ul>
+        </div>
+
+        <div id="booking-form" class="form-panel" tabindex="-1">
+          <h2 class="panel-title">فرم رزرو</h2>
+
+          <div
+            id="booking-closed"
+            class="closed-overlay app-hidden"
+            aria-hidden="true"
+          >
+            <div class="overlay-card">
+              <div class="overlay-icon">
+                <i class="fa-solid fa-circle-pause"></i>
+              </div>
+              <div class="overlay-title">رزرو موقتاً بسته است</div>
+              <div class="overlay-note">لطفاً بعداً دوباره تلاش کنید.</div>
+            </div>
+          </div>
+
+          <div id="guest-auth" class="guest-auth">
+            <div id="guest-step-phone" class="auth-step">
+              <label class="field-group">
+                <span class="field-label">شماره موبایل</span>
+                <input
+                  id="guest-phone"
+                  class="text-input"
+                  type="tel"
+                  placeholder="09123456789"
+                  inputmode="tel"
+                />
+              </label>
+              <button id="guest-send" class="soft-button" type="button">
+                دریافت کد
+              </button>
+            </div>
+
+            <div id="guest-step-code" class="auth-step app-hidden">
+              <div class="code-meta">
+                <div class="code-preview">
+                  ارسال شد به: <strong id="guest-phone-preview"></strong>
+                </div>
+                <button id="guest-phone-edit" class="link-button" type="button">
+                  ویرایش شماره
+                </button>
+              </div>
+
+              <label class="field-group">
+                <span class="field-label">کد تایید</span>
+                <input
+                  id="guest-code"
+                  class="text-input"
+                  type="text"
+                  placeholder="مثلاً 1234"
+                  inputmode="numeric"
+                />
+              </label>
+
+              <button id="guest-verify" class="primary-button" type="button">
+                ادامه
+              </button>
+            </div>
+
+            <div id="guest-step-name" class="auth-step app-hidden">
+              <p class="helper-text">این شماره جدید است. نام را وارد کن.</p>
+              <label class="field-group">
+                <span class="field-label">نام شما</span>
+                <input
+                  id="guest-name"
+                  class="text-input"
+                  type="text"
+                  placeholder="مثلاً هدی"
+                />
+              </label>
+              <button id="guest-name-save" class="primary-button" type="button">
+                تایید و ادامه
+              </button>
+            </div>
+          </div>
+
+          <div class="section-row">
+            <div class="row-title">خدمات انتخابی</div>
+            <button id="open-services" class="soft-button" type="button">
+              انتخاب خدمات
+            </button>
+          </div>
+
+          <div id="selected-services" class="selected-services"></div>
+
+          <div class="datetime-grid">
+            <label class="field-group">
+              <span class="field-label">تاریخ</span>
+              <select id="booking-date" class="text-input"></select>
+            </label>
+            <label class="field-group">
+              <span class="field-label">ساعت</span>
+              <select id="booking-time" class="text-input"></select>
+            </label>
+          </div>
+
+          <div class="summary-panel">
+            <div class="summary-row">
+              <span class="summary-label">مدت زمان</span>
+              <strong id="summary-duration">—</strong>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">مبلغ</span>
+              <strong id="summary-price">—</strong>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">کیف پول</span>
+              <strong id="summary-wallet">—</strong>
+            </div>
+          </div>
+
+          <button id="start-payment" class="start-payment-button" type="button">
+            ادامه و پرداخت
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="page-footer">
+      <div class="footer-head">
+        <div class="footer-brand">
+          <div class="footer-title">𝒉𝒆𝒅𝒊𝒚𝒏𝒂𝒊𝒍𝒂𝒓𝒕</div>
+          <div class="footer-note">
+            تجربه‌ای مینیمال و حرفه‌ای برای رزرو خدمات ناخن.
+          </div>
+        </div>
+        <button
+          id="scroll-top"
+          class="icon-button"
+          type="button"
+          aria-label="رفتن به بالا"
+        >
+          <i class="fa-solid fa-arrow-up"></i>
+        </button>
+      </div>
+
+      <div class="footer-grid">
+        <section class="footer-card">
+          <h3 class="footer-card-title">راه‌های ارتباطی</h3>
+          <a class="footer-link footer-link-phone" href="tel:09150667527">
+            <i class="fa-solid fa-phone footer-icon footer-icon-phone"></i>
+            تماس مستقیم
+          </a>
+          <a
+            class="footer-link footer-link-whatsapp"
+            href="https://wa.me/989150667527"
+            target="_blank"
+            rel="noopener"
+          >
+            <i
+              class="fa-brands fa-whatsapp footer-icon footer-icon-whatsapp"
+            ></i>
+            واتساپ
+          </a>
+          <a
+            class="footer-link footer-link-telegram"
+            href="https://t.me/+989150667527"
+            target="_blank"
+            rel="noopener"
+          >
+            <i
+              class="fa-brands fa-telegram footer-icon footer-icon-telegram"
+            ></i>
+            تلگرام
+          </a>
+          <a
+            class="footer-link footer-link-instagram"
+            href="https://www.instagram.com/hediynailart"
+            target="_blank"
+            rel="noopener"
+          >
+            <i
+              class="fa-brands fa-instagram footer-icon footer-icon-instagram"
+            ></i>
+            اینستاگرام
+          </a>
+        </section>
+
+        <section class="footer-card">
+          <h3 class="footer-card-title">لوکیشن - تهران، زعفرانیه</h3>
+
+          <iframe
+            class="map-container-iframe"
+            src="https://www.google.com/maps?q=تهران،زعفرانیه&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </section>
+
+        <section class="footer-card">
+          <h3 class="footer-card-title">قوانین رزرو</h3>
+          <ul class="policy-list">
+            <li>پرداخت فعلاً آزمایشی است.</li>
+            <li>لغو رزرو تا ۳ ساعت قبل از موعد ممکن است.</li>
+            <li>در صورت لغو، مبلغ به کیف پول کاربر برمی‌گردد.</li>
+          </ul>
+        </section>
+
+        <section class="footer-card">
+          <h3 class="footer-card-title">درباره ما</h3>
+          <p class="footer-text">
+            Hediy Nail Art فضایی آرام و حرفه‌ای برای طراحی و مراقبت از ناخن است.
+          </p>
+          <p class="footer-text">
+            تمرکز ما روی کیفیت، جزئیات و تجربه سریع رزرو آنلاین است.
+          </p>
+        </section>
+      </div>
+
+      <div class="footer-copy">
+        <div>
+          © <span id="footer-year"></span> تمامی حقوق محفوظ است | طراحی شده با
+          <i class="fa-solid fa-heart heart-icon"></i>
+        </div>
+      </div>
+    </footer>
+
+    <div id="modal-overlay" class="modal-overlay app-hidden"></div>
+
+    <div
+      id="services-modal"
+      class="modal app-hidden"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div class="sheet-head">
+        <h2 class="sheet-title">انتخاب خدمات</h2>
+        <button
+          id="close-services"
+          class="icon-button"
+          type="button"
+          aria-label="بستن"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="sheet-card">
+        <div id="services-list" class="services-list"></div>
+        <button
+          id="confirm-services"
+          class="confirm-services-button"
+          type="button"
+        >
+          تایید انتخاب
+        </button>
+      </div>
+    </div>
+
+    <div
+      id="payment-modal"
+      class="modal app-hidden"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div class="sheet-head">
+        <h2 class="sheet-title">پرداخت</h2>
+        <button
+          id="close-payment"
+          class="icon-button"
+          type="button"
+          aria-label="بستن"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="sheet-card">
+        <div class="payment-panel">
+          <div class="summary-row">
+            <span class="summary-label">خدمات</span>
+            <strong id="payment-services">—</strong>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">مدت</span>
+            <strong id="payment-duration">—</strong>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">مبلغ</span>
+            <strong id="payment-total">—</strong>
+          </div>
+
+          <div id="wallet-row" class="wallet-row">
+            <div class="wallet-meta">
+              <span class="summary-label">استفاده از کیف پول</span>
+              <strong id="payment-wallet">—</strong>
+            </div>
+            <button id="wallet-toggle" class="soft-button" type="button">
+              انتخاب
+            </button>
+          </div>
+
+          <div class="summary-row">
+            <span class="summary-label">قابل پرداخت</span>
+            <strong id="payment-final">—</strong>
+          </div>
+        </div>
+
+        <button
+          id="payment-confirm"
+          class="payment-confirm-button"
+          type="button"
+        >
+          پرداخت (آزمایشی) و ثبت رزرو
+        </button>
+        <p class="helper-text">
+          <i class="fa-solid fa-circle-info"></i>
+          این پرداخت فعلاً واقعی نیست.
+        </p>
+      </div>
+    </div>
+
+    <div
+      id="auth-modal"
+      class="modal app-hidden"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div class="sheet-head">
+        <h2 id="auth-title" class="sheet-title">ورود</h2>
+        <button
+          id="close-auth"
+          class="icon-button"
+          type="button"
+          aria-label="بستن"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="sheet-card">
+        <div id="auth-step-phone" class="auth-step">
+          <label class="field-group">
+            <span class="field-label">شماره موبایل</span>
+            <input
+              id="auth-phone"
+              class="text-input"
+              type="tel"
+              placeholder="09123456789"
+              inputmode="tel"
+            />
+          </label>
+          <button id="auth-send" class="soft-button" type="button">
+            دریافت کد
+          </button>
+          <p class="helper-text">کد فعلاً الکی است.</p>
+        </div>
+
+        <div id="auth-step-code" class="auth-step app-hidden">
+          <div class="code-meta">
+            <div class="code-preview">
+              ارسال شد به: <strong id="auth-phone-preview"></strong>
+            </div>
+            <button id="auth-phone-edit" class="link-button" type="button">
+              ویرایش شماره
+            </button>
+          </div>
+          <label class="field-group">
+            <span class="field-label">کد تایید</span>
+            <input
+              id="auth-code"
+              class="text-input"
+              type="text"
+              placeholder="مثلاً 1234"
+              inputmode="numeric"
+            />
+          </label>
+          <button id="auth-verify" class="primary-button" type="button">
+            ورود
+          </button>
+        </div>
+
+        <div id="auth-step-name" class="auth-step app-hidden">
+          <p class="helper-text">این شماره جدید است. نام را وارد کن.</p>
+          <label class="field-group">
+            <span class="field-label">نام</span>
+            <input
+              id="auth-name"
+              class="text-input"
+              type="text"
+              placeholder="مثلاً هدی"
+            />
+          </label>
+          <button id="auth-name-save" class="primary-button" type="button">
+            تایید
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="dashboard-modal"
+      class="modal app-hidden"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div class="sheet-head">
+        <h2 class="sheet-title">داشبورد</h2>
+        <button
+          id="close-dashboard"
+          class="icon-button"
+          type="button"
+          aria-label="بستن"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="sheet-card dashboard-card">
+        <div class="dashboard-head">
+          <div class="dashboard-user">
+            <div class="dashboard-avatar"><i class="fa-solid fa-user"></i></div>
+            <div class="dashboard-meta">
+              <div id="dashboard-name" class="dashboard-name"></div>
+              <div id="dashboard-phone" class="dashboard-phone"></div>
+            </div>
+          </div>
+          <button id="dashboard-logout" class="danger-button" type="button">
+            خروج
+          </button>
+        </div>
+
+        <div id="dashboard-wallet-panel" class="wallet-panel">
+          <div class="summary-row">
+            <span class="summary-label">کیف پول</span>
+            <strong id="dashboard-wallet">—</strong>
+          </div>
+        </div>
+
+        <div id="admin-income-panel" class="wallet-panel app-hidden">
+          <div class="summary-row">
+            <span class="summary-label">درآمد از آخرین ریست</span>
+            <strong id="admin-income">—</strong>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">کل درآمد</span>
+            <strong id="admin-income-total">—</strong>
+          </div>
+          <button
+            id="admin-income-reset"
+            class="reset-income-button"
+            type="button"
+          >
+            ریست درآمد
+          </button>
+        </div>
+
+        <section id="user-section" class="dashboard-section">
+          <div class="section-row">
+            <h3 class="row-title">رزروهای شما</h3>
+            <button
+              id="user-cancel-all"
+              class="soft-button danger-button"
+              type="button"
+            >
+              لغو همه
+            </button>
+          </div>
+
+          <div
+            id="user-filter"
+            class="filter-row"
+            role="group"
+            aria-label="فیلتر رزروهای شما"
+          >
+            <button
+              class="filter-button filter-button-active"
+              type="button"
+              data-filter="all"
+            >
+              همه
+            </button>
+            <button class="filter-button" type="button" data-filter="pending">
+              در انتظار
+            </button>
+            <button class="filter-button" type="button" data-filter="doing">
+              در حال انجام
+            </button>
+            <button class="filter-button" type="button" data-filter="done">
+              تمام شده
+            </button>
+            <button class="filter-button" type="button" data-filter="canceled">
+              لغو شده
+            </button>
+          </div>
+
+          <div id="user-bookings" class="booking-list"></div>
+        </section>
+
+        <section id="admin-section" class="dashboard-section app-hidden">
+          <div
+            id="admin-tabs"
+            class="tab-row"
+            role="tablist"
+            aria-label="تب‌های ادمین"
+          >
+            <button
+              class="tab-button tab-button-active"
+              type="button"
+              data-tab="bookings"
+            >
+              رزروها
+            </button>
+            <button class="tab-button" type="button" data-tab="services">
+              خدمات
+            </button>
+            <button class="tab-button" type="button" data-tab="works">
+              نمونه‌کارها
+            </button>
+            <button class="tab-button" type="button" data-tab="settings">
+              تنظیمات
+            </button>
+          </div>
+
+          <div
+            id="admin-filter"
+            class="filter-row"
+            role="group"
+            aria-label="فیلتر رزروها"
+          >
+            <button
+              class="filter-button filter-button-active"
+              type="button"
+              data-filter="all"
+            >
+              همه
+            </button>
+            <button class="filter-button" type="button" data-filter="pending">
+              در انتظار
+            </button>
+            <button class="filter-button" type="button" data-filter="doing">
+              در حال انجام
+            </button>
+            <button class="filter-button" type="button" data-filter="done">
+              تمام شده
+            </button>
+            <button class="filter-button" type="button" data-filter="canceled">
+              لغو شده
+            </button>
+          </div>
+
+          <div id="admin-bookings-panel" class="admin-panel">
+            <div class="section-row">
+              <h3 class="row-title">همه رزروها</h3>
+              <button
+                id="admin-cancel-all"
+                class="soft-button danger-button"
+                type="button"
+              >
+                لغو همه
+              </button>
+            </div>
+            <div id="admin-bookings" class="booking-list"></div>
+          </div>
+
+          <div id="admin-services-panel" class="admin-panel app-hidden">
+            <h3 class="row-title">مدیریت خدمات</h3>
+
+            <div class="editor-panel">
+              <label class="field-group">
+                <span class="field-label">نام خدمت</span>
+                <input
+                  id="service-name"
+                  class="text-input"
+                  type="text"
+                  placeholder="مثلاً لمینت"
+                />
+              </label>
+
+              <div class="service-input-grid">
+                <label class="field-group">
+                  <span class="field-label">زمان (دقیقه)</span>
+                  <input
+                    id="service-minutes"
+                    class="text-input"
+                    type="number"
+                    placeholder="مثلا 60"
+                    min="5"
+                    step="5"
+                  />
+                </label>
+                <label class="field-group">
+                  <span class="field-label">قیمت (تومان)</span>
+                  <input
+                    id="service-price"
+                    class="text-input"
+                    type="number"
+                    placeholder="مثلا 1000"
+                    min="0"
+                    step="1000"
+                  />
+                </label>
+              </div>
+
+              <button
+                id="service-save"
+                class="add-service-button"
+                type="button"
+              >
+                افزودن
+              </button>
+
+              <p class="helper-text">برای ویرایش، روی «ویرایش» بزن.</p>
+            </div>
+
+            <div id="service-list" class="booking-list"></div>
+          </div>
+
+          <div id="admin-works-panel" class="admin-panel app-hidden">
+            <h3 class="row-title">مدیریت نمونه‌کارها</h3>
+
+            <div class="editor-panel">
+              <label class="field-group">
+                <span class="field-label">مسیر تصویر محلی</span>
+                <input
+                  id="work-image"
+                  class="text-input"
+                  type="text"
+                  placeholder="./nail.png"
+                />
+              </label>
+
+              <label class="field-group">
+                <span class="field-label">عنوان کار</span>
+                <input
+                  id="work-title"
+                  class="text-input"
+                  type="text"
+                  placeholder="مثلاً ژلیش صورتی"
+                />
+              </label>
+
+              <label class="field-group">
+                <span class="field-label">نظر کاربر</span>
+                <textarea
+                  id="work-comment"
+                  class="text-input text-area-input"
+                  rows="3"
+                  placeholder="مثلاً خیلی تمیز و حرفه‌ای انجام شد."
+                ></textarea>
+              </label>
+
+              <label class="field-group">
+                <span class="field-label">نام کاربر</span>
+                <input
+                  id="work-user"
+                  class="text-input"
+                  type="text"
+                  placeholder="مثلاً نظر الهام"
+                />
+              </label>
+
+              <button id="work-save" class="add-service-button" type="button">
+                افزودن نمونه‌کار
+              </button>
+
+              <p class="helper-text">
+                فقط مسیر محلی تصویر را وارد کنید (مثلاً ./nail-1.png).
+              </p>
+            </div>
+
+            <div id="works-list" class="booking-list"></div>
+          </div>
+
+          <div id="admin-settings-panel" class="admin-panel app-hidden">
+            <h3 class="row-title">تنظیمات رزرو</h3>
+
+            <div class="editor-panel">
+              <div class="section-row">
+                <span class="summary-label">وضعیت رزرو</span>
+                <button
+                  id="toggle-booking-status"
+                  class="soft-button"
+                  type="button"
+                >
+                  ...
+                </button>
+              </div>
+
+              <label class="field-group">
+                <span class="field-label">نمایش چند روز آینده</span>
+                <input
+                  id="days-ahead"
+                  class="text-input"
+                  type="number"
+                  min="1"
+                  max="90"
+                />
+              </label>
+
+              <div class="section-row">
+                <span class="summary-label">روزهای در دسترس</span>
+                <button id="rebuild-days" class="soft-button" type="button">
+                  بازسازی
+                </button>
+              </div>
+              <div id="days-list" class="check-list"></div>
+
+              <div class="section-row">
+                <span class="summary-label">شیفت‌های کاری</span>
+                <button id="add-shift" class="soft-button" type="button">
+                  افزودن شیفت
+                </button>
+              </div>
+              <div id="shifts-list" class="check-list"></div>
+
+              <button
+                id="save-settings"
+                class="save-settings-button"
+                type="button"
+              >
+                ذخیره
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

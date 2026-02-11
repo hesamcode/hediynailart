@@ -1,0 +1,1210 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  border: 0;
+  text-decoration: none;
+  font-family: "Vazirmatn", "Manrope", sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background: rgb(255, 245, 241);
+  color: rgb(88, 48, 110);
+  font-size: 15px;
+  display: block;
+  direction: rtl;
+}
+
+a,
+button,
+input,
+select,
+textarea {
+  appearance: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid rgb(131, 82, 183);
+  outline-offset: 2px;
+}
+
+.app-hidden {
+  display: none !important;
+}
+
+.page-header,
+.social-bar,
+.page-main {
+  width: 100%;
+  height: auto;
+  padding: 14px 24px;
+  background: rgb(255, 255, 255);
+  color: rgb(88, 48, 110);
+  border: 1px solid rgb(241, 209, 225);
+  font-size: 15px;
+  display: flex;
+}
+
+.page-header {
+  background: rgb(255, 255, 255);
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  position: sticky;
+  top: 0;
+  z-index: 25;
+}
+
+.header-actions {
+  width: auto;
+  height: auto;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-area {
+  width: auto;
+  height: auto;
+  background: rgba(0, 0, 0, 0);
+  color: rgb(88, 48, 110);
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-logo {
+  width: 50px;
+  height: 50px;
+  background: transparent;
+  object-fit: cover;
+}
+
+.brand-meta,
+.wallet-meta,
+.footer-brand {
+  width: auto;
+  height: auto;
+  background: rgba(0, 0, 0, 0);
+  color: inherit;
+  font-size: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title,
+.section-title,
+.panel-title,
+.sheet-title,
+.row-title,
+.footer-title,
+.footer-card-title,
+.dashboard-name,
+.overlay-title,
+.booking-card-title {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.brand-subtitle,
+.footer-note,
+.footer-text,
+.helper-text,
+.overlay-note,
+.dashboard-phone,
+.code-preview,
+.booking-card-subtitle,
+.empty-note {
+  color: rgb(147, 103, 170);
+}
+
+.social-bar {
+  padding: 10px 24px;
+  background: rgb(255, 238, 245);
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px;
+}
+
+.social-link {
+  width: 50px;
+  height: 50px;
+  background: rgb(255, 255, 255);
+  color: rgb(234, 92, 157);
+  border-radius: 10px;
+  border: 1px solid rgb(241, 209, 225);
+  font-size: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-instagram {
+  background: rgb(255, 236, 246);
+  color: rgb(225, 68, 141);
+  border-color: rgb(244, 192, 219);
+}
+
+.social-whatsapp {
+  background: rgb(233, 250, 239);
+  color: rgb(18, 150, 90);
+  border-color: rgb(172, 229, 198);
+}
+
+.social-telegram {
+  background: rgb(232, 245, 255);
+  color: rgb(36, 123, 211);
+  border-color: rgb(176, 214, 248);
+}
+
+.social-phone {
+  background: rgb(255, 238, 243);
+  color: rgb(206, 76, 128);
+  border-color: rgb(244, 195, 217);
+}
+
+.social-location {
+  background: rgb(244, 236, 255);
+  color: rgb(133, 92, 194);
+  border-color: rgb(218, 199, 244);
+}
+
+.page-main {
+  padding: 18px 24px 24px;
+  background: transparent;
+  flex: 1 0 auto;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.booking-panel,
+.help-panel,
+.form-panel,
+.summary-panel,
+.wallet-panel,
+.payment-panel,
+.editor-panel,
+.overlay-card,
+.service-option,
+.booking-card,
+.shift-card,
+.wallet-row,
+.app-toast {
+  width: 100%;
+  height: auto;
+  padding: 14px;
+  background: rgb(255, 255, 255);
+  color: rgb(88, 48, 110);
+  border-radius: 14px;
+  border: 1px solid rgb(241, 209, 225);
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.shift-card,
+.wallet-row,
+.app-toast {
+  flex-direction: row;
+}
+
+.booking-panel {
+  width: 100%;
+  border-radius: 18px;
+  gap: 14px;
+}
+
+.works-gallery {
+  width: 100%;
+  height: auto;
+  padding: 14px;
+  background: rgb(255, 255, 255);
+  border-radius: 14px;
+  border: 1px solid rgb(241, 209, 225);
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+}
+
+.gallery-frame {
+  width: 100%;
+  height: auto;
+  background: transparent;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.gallery-card {
+  width: calc(100% - 100px);
+  background: rgb(255, 255, 255);
+  border-radius: 14px;
+  border: 1px solid rgb(241, 209, 225);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.gallery-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-meta {
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.gallery-title {
+  color: rgb(88, 48, 110);
+  font-size: 15px;
+}
+
+.gallery-comment {
+  color: rgb(147, 103, 170);
+  font-size: 14px;
+  text-align: right;
+}
+
+.gallery-user {
+  color: rgb(234, 92, 157);
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.gallery-nav-button {
+  background: rgb(252, 233, 243);
+  color: rgb(234, 92, 157);
+  border: 1px solid rgb(241, 209, 225);
+}
+
+.section-head,
+.section-row,
+.sheet-head,
+.dashboard-head,
+.code-meta,
+.summary-row,
+.footer-head,
+.booking-card-subtitle {
+  width: 100%;
+  height: auto;
+  background: rgb(255, 255, 255);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.sheet-head {
+  padding: 14px;
+  border-bottom: 1px solid rgb(145, 93, 193);
+  position: sticky;
+  top: 0;
+}
+
+.form-panel {
+  position: relative;
+}
+
+.help-list,
+.policy-list {
+  width: 100%;
+  height: auto;
+  padding: 0 18px 0 0;
+  color: rgb(158, 115, 177);
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  list-style: disc;
+}
+
+.closed-overlay {
+  width: 100%;
+  height: 100%;
+  padding: 14px;
+  background: rgb(255, 255, 255);
+  border-radius: 14px;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+}
+
+.overlay-card {
+  max-width: 100%;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+
+.overlay-icon,
+.dashboard-avatar {
+  width: 50px;
+  height: 50px;
+  background: rgb(252, 233, 243);
+  color: rgb(234, 92, 157);
+  border-radius: 10px;
+  border: 1px solid rgb(241, 209, 225);
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.guest-auth,
+.auth-step,
+.field-group,
+.dashboard-section,
+.admin-panel,
+.services-list,
+.booking-list,
+.check-list,
+.footer-grid {
+  width: 100%;
+  height: auto;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.guest-auth {
+  padding: 14px;
+  border-radius: 15px;
+  border: 1px dashed rgb(115, 74, 170);
+}
+
+.field-group {
+  align-items: flex-start;
+}
+
+.field-label,
+.summary-label {
+  color: rgb(126, 83, 153);
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.text-input,
+.shift-select {
+  width: 100%;
+  height: 50px;
+  padding: 10px;
+  background: rgb(255, 255, 255);
+  color: rgb(112, 70, 138);
+  border-radius: 10px;
+  border: 1px solid rgb(241, 209, 225);
+  font-size: 14px;
+  display: block;
+}
+
+.text-area-input {
+  min-height: 96px;
+  height: auto;
+  resize: vertical;
+}
+
+.text-input::placeholder {
+  color: rgb(180, 143, 197);
+}
+
+.datetime-grid,
+.service-input-grid,
+.shift-select-row {
+  width: 100%;
+  height: auto;
+  font-size: 14px;
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.start-payment-button,
+.payment-confirm-button,
+.confirm-services-button,
+.add-service-button,
+.reset-income-button,
+.save-settings-button,
+.edit-service-button,
+.delete-service-button {
+  width: 100%;
+  height: 50px;
+  padding: 10px 14px;
+  background: rgb(234, 92, 157);
+  color: rgb(255, 255, 255);
+  border-radius: 10px;
+  border: 1px solid rgb(234, 92, 157);
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.service-card {
+  width: 100%;
+  height: auto;
+  padding: 10px 14px;
+  background: rgb(255, 255, 255);
+  color: rgb(147, 103, 170);
+  border-radius: 10px;
+  border: 1px solid rgb(147, 103, 170);
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.work-card {
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  background: rgb(255, 255, 255);
+  color: rgb(88, 48, 110);
+  border-radius: 12px;
+  border: 1px solid rgb(241, 209, 225);
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.work-card-image {
+  width: 95px;
+  height: 95px;
+  border-radius: 10px;
+  border: 1px solid rgb(241, 209, 225);
+  object-fit: cover;
+  flex: 0 0 auto;
+}
+
+.work-card-meta {
+  width: calc(100% - 105px);
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.work-card-title {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.work-card-comment {
+  color: rgb(147, 103, 170);
+  font-size: 13px;
+}
+
+.work-card-user {
+  color: rgb(234, 92, 157);
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.service-card-box,
+.service-card-actions {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.selected-services {
+  width: 100%;
+  height: auto;
+  font-size: 14px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.summary-row strong {
+  font-weight: bold;
+}
+
+.icon-button,
+.soft-button,
+.primary-button,
+.danger-button,
+.filter-button,
+.tab-button {
+  width: auto;
+  height: 50px;
+  padding: 10px 14px;
+  background: rgb(255, 255, 255);
+  color: rgb(88, 48, 110);
+  border-radius: 10px;
+  border: 1px solid rgb(241, 209, 225);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.icon-button {
+  width: 50px;
+}
+
+.primary-button {
+  background: rgb(234, 92, 157);
+  color: rgb(255, 255, 255);
+  border: 1px solid rgb(234, 92, 157);
+}
+
+.soft-button {
+  background: rgb(252, 233, 243);
+  color: rgb(234, 92, 157);
+  border: 1px solid rgb(241, 209, 225);
+}
+
+.shift-remove {
+  width: 100%;
+  height: 50px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.danger-button,
+.shift-remove {
+  background: rgb(201, 78, 116);
+  color: rgb(255, 255, 255);
+  border-radius: 15px;
+  border: 1px solid rgb(88, 48, 110);
+}
+
+.link-button {
+  width: auto;
+  height: auto;
+  background: rgba(0, 0, 0, 0);
+  color: rgb(234, 92, 157);
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.page-footer {
+  background: rgb(255, 255, 255);
+  color: rgb(88, 48, 110);
+  border-top: 1px solid rgb(131, 82, 183);
+  flex-direction: column;
+  gap: 14px;
+}
+
+.footer-card {
+  width: 100%;
+  height: auto;
+  padding: 14px;
+  background: rgb(255, 255, 255);
+  color: rgb(88, 48, 110);
+  border-radius: 14px;
+  border: 1px solid rgb(241, 209, 225);
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.footer-head,
+.footer-grid {
+  width: 100%;
+  padding: 14px 24px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  place-items: center;
+}
+
+.footer-card {
+  width: 100%;
+  height: 100%;
+  background: rgba(145, 93, 193, 0.12);
+}
+
+.footer-card-title {
+  color: rgb(88, 48, 110);
+  font-size: 16px;
+}
+
+.footer-link {
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  background: rgb(255, 245, 241);
+  color: rgb(88, 48, 110);
+  border-radius: 10px;
+  border: 1px solid rgb(241, 209, 225);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-icon {
+  font-size: 18px;
+}
+
+.footer-link-phone {
+  background: rgb(255, 237, 243);
+  color: rgb(206, 76, 128);
+  border-color: rgb(244, 195, 217);
+}
+
+.footer-link-whatsapp {
+  background: rgb(233, 250, 239);
+  color: rgb(18, 150, 90);
+  border-color: rgb(172, 229, 198);
+}
+
+.footer-link-telegram {
+  background: rgb(232, 245, 255);
+  color: rgb(36, 123, 211);
+  border-color: rgb(176, 214, 248);
+}
+
+.footer-link-instagram {
+  background: rgb(255, 236, 246);
+  color: rgb(225, 68, 141);
+  border-color: rgb(244, 192, 219);
+}
+
+.footer-icon-phone {
+  color: rgb(206, 76, 128);
+}
+
+.footer-icon-whatsapp {
+  color: rgb(18, 150, 90);
+}
+
+.footer-icon-telegram {
+  color: rgb(36, 123, 211);
+}
+
+.footer-icon-instagram {
+  color: rgb(225, 68, 141);
+}
+
+.map-container-iframe {
+  width: 100%;
+  height: 200px;
+  border-radius: 12px;
+  border: 1px solid rgb(145, 93, 193);
+  overflow: hidden;
+}
+
+.footer-text {
+  color: rgb(162, 120, 181);
+}
+
+.footer-copy {
+  width: 100%;
+  height: auto;
+  padding: 18px 24px;
+  background: rgba(0, 0, 0, 0);
+  color: rgb(145, 93, 193);
+  border-top: 1px solid rgb(131, 82, 183);
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.heart-icon {
+  color: rgb(255, 0, 0);
+}
+
+.modal-overlay {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  color: rgb(255, 255, 255);
+  font-size: 15px;
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+}
+
+.modal {
+  width: 100%;
+  max-height: 80%;
+  background: rgb(255, 255, 255);
+  border-radius: 15px 15px 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  position: fixed;
+  bottom: 0;
+  z-index: 50;
+  overflow: hidden;
+}
+
+.sheet-card {
+  width: 100%;
+  height: 100%;
+  padding: 0 14px 14px 14px;
+  background: rgb(255, 255, 255);
+  font-size: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  overflow-y: auto;
+}
+
+.wallet-row {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.wallet-row.wallet-row-active {
+  background: rgb(252, 233, 243);
+  border: 1px solid rgb(234, 92, 157);
+}
+
+#booking-form:focus {
+  outline: 2px solid rgb(131, 82, 183);
+  outline-offset: 2px;
+}
+
+#booking-form {
+  scroll-margin-top: 108px;
+}
+
+.dashboard-user {
+  width: 60%;
+  height: auto;
+  background: transparent;
+  font-size: 14px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+}
+
+.dashboard-meta {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.dashboard-phone,
+#guest-phone-preview,
+#auth-phone-preview {
+  unicode-bidi: plaintext;
+  font-size: 10px;
+}
+
+.filter-row,
+.tab-row {
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  background: rgb(255, 255, 255);
+  border-radius: 10px;
+  border: 1px solid rgb(145, 93, 193);
+  font-size: 14px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filter-button,
+.tab-button {
+  background: rgb(255, 255, 255);
+  color: rgb(145, 93, 193);
+}
+
+.filter-button.filter-button-active,
+.tab-button.tab-button-active {
+  background: rgb(145, 93, 193);
+  color: rgb(255, 255, 255);
+  border: 1px solid rgb(88, 48, 110);
+}
+
+.service-chip {
+  width: auto;
+  height: 50px;
+  padding: 6px 10px;
+  background: rgb(252, 233, 243);
+  color: rgb(147, 103, 170);
+  border-radius: 10px;
+  border: 1px solid rgb(147, 103, 170);
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.service-chip-text {
+  font-weight: bold;
+}
+
+.service-chip-remove {
+  width: 25px;
+  height: 25px;
+  background: rgb(198, 95, 102);
+  color: rgb(88, 48, 110);
+  border-radius: 50%;
+  border: 1px solid rgb(88, 48, 110);
+  font-size: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.service-option {
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  color: rgb(88, 48, 110);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.service-option-meta {
+  flex: 1 1 auto;
+  min-width: 0;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.service-option-name,
+.service-option-price {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.service-option-toggle {
+  min-width: 100px;
+  height: 42px;
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.service-option.service-option-active {
+  background: rgb(145, 93, 193);
+  color: rgb(255, 255, 255);
+  border: 1px solid rgb(88, 48, 110);
+}
+
+.service-option.service-option-active .service-option-toggle {
+  background: rgba(255, 255, 255, 0.18);
+  color: rgb(255, 255, 255);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.day-card {
+  width: 100%;
+  padding: 14px;
+  background-color: rgb(255, 255, 255);
+  color: rgb(88, 48, 110);
+  border-radius: 15px;
+  border: 1px solid rgb(145, 93, 193);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.day-card-info {
+  flex: 1 1 auto;
+  min-width: 0;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.day-card-subtitle,
+.day-card-title {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.day-card-toggle {
+  min-width: 100px;
+  height: 42px;
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.day-card.day-card-active {
+  background: rgb(145, 93, 193);
+  color: rgb(255, 255, 255);
+  border: 1px solid rgb(88, 48, 110);
+}
+
+.day-card.day-card-active .day-card-toggle {
+  background: rgba(255, 255, 255, 0.18);
+  color: rgb(255, 255, 255);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.booking-card {
+  width: 100%;
+  height: auto;
+  padding: 14px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 15px;
+  border: 1px solid rgb(145, 93, 193);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.booking-card-info {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.booking-card-box {
+  width: auto;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.cancel-booking-button {
+  width: 50px;
+  height: 50px;
+  background: rgb(201, 78, 116);
+  color: rgb(255, 255, 255);
+  border-radius: 15px;
+  border: 1px solid rgb(88, 48, 110);
+}
+
+.booking-card-status {
+  width: auto;
+  height: auto;
+}
+
+.status-chip {
+  width: auto;
+  height: 50px;
+  padding: 6px 10px;
+  background: rgb(251, 238, 246);
+  color: rgb(126, 83, 153);
+  border-radius: 15px;
+  border: 1px solid rgb(215, 182, 231);
+  font-size: 12px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.status-pending {
+  background: rgb(255, 245, 225);
+  color: rgb(156, 100, 22);
+  border: 1px solid rgb(219, 151, 32);
+}
+
+.status-doing {
+  background: rgb(241, 232, 255);
+  color: rgb(115, 74, 170);
+  border: 1px solid rgb(145, 93, 193);
+}
+
+.status-done {
+  background: rgb(232, 249, 238);
+  color: rgb(27, 120, 69);
+  border: 1px solid rgb(60, 160, 99);
+}
+
+.status-canceled {
+  background: rgb(255, 233, 239);
+  color: rgb(170, 34, 87);
+  border: 1px solid rgb(214, 66, 109);
+}
+
+.shift-card {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.empty-note {
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  background: rgb(255, 255, 255);
+  color: rgb(147, 103, 170);
+  border-radius: 10px;
+  border: 1px dashed rgb(147, 103, 170);
+  font-size: 14px;
+}
+
+.app-toast {
+  width: calc(100% - 28px);
+  height: auto;
+  padding: 10px 14px;
+  background: rgb(245, 236, 255);
+  border: 1px solid rgb(145, 93, 193);
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  position: fixed;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
+}
+
+.toast-content {
+  width: auto;
+  height: auto;
+  background: transparent;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.toast-icon {
+  width: 50px;
+  height: 50px;
+  background: rgb(232, 216, 251);
+  color: rgb(115, 74, 170);
+  border-radius: 50%;
+  border: 1px solid rgb(145, 93, 193);
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toast-text {
+  width: auto;
+  height: auto;
+  color: rgb(88, 48, 110);
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.app-toast.toast-success {
+  background: rgb(232, 249, 238);
+  border: 1px solid rgb(60, 160, 99);
+}
+
+.app-toast.toast-success .toast-icon {
+  background: rgb(217, 242, 226);
+  color: rgb(27, 120, 69);
+  border: 1px solid rgb(60, 160, 99);
+}
+
+.app-toast.toast-warn {
+  background: rgb(255, 245, 225);
+  border: 1px solid rgb(219, 151, 32);
+}
+
+.app-toast.toast-warn .toast-icon {
+  background: rgb(255, 236, 198);
+  color: rgb(156, 100, 22);
+  border: 1px solid rgb(219, 151, 32);
+}
+
+.app-toast.toast-error {
+  background: rgb(255, 233, 239);
+  border: 1px solid rgb(214, 66, 109);
+}
+
+.app-toast.toast-error .toast-icon {
+  background: rgb(254, 219, 231);
+  color: rgb(170, 34, 87);
+  border: 1px solid rgb(214, 66, 109);
+}
