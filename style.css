@@ -47,7 +47,7 @@ button:active {
 
 .app {
   width: 100%;
-  max-width: 500px;
+  max-width: 700px;
   height: 100%;
   background: rgb(255, 245, 241);
   color: rgb(88, 48, 110);
@@ -59,7 +59,7 @@ button:active {
 
 .app-toast {
   width: calc(100% - 24px);
-  max-width: 476px;
+  max-width: 676px;
   height: auto;
   padding: 12px;
   background: rgb(255, 255, 255);
@@ -699,7 +699,7 @@ button:active {
   display: none !important;
 }
 
-@media (min-width: 500px) {
+@media (min-width: 700px) {
   .app {
     border-left: 1px solid rgba(241, 209, 225, 0.85);
     border-right: 1px solid rgba(241, 209, 225, 0.85);
