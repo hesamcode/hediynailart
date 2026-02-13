@@ -19,7 +19,7 @@
 
   // Slots independent of services
   const SLOT_CONFIG = {
-    daysAhead: 5,
+    daysAhead: 10,
     stepMin: 30,
     shifts: [{ startMin: 8 * 60, endMin: 18 * 60 }],
   };
