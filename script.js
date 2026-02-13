@@ -27,6 +27,8 @@
   const $ = (id) => document.getElementById(id);
 
   const dom = {
+    app: $("app"),
+
     focusBooking: $("focus-booking"),
     heroCta: $("hero-cta"),
     bookingPanel: $("booking-panel"),
@@ -477,8 +479,8 @@ ${note ? `\n${note}` : ""}
   dom.heroCta?.addEventListener("click", focusBooking);
   dom.startWhatsapp?.addEventListener("click", openWhatsapp);
 
-  dom.scrollTop?.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  dom.scrollTop?.addEventListener("click", (e) => {
+    dom.app?.scrollTo({ top: 0, behavior: "smooth" });
   });
 
   dom.toastClose?.addEventListener("click", () =>
