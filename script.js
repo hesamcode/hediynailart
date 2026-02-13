@@ -364,7 +364,7 @@
   function openWhatsapp() {
     const msg = buildWhatsappMessage();
     if (!msg) {
-      showToast("لطفاً حداقل یک خدمت و زمان را انتخاب کن.");
+      showToast("لطفاً حداقل یک خدمت رو انتخاب کن.");
       return;
     }
     window.open(

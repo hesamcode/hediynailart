@@ -105,7 +105,7 @@ button:active {
 .toast-text {
   color: rgb(88, 48, 110);
   font-weight: bold;
-  font-size: 15px;
+  font-size: 12px;
 }
 
 .stack {
@@ -582,6 +582,7 @@ button:active {
   border-top: 1px solid rgba(241, 209, 225, 0.85);
   display: flex;
   flex-direction: column;
+  scroll-margin-top: 74px;
 }
 
 .footer-stack {
