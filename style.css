@@ -52,9 +52,9 @@ button:active {
 }
 
 .app {
-  width: 100vw;
+  width: 100%;
   max-width: 800px;
-  height: 100vh;
+  height: 100%;
   background: rgb(255, 245, 241);
   color: rgb(88, 48, 110);
   direction: rtl;
