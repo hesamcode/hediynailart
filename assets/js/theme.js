@@ -23,6 +23,7 @@ function getSavedTheme() {
 
 function syncThemeControls({ dom, theme }) {
   const isDark = theme === "dark";
+  const themeColor = isDark ? THEME_META_COLORS.dark : THEME_META_COLORS.light;
 
   if (dom.themeToggle) {
     dom.themeToggle.setAttribute("aria-pressed", isDark ? "true" : "false");
@@ -38,11 +39,11 @@ function syncThemeControls({ dom, theme }) {
   }
 
   if (dom.themeColorMeta) {
-    dom.themeColorMeta.setAttribute(
-      "content",
-      isDark ? THEME_META_COLORS.dark : THEME_META_COLORS.light,
-    );
+    dom.themeColorMeta.setAttribute("content", themeColor);
   }
+  document
+    .querySelectorAll('meta[name="theme-color"]')
+    .forEach((meta) => meta.setAttribute("content", themeColor));
 
   if (dom.appleStatusBarMeta) {
     dom.appleStatusBarMeta.setAttribute(

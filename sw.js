@@ -1,4 +1,5 @@
-const CACHE_NAME = "hediynailart-cache-v2";
+// NOTE: keep service worker at project root to control the full site scope (`./`).
+const CACHE_NAME = "hediynailart-cache-v3";
 
 const APP_SHELL = [
   "./",

@@ -6,7 +6,9 @@
   };
 
   const root = document.documentElement;
-  const themeMeta = document.getElementById("theme-color-meta");
+  const themeMetas = Array.from(
+    document.querySelectorAll('meta[name="theme-color"]'),
+  );
   const systemTheme =
     window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
       ? "dark"
@@ -24,7 +26,6 @@
   root.setAttribute("data-theme", theme);
   root.style.colorScheme = theme;
 
-  if (themeMeta) {
-    themeMeta.setAttribute("content", THEME_META_COLORS[theme]);
-  }
+  const themeColor = THEME_META_COLORS[theme];
+  themeMetas.forEach((meta) => meta.setAttribute("content", themeColor));
 })();

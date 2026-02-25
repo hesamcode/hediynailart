@@ -137,6 +137,6 @@
   color: var(--heart-color);
 }
 
-.footer-copy a {
+.footer-sign a {
   text-decoration: underline;
 }
