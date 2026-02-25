@@ -1,0 +1,139 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  text-decoration: none;
+  font-family: "Vazirmatn", "Manrope", sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+:root {
+  color-scheme: light;
+  --bg-page: #fffaf8;
+  --text-primary: #3f2154;
+  --text-muted: rgba(63, 33, 84, 0.62);
+  --text-strong: rgba(63, 33, 84, 0.78);
+  --text-high: rgba(63, 33, 84, 0.84);
+  --border-color: rgba(63, 33, 84, 0.14);
+  --surface-subtle: rgba(63, 33, 84, 0.06);
+  --header-glass: rgba(255, 250, 248, 0.7);
+  --gallery-dot-bg: rgba(255, 250, 248, 0.78);
+  --accent: #ea5c9d;
+  --accent-soft-bg: rgba(234, 92, 157, 0.12);
+  --accent-soft-border: rgba(234, 92, 157, 0.25);
+  --accent-strong-border: rgba(234, 92, 157, 0.55);
+  --footer-copy-bg: rgba(0, 0, 0, 0);
+  --heart-color: #ff0000;
+
+  --social-instagram-bg: #ffeef3;
+  --social-instagram-fg: #e1448d;
+  --social-instagram-border: #f4c0db;
+  --social-whatsapp-bg: #e9faef;
+  --social-whatsapp-fg: #12965a;
+  --social-whatsapp-border: #ace5c6;
+  --social-phone-bg: #ffecf6;
+  --social-phone-fg: #ce4c80;
+  --social-phone-border: #f4c3d9;
+  --social-location-bg: #f4ecff;
+  --social-location-fg: #855cc2;
+  --social-location-border: #dac7f4;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg-page: #16141f;
+  --text-primary: #f2e9ff;
+  --text-muted: rgba(242, 233, 255, 0.68);
+  --text-strong: rgba(242, 233, 255, 0.82);
+  --text-high: rgba(242, 233, 255, 0.92);
+  --border-color: rgba(242, 233, 255, 0.2);
+  --surface-subtle: rgba(242, 233, 255, 0.08);
+  --header-glass: rgba(22, 20, 31, 0.74);
+  --gallery-dot-bg: rgba(22, 20, 31, 0.86);
+  --accent: #f775b6;
+  --accent-soft-bg: rgba(247, 117, 182, 0.2);
+  --accent-soft-border: rgba(247, 117, 182, 0.42);
+  --accent-strong-border: rgba(247, 117, 182, 0.66);
+  --heart-color: #cc0000;
+
+  --social-instagram-bg: rgba(225, 68, 141, 0.22);
+  --social-instagram-fg: #ffaddc;
+  --social-instagram-border: rgba(225, 68, 141, 0.44);
+  --social-whatsapp-bg: rgba(18, 150, 90, 0.22);
+  --social-whatsapp-fg: #9ff6cd;
+  --social-whatsapp-border: rgba(18, 150, 90, 0.44);
+  --social-phone-bg: rgba(206, 76, 128, 0.24);
+  --social-phone-fg: #ffb7da;
+  --social-phone-border: rgba(206, 76, 128, 0.44);
+  --social-location-bg: rgba(133, 92, 194, 0.24);
+  --social-location-fg: #dfc9ff;
+  --social-location-border: rgba(133, 92, 194, 0.44);
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background: var(--bg-page);
+  color: var(--text-primary);
+  direction: rtl;
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+a,
+button,
+input,
+textarea,
+select {
+  appearance: none;
+}
+
+textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+button {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+button:active {
+  transform: scale(0.9);
+}
+
+.app {
+  width: 100%;
+  max-width: 800px;
+  height: 100%;
+  background: var(--bg-page);
+  color: var(--text-primary);
+  direction: rtl;
+  font-size: 15px;
+  overflow-y: auto;
+  position: relative;
+}
+
+.app-hidden {
+  display: none !important;
+}
+
+@media (min-width: 800px) {
+  .app {
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+  }
+}

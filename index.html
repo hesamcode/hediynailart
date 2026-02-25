@@ -17,6 +17,18 @@
     />
 
     <!-- Theme / iOS PWA -->
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: light)"
+      content="#fffaf8"
+      id="theme-color-light"
+    />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+      content="#16141f"
+      id="theme-color-dark"
+    />
     <meta name="theme-color" content="#fffaf8" id="theme-color-meta" />
 
     <meta name="mobile-web-app-capable" content="yes" />
@@ -24,7 +36,8 @@
     <meta name="apple-mobile-web-app-title" content="hediynailart" />
     <meta
       name="apple-mobile-web-app-status-bar-style"
-      content="black-translucent"
+      content="default"
+      id="apple-status-bar-meta"
     />
 
     <!-- Icons / PWA -->
@@ -85,38 +98,13 @@
       content="https://hesamcode.github.io/hediynailart/assets/images/og-image.jpg"
     />
 
-    <script>
-      (() => {
-        const storageKey = "hediynailart-theme";
-        const root = document.documentElement;
-        const themeMeta = document.getElementById("theme-color-meta");
-        const systemTheme =
-          window.matchMedia &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches
-            ? "dark"
-            : "light";
-        let theme = systemTheme;
-
-        try {
-          const saved = localStorage.getItem(storageKey);
-          if (saved === "dark" || saved === "light") {
-            theme = saved;
-          }
-        } catch {}
-
-        root.setAttribute("data-theme", theme);
-        root.style.colorScheme = theme;
-        if (themeMeta) {
-          themeMeta.setAttribute(
-            "content",
-            theme === "dark" ? "#16141f" : "#fffaf8",
-          );
-        }
-      })();
-    </script>
+    <script src="assets/js/theme-bootstrap.js?v=30"></script>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="assets/css/style.css?v=29" />
+    <link rel="stylesheet" href="assets/css/base.css?v=30" />
+    <link rel="stylesheet" href="assets/css/layout.css?v=30" />
+    <link rel="stylesheet" href="assets/css/components.css?v=30" />
+    <link rel="stylesheet" href="assets/css/footer.css?v=30" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
@@ -550,7 +538,10 @@
           </div>
         </div>
         <div class="footer-copy">
-          © <span id="footer-year"></span> تمامی حقوق محفوظ است | ساخته شده با
+          © <span id="footer-year"></span> تمامی حقوق محفوظ است
+        </div>
+        <div class="footer-sign">
+          ساخته شده با
           <i class="fa-solid fa-heart heart-icon"></i>
           توسط
           <a href="https://hesamcode.github.io/" target="_blank" rel="noopener"
@@ -560,6 +551,6 @@
       </footer>
     </div>
 
-    <script src="assets/js/script.js?v=29" defer></script>
+    <script type="module" src="assets/js/main.js?v=30"></script>
   </body>
 </html>

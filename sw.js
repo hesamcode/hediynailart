@@ -1,11 +1,24 @@
-const CACHE_NAME = "hediynailart-cache-v1";
+const CACHE_NAME = "hediynailart-cache-v2";
 
 const APP_SHELL = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
-  "./assets/css/style.css",
-  "./assets/js/script.js",
+  "./assets/css/base.css",
+  "./assets/css/layout.css",
+  "./assets/css/components.css",
+  "./assets/css/footer.css",
+  "./assets/js/theme-bootstrap.js",
+  "./assets/js/main.js",
+  "./assets/js/config.js",
+  "./assets/js/dom.js",
+  "./assets/js/state.js",
+  "./assets/js/ui.js",
+  "./assets/js/theme.js",
+  "./assets/js/pwa.js",
+  "./assets/js/date-utils.js",
+  "./assets/js/booking.js",
+  "./assets/js/gallery.js",
   "./assets/images/favicon-32.png",
   "./assets/images/favicon-192.png",
   "./assets/images/favicon-512.png",
@@ -28,7 +41,9 @@ self.addEventListener("activate", (event) => {
       .keys()
       .then((keys) =>
         Promise.all(
-          keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key)),
+          keys
+            .filter((key) => key !== CACHE_NAME)
+            .map((key) => caches.delete(key)),
         ),
       )
       .then(() => self.clients.claim()),
@@ -78,7 +93,9 @@ async function networkFirstPage(request) {
 
 self.addEventListener("fetch", (event) => {
   const { request } = event;
-  if (request.method !== "GET") return;
+  if (request.method !== "GET") {
+    return;
+  }
 
   const url = new URL(request.url);
 

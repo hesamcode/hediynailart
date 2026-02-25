@@ -1,0 +1,239 @@
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.page-header {
+  width: 100%;
+  height: 64px;
+  padding: 12px;
+  background: var(--header-glass);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.brand-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.brand-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 1px solid var(--border-color);
+  background: var(--bg-page);
+}
+
+.brand-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.brand-subtitle {
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.install-button,
+.theme-toggle {
+  padding: 0;
+}
+
+.install-button {
+  min-width: 40px;
+}
+
+.install-button i,
+.theme-toggle i {
+  font-size: 16px;
+}
+
+.quick-actions {
+  padding: 12px;
+  padding-bottom: 0;
+}
+
+.qa-card {
+  padding: 12px;
+  background: var(--bg-page);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px;
+}
+
+.qa-item {
+  width: 40px;
+  height: 40px;
+  padding: 12px;
+  background: var(--bg-page);
+  color: var(--text-primary);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.qa-instagram {
+  background: var(--social-instagram-bg);
+  color: var(--social-instagram-fg);
+  border-color: var(--social-instagram-border);
+}
+
+.qa-whatsapp {
+  background: var(--social-whatsapp-bg);
+  color: var(--social-whatsapp-fg);
+  border-color: var(--social-whatsapp-border);
+}
+
+.qa-phone {
+  background: var(--social-phone-bg);
+  color: var(--social-phone-fg);
+  border-color: var(--social-phone-border);
+}
+
+.qa-location {
+  background: var(--social-location-bg);
+  color: var(--social-location-fg);
+  border-color: var(--social-location-border);
+}
+
+.page-main {
+  padding: 12px;
+}
+
+.panel {
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-page);
+  padding: 12px;
+}
+
+.hero-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: var(--text-primary);
+}
+
+.hero-text {
+  color: var(--text-muted);
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+
+.hero-actions {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-actions .cta-button {
+  flex: 1;
+}
+
+.section-head,
+.gallery-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.gallery-head {
+  margin-bottom: 12px;
+}
+
+.panel-title {
+  font-size: 15px;
+  font-weight: bold;
+  color: var(--text-primary);
+}
+
+.section-hint {
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.booking-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  scroll-margin-top: 74px;
+}
+
+.form-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.block-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.block-title {
+  color: var(--text-strong);
+  font-weight: bold;
+}
+
+.block-hint {
+  color: var(--text-muted);
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field-label {
+  font-weight: bold;
+  color: var(--text-strong);
+  font-size: 15px;
+}
