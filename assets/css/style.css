@@ -12,12 +12,75 @@
   display: none;
 }
 
+:root {
+  color-scheme: light;
+  --bg-page: #fffaf8;
+  --text-primary: #3f2154;
+  --text-muted: rgba(63, 33, 84, 0.62);
+  --text-strong: rgba(63, 33, 84, 0.78);
+  --text-high: rgba(63, 33, 84, 0.84);
+  --border-color: rgba(63, 33, 84, 0.14);
+  --surface-subtle: rgba(63, 33, 84, 0.06);
+  --header-glass: rgba(255, 250, 248, 0.7);
+  --gallery-dot-bg: rgba(255, 250, 248, 0.78);
+  --accent: #ea5c9d;
+  --accent-soft-bg: rgba(234, 92, 157, 0.12);
+  --accent-soft-border: rgba(234, 92, 157, 0.25);
+  --accent-strong-border: rgba(234, 92, 157, 0.55);
+  --footer-copy-bg: rgba(0, 0, 0, 0);
+  --heart-color: #ff0000;
+
+  --social-instagram-bg: #ffeef3;
+  --social-instagram-fg: #e1448d;
+  --social-instagram-border: #f4c0db;
+  --social-whatsapp-bg: #e9faef;
+  --social-whatsapp-fg: #12965a;
+  --social-whatsapp-border: #ace5c6;
+  --social-phone-bg: #ffecf6;
+  --social-phone-fg: #ce4c80;
+  --social-phone-border: #f4c3d9;
+  --social-location-bg: #f4ecff;
+  --social-location-fg: #855cc2;
+  --social-location-border: #dac7f4;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg-page: #16141f;
+  --text-primary: #f2e9ff;
+  --text-muted: rgba(242, 233, 255, 0.68);
+  --text-strong: rgba(242, 233, 255, 0.82);
+  --text-high: rgba(242, 233, 255, 0.92);
+  --border-color: rgba(242, 233, 255, 0.2);
+  --surface-subtle: rgba(242, 233, 255, 0.08);
+  --header-glass: rgba(22, 20, 31, 0.74);
+  --gallery-dot-bg: rgba(22, 20, 31, 0.86);
+  --accent: #f775b6;
+  --accent-soft-bg: rgba(247, 117, 182, 0.2);
+  --accent-soft-border: rgba(247, 117, 182, 0.42);
+  --accent-strong-border: rgba(247, 117, 182, 0.66);
+  --heart-color: #cc0000;
+
+  --social-instagram-bg: rgba(225, 68, 141, 0.22);
+  --social-instagram-fg: #ffaddc;
+  --social-instagram-border: rgba(225, 68, 141, 0.44);
+  --social-whatsapp-bg: rgba(18, 150, 90, 0.22);
+  --social-whatsapp-fg: #9ff6cd;
+  --social-whatsapp-border: rgba(18, 150, 90, 0.44);
+  --social-phone-bg: rgba(206, 76, 128, 0.24);
+  --social-phone-fg: #ffb7da;
+  --social-phone-border: rgba(206, 76, 128, 0.44);
+  --social-location-bg: rgba(133, 92, 194, 0.24);
+  --social-location-fg: #dfc9ff;
+  --social-location-border: rgba(133, 92, 194, 0.44);
+}
+
 html,
 body {
   width: 100%;
   height: 100%;
-  background: rgb(255, 250, 248);
-  color: rgb(63, 33, 84);
+  background: var(--bg-page);
+  color: var(--text-primary);
   direction: rtl;
   font-size: 15px;
   display: flex;
@@ -28,12 +91,13 @@ body {
 a,
 button,
 input,
-textarea {
+textarea,
+select {
   appearance: none;
 }
 
 textarea:focus-visible {
-  outline: 2px solid rgb(234, 92, 157);
+  outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 
@@ -55,8 +119,8 @@ button:active {
   width: 100%;
   max-width: 800px;
   height: 100%;
-  background: rgb(255, 250, 248);
-  color: rgb(63, 33, 84);
+  background: var(--bg-page);
+  color: var(--text-primary);
   direction: rtl;
   font-size: 15px;
   overflow-y: auto;
@@ -68,9 +132,9 @@ button:active {
   max-width: 776px;
   height: auto;
   padding: 12px;
-  background: rgb(255, 250, 248);
+  background: var(--bg-page);
   border-radius: 12px;
-  border: 1px solid rgba(63, 33, 84, 0.14);
+  border: 1px solid var(--border-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -92,10 +156,10 @@ button:active {
 .toast-icon {
   width: 40px;
   height: 40px;
-  background: rgba(234, 92, 157, 0.12);
-  color: rgb(234, 92, 157);
+  background: var(--accent-soft-bg);
+  color: var(--accent);
   border-radius: 12px;
-  border: 1px solid rgba(234, 92, 157, 0.25);
+  border: 1px solid var(--accent-soft-border);
   font-size: 20px;
   display: flex;
   align-items: center;
@@ -103,7 +167,7 @@ button:active {
 }
 
 .toast-text {
-  color: rgb(63, 33, 84);
+  color: var(--text-primary);
   font-weight: bold;
   font-size: 12px;
 }
@@ -118,9 +182,9 @@ button:active {
   width: 100%;
   height: 64px;
   padding: 12px;
-  background: rgba(255, 250, 248, 0.7);
+  background: var(--header-glass);
   backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(63, 33, 84, 0.14);
+  border-bottom: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -142,8 +206,8 @@ button:active {
   height: 40px;
   border-radius: 12px;
   object-fit: cover;
-  border: 1px solid rgba(63, 33, 84, 0.14);
-  background: rgb(255, 250, 248);
+  border: 1px solid var(--border-color);
+  background: var(--bg-page);
 }
 
 .brand-meta {
@@ -152,13 +216,13 @@ button:active {
 }
 
 .brand-title {
-  color: rgb(63, 33, 84);
+  color: var(--text-primary);
   font-size: 15px;
   font-weight: bold;
 }
 
 .brand-subtitle {
-  color: rgba(63, 33, 84, 0.62);
+  color: var(--text-muted);
   font-size: 12px;
   font-weight: bold;
 }
@@ -169,6 +233,31 @@ button:active {
   gap: 10px;
 }
 
+.install-button,
+.theme-toggle {
+  padding: 0;
+}
+
+.install-button {
+  min-width: 40px;
+  padding: 0 10px;
+  gap: 6px;
+}
+
+.install-button .install-label {
+  font-size: 12px;
+  line-height: 1;
+}
+
+.install-button.open-mode {
+  min-width: 78px;
+}
+
+.install-button i,
+.theme-toggle i {
+  font-size: 16px;
+}
+
 .icon-button,
 .soft-button,
 .primary-button,
@@ -176,10 +265,10 @@ button:active {
   min-width: 40px;
   height: 40px;
   padding: 12px;
-  background: rgb(255, 250, 248);
-  color: rgb(63, 33, 84);
+  background: var(--bg-page);
+  color: var(--text-primary);
   border-radius: 12px;
-  border: 1px solid rgba(63, 33, 84, 0.14);
+  border: 1px solid var(--border-color);
   font-size: 15px;
   font-weight: bold;
   display: flex;
@@ -190,20 +279,20 @@ button:active {
 
 .primary-button,
 .cta-button {
-  background: rgb(234, 92, 157);
-  border-color: rgb(234, 92, 157);
-  color: rgb(255, 250, 248);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg-page);
 }
 
 .soft-button {
-  background: rgba(234, 92, 157, 0.12);
-  color: rgb(234, 92, 157);
-  border-color: rgba(234, 92, 157, 0.25);
+  background: var(--accent-soft-bg);
+  color: var(--accent);
+  border-color: var(--accent-soft-border);
 }
 
 .link-button {
   background: transparent;
-  color: rgb(234, 92, 157);
+  color: var(--accent);
   font-weight: bold;
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -216,9 +305,9 @@ button:active {
 
 .qa-card {
   padding: 12px;
-  background: rgb(255, 250, 248);
+  background: var(--bg-page);
   border-radius: 12px;
-  border: 1px solid rgba(63, 33, 84, 0.14);
+  border: 1px solid var(--border-color);
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -229,10 +318,10 @@ button:active {
   width: 40px;
   height: 40px;
   padding: 12px;
-  background: rgb(255, 250, 248);
-  color: rgb(63, 33, 84);
+  background: var(--bg-page);
+  color: var(--text-primary);
   border-radius: 12px;
-  border: 1px solid rgba(63, 33, 84, 0.14);
+  border: 1px solid var(--border-color);
   font-size: 20px;
   font-weight: bold;
   display: flex;
@@ -243,27 +332,27 @@ button:active {
 
 /* رنگ‌های اختصاصی شبکه‌های اجتماعی (طبق درخواست شما) */
 .qa-instagram {
-  background: rgb(255, 238, 243);
-  color: rgb(225, 68, 141);
-  border-color: rgb(244, 192, 219);
+  background: var(--social-instagram-bg);
+  color: var(--social-instagram-fg);
+  border-color: var(--social-instagram-border);
 }
 
 .qa-whatsapp {
-  background: rgb(233, 250, 239);
-  color: rgb(18, 150, 90);
-  border-color: rgb(172, 229, 198);
+  background: var(--social-whatsapp-bg);
+  color: var(--social-whatsapp-fg);
+  border-color: var(--social-whatsapp-border);
 }
 
 .qa-phone {
-  background: rgb(255, 236, 246);
-  color: rgb(206, 76, 128);
-  border-color: rgb(244, 195, 217);
+  background: var(--social-phone-bg);
+  color: var(--social-phone-fg);
+  border-color: var(--social-phone-border);
 }
 
 .qa-location {
-  background: rgb(244, 236, 255);
-  color: rgb(133, 92, 194);
-  border-color: rgb(218, 199, 244);
+  background: var(--social-location-bg);
+  color: var(--social-location-fg);
+  border-color: var(--social-location-border);
 }
 
 .page-main {
@@ -272,8 +361,8 @@ button:active {
 
 .panel {
   border-radius: 12px;
-  border: 1px solid rgba(63, 33, 84, 0.14);
-  background: rgb(255, 250, 248);
+  border: 1px solid var(--border-color);
+  background: var(--bg-page);
   padding: 12px;
 }
 
@@ -281,19 +370,31 @@ button:active {
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 5px;
-  color: rgb(63, 33, 84);
+  color: var(--text-primary);
 }
 
 .hero-text {
-  color: rgba(63, 33, 84, 0.62);
+  color: var(--text-muted);
   font-size: 15px;
   margin-bottom: 12px;
 }
 
+.hero-actions {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-actions .cta-button {
+  flex: 1;
+}
+
 .gallery-card {
-  background: rgb(255, 250, 248);
+  background: var(--bg-page);
   border-radius: 12px;
-  border: 1px solid rgba(63, 33, 84, 0.14);
+  border: 1px solid var(--border-color);
   position: relative;
   overflow: hidden;
   touch-action: pan-y;
@@ -323,13 +424,13 @@ button:active {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: rgba(255, 250, 248, 0.78);
-  border: 1px solid rgba(63, 33, 84, 0.14);
+  background: var(--gallery-dot-bg);
+  border: 1px solid var(--border-color);
 }
 
 .gallery-dot.active {
-  background: rgb(234, 92, 157);
-  border-color: rgb(234, 92, 157);
+  background: var(--accent);
+  border-color: var(--accent);
 }
 
 .section-head,
@@ -347,11 +448,11 @@ button:active {
 .panel-title {
   font-size: 15px;
   font-weight: bold;
-  color: rgb(63, 33, 84);
+  color: var(--text-primary);
 }
 
 .section-hint {
-  color: rgba(63, 33, 84, 0.62);
+  color: var(--text-muted);
   font-size: 12px;
   font-weight: bold;
 }
@@ -364,15 +465,15 @@ button:active {
 }
 
 .help-panel {
-  border: 1px solid rgba(234, 92, 157, 0.25);
-  background: rgba(234, 92, 157, 0.12);
+  border: 1px solid var(--accent-soft-border);
+  background: var(--accent-soft-bg);
   border-radius: 12px;
   padding: 12px;
 }
 
 .help-list {
   padding-right: 18px;
-  color: rgba(63, 33, 84, 0.62);
+  color: var(--text-muted);
   font-size: 12px;
   list-style: disc;
   display: flex;
@@ -400,12 +501,12 @@ button:active {
 }
 
 .block-title {
-  color: rgba(63, 33, 84, 0.78);
+  color: var(--text-strong);
   font-weight: bold;
 }
 
 .block-hint {
-  color: rgba(63, 33, 84, 0.62);
+  color: var(--text-muted);
   font-size: 15px;
   font-weight: bold;
 }
@@ -418,7 +519,7 @@ button:active {
 
 .field-label {
   font-weight: bold;
-  color: rgba(63, 33, 84, 0.78);
+  color: var(--text-strong);
   font-size: 15px;
 }
 
@@ -426,38 +527,64 @@ button:active {
   width: 100%;
   min-height: 80px;
   padding: 12px;
-  background: rgb(255, 250, 248);
-  color: rgba(63, 33, 84, 0.84);
+  background: var(--bg-page);
+  color: var(--text-high);
   border-radius: 12px;
-  border: 1px solid rgba(63, 33, 84, 0.14);
+  border: 1px solid var(--border-color);
   font-size: 15px;
   resize: vertical;
 }
 
+.text-area-input::placeholder {
+  color: var(--text-muted);
+}
+
 .chips-services {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-}
-
-.chips-dates {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-}
-
-.chips-times {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
 }
 
+.chips-dates {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.chips-times {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.chip-select {
+  width: 100%;
+  min-height: 40px;
+  padding: 0 10px;
+  background: var(--surface-subtle);
+  color: var(--text-primary);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.chip-select.selected {
+  background: var(--accent-soft-bg);
+  border-color: var(--accent-strong-border);
+}
+
+.chip-select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 .chip {
   padding: 12px;
-  background: rgba(63, 33, 84, 0.06);
-  color: rgb(63, 33, 84);
+  background: var(--surface-subtle);
+  color: var(--text-primary);
   border-radius: 12px;
-  border: 1px solid rgba(63, 33, 84, 0.14);
+  border: 1px solid var(--border-color);
   font-size: 12px;
   font-weight: bold;
   display: flex;
@@ -472,31 +599,31 @@ button:active {
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  border: 1px solid rgba(63, 33, 84, 0.14);
-  background: rgb(255, 250, 248);
+  border: 1px solid var(--border-color);
+  background: var(--bg-page);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgb(234, 92, 157);
+  color: var(--accent);
   font-size: 10px;
 }
 
 .chip.selected {
-  background: rgba(234, 92, 157, 0.12);
-  border-color: rgba(234, 92, 157, 0.55);
+  background: var(--accent-soft-bg);
+  border-color: var(--accent-strong-border);
 }
 
 .chip.selected .chip-icon {
-  background: rgb(234, 92, 157);
-  border-color: rgb(234, 92, 157);
-  color: rgb(255, 250, 248);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg-page);
 }
 
 .summary-panel {
-  border: 1px solid rgba(63, 33, 84, 0.14);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 12px;
-  background: rgba(63, 33, 84, 0.06);
+  background: var(--surface-subtle);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -511,11 +638,11 @@ button:active {
 
 .summary-label {
   font-weight: bold;
-  color: rgba(63, 33, 84, 0.78);
+  color: var(--text-strong);
 }
 
 .helper-text {
-  color: rgba(63, 33, 84, 0.62);
+  color: var(--text-muted);
   font-size: 15px;
   display: flex;
   justify-content: center;
@@ -531,10 +658,10 @@ button:active {
 }
 
 .faq-item {
-  border: 1px solid rgba(63, 33, 84, 0.14);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 12px;
-  background: rgba(63, 33, 84, 0.06);
+  background: var(--surface-subtle);
 }
 
 .faq-item summary {
@@ -559,11 +686,11 @@ button:active {
 }
 
 .faq-q i {
-  color: rgba(63, 33, 84, 0.84);
+  color: var(--text-high);
 }
 
 .faq-chevron {
-  color: rgba(63, 33, 84, 0.62);
+  color: var(--text-muted);
   transition: transform 160ms ease;
 }
 
@@ -573,14 +700,14 @@ button:active {
 
 .faq-item p {
   margin-top: 8px;
-  color: rgba(63, 33, 84, 0.62);
+  color: var(--text-muted);
   font-size: 12px;
 }
 
 .page-footer {
   width: 100%;
-  background: rgb(255, 250, 248);
-  border-top: 1px solid rgba(63, 33, 84, 0.14);
+  background: var(--bg-page);
+  border-top: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
   scroll-margin-top: 74px;
@@ -604,12 +731,12 @@ button:active {
 .footer-title {
   font-size: 15px;
   font-weight: bold;
-  color: rgb(63, 33, 84);
+  color: var(--text-primary);
 }
 
 .footer-note,
 .footer-text {
-  color: rgba(63, 33, 84, 0.62);
+  color: var(--text-muted);
   font-size: 12px;
 }
 
@@ -623,16 +750,16 @@ button:active {
 
 .footer-card {
   width: 100%;
-  border: 1px solid rgba(63, 33, 84, 0.14);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
-  background: rgba(63, 33, 84, 0.06);
+  background: var(--surface-subtle);
   padding: 12px;
 }
 
 .footer-card-title {
   font-weight: bold;
   font-size: 15px;
-  color: rgb(63, 33, 84);
+  color: var(--text-primary);
   margin-bottom: 10px;
 }
 
@@ -646,10 +773,10 @@ button:active {
 .footer-link {
   width: 100%;
   padding: 12px;
-  background: rgba(63, 33, 84, 0.06);
-  color: rgb(63, 33, 84);
+  background: var(--surface-subtle);
+  color: var(--text-primary);
   border-radius: 12px;
-  border: 1px solid rgba(63, 33, 84, 0.14);
+  border: 1px solid var(--border-color);
   font-weight: bold;
   display: flex;
   justify-content: center;
@@ -659,21 +786,21 @@ button:active {
 
 /* لینک‌های اختصاصی پایین صفحه (همان رنگ‌های اختصاصی قبلی) */
 .footer-link-phone {
-  background: rgb(244, 236, 255);
-  color: rgb(133, 92, 194);
-  border-color: rgb(218, 199, 244);
+  background: var(--social-location-bg);
+  color: var(--social-location-fg);
+  border-color: var(--social-location-border);
 }
 
 .footer-link-whatsapp {
-  background: rgb(233, 250, 239);
-  color: rgb(18, 150, 90);
-  border-color: rgb(172, 229, 198);
+  background: var(--social-whatsapp-bg);
+  color: var(--social-whatsapp-fg);
+  border-color: var(--social-whatsapp-border);
 }
 
 .footer-link-instagram {
-  background: rgb(255, 236, 246);
-  color: rgb(225, 68, 141);
-  border-color: rgb(244, 192, 219);
+  background: var(--social-phone-bg);
+  color: var(--social-instagram-fg);
+  border-color: var(--social-instagram-border);
 }
 
 .policy-list {
@@ -681,7 +808,7 @@ button:active {
   list-style: disc;
   display: flex;
   flex-direction: column;
-  color: rgba(63, 33, 84, 0.62);
+  color: var(--text-muted);
   font-size: 12px;
 }
 
@@ -689,17 +816,21 @@ button:active {
   width: 100%;
   height: 240px;
   border-radius: 12px;
-  border: 1px solid rgba(63, 33, 84, 0.14);
+  border: 1px solid var(--border-color);
   overflow: hidden;
+}
+
+:root[data-theme="dark"] .map-container-iframe {
+  filter: brightness(0.82) contrast(1.08) saturate(0.9);
 }
 
 .footer-copy {
   width: 100%;
   height: auto;
   padding: 12px;
-  background: rgba(0, 0, 0, 0);
-  color: rgba(63, 33, 84, 0.62);
-  border-top: 1px solid rgba(63, 33, 84, 0.14);
+  background: var(--footer-copy-bg);
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-color);
   font-size: 14px;
   display: flex;
   justify-content: center;
@@ -709,7 +840,11 @@ button:active {
 }
 
 .heart-icon {
-  color: rgb(255, 0, 0);
+  color: var(--heart-color);
+}
+
+.footer-copy a {
+  text-decoration: underline;
 }
 
 .app-hidden {
@@ -718,7 +853,13 @@ button:active {
 
 @media (min-width: 800px) {
   .app {
-    border-left: 1px solid rgba(63, 33, 84, 0.14);
-    border-right: 1px solid rgba(63, 33, 84, 0.14);
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+  }
+}
+
+@media (max-width: 460px) {
+  .header-actions {
+    gap: 8px;
   }
 }

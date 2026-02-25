@@ -17,19 +17,15 @@
     />
 
     <!-- Theme / iOS PWA -->
-    <meta
-      name="theme-color"
-      content="#ea5c9d"
-      media="(prefers-color-scheme: light)"
-    />
-    <meta
-      name="theme-color"
-      content="#ea5c9d"
-      media="(prefers-color-scheme: dark)"
-    />
+    <meta name="theme-color" content="#fffaf8" id="theme-color-meta" />
 
+    <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="hediynailart" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
 
     <!-- Icons / PWA -->
     <link rel="icon" href="assets/images/favicon-32.png" type="image/png" />
@@ -89,8 +85,38 @@
       content="https://hesamcode.github.io/hediynailart/assets/images/og-image.jpg"
     />
 
+    <script>
+      (() => {
+        const storageKey = "hediynailart-theme";
+        const root = document.documentElement;
+        const themeMeta = document.getElementById("theme-color-meta");
+        const systemTheme =
+          window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+        let theme = systemTheme;
+
+        try {
+          const saved = localStorage.getItem(storageKey);
+          if (saved === "dark" || saved === "light") {
+            theme = saved;
+          }
+        } catch {}
+
+        root.setAttribute("data-theme", theme);
+        root.style.colorScheme = theme;
+        if (themeMeta) {
+          themeMeta.setAttribute(
+            "content",
+            theme === "dark" ? "#16141f" : "#fffaf8",
+          );
+        }
+      })();
+    </script>
+
     <!-- Styles -->
-    <link rel="stylesheet" href="assets/css/style.css?v=24" />
+    <link rel="stylesheet" href="assets/css/style.css?v=29" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
@@ -179,16 +205,27 @@
         </div>
 
         <div class="header-actions">
-          <button id="focus-booking" class="soft-button" type="button">
-            رزرو
+          <button
+            id="install-app"
+            class="soft-button install-button app-hidden"
+            type="button"
+            aria-label="نصب اپلیکیشن"
+            title="نصب اپلیکیشن"
+          >
+            <i class="fa-solid fa-download" aria-hidden="true"></i>
           </button>
           <button
-            id="focus-footer"
-            class="primary-button"
+            id="theme-toggle"
+            class="soft-button theme-toggle"
             type="button"
-            aria-label="ارتباط"
+            aria-label="فعال‌سازی تم تاریک"
+            aria-pressed="false"
           >
-            ارتباط
+            <i
+              id="theme-toggle-icon"
+              class="fa-solid fa-moon"
+              aria-hidden="true"
+            ></i>
           </button>
         </div>
       </header>
@@ -197,12 +234,12 @@
       <nav class="quick-actions" aria-label="راه‌های ارتباط سریع">
         <div class="qa-card">
           <a
-            class="qa-item"
+            class="qa-item qa-instagram"
             href="https://www.instagram.com/hediynailart"
             target="_blank"
             rel="noopener"
           >
-            <i class="fa-brands fa-instagram qa-instagram"></i>
+            <i class="fa-brands fa-instagram"></i>
           </a>
 
           <a
@@ -211,7 +248,7 @@
             target="_blank"
             rel="noopener"
           >
-            <i class="fa-brands fa-whatsapp qa-whatsapp"></i>
+            <i class="fa-brands fa-whatsapp"></i>
           </a>
 
           <a class="qa-item qa-phone" href="tel:09150667527">
@@ -224,7 +261,7 @@
             target="_blank"
             rel="noopener"
           >
-            <i class="fa-solid fa-location-dot qa-location"></i>
+            <i class="fa-solid fa-location-dot"></i>
           </a>
         </div>
       </nav>
@@ -240,9 +277,14 @@
               درخواست رزرو را در واتساپ ارسال کنید.
             </p>
 
-            <button id="hero-cta" class="cta-button" type="button">
-              رزرو وقت <i class="fa-solid fa-arrow-left"></i>
-            </button>
+            <div class="hero-actions">
+              <button id="hero-cta" class="cta-button" type="button">
+                رزرو وقت دقیق <i class="fa-solid fa-arrow-down"></i>
+              </button>
+              <button id="hero-fast-cta" class="cta-button" type="button">
+                رزرو وقت سریع <i class="fa-solid fa-up-right-from-square"></i>
+              </button>
+            </div>
           </section>
 
           <!-- Gallery (Swipe) -->
@@ -279,8 +321,10 @@
 
             <div id="help-panel" class="help-panel app-hidden">
               <ul class="help-list">
-                <li>خدمات را لمس کن؛ با لمس دوباره لغو می‌شود.</li>
-                <li>تاریخ و ساعت را از چیپ‌ها انتخاب کن.</li>
+                <li>حداکثر ۳ خدمت قابل انتخاب است.</li>
+                <li>
+                  تاریخ و زمان دلخواه را مستقیم از لیست همان بخش انتخاب کن.
+                </li>
                 <li>در پایان، واتساپ با متن آماده باز می‌شود.</li>
               </ul>
             </div>
@@ -289,7 +333,7 @@
               <div class="block">
                 <div class="block-head">
                   <div class="block-title">انتخاب خدمات</div>
-                  <div class="block-hint">چند مورد قابل انتخاب است</div>
+                  <div class="block-hint">حداکثر ۳ مورد</div>
                 </div>
                 <div
                   id="services-inline"
@@ -301,7 +345,7 @@
               <div class="block">
                 <div class="block-head">
                   <div class="block-title">انتخاب تاریخ</div>
-                  <div class="block-hint">۱۰ روز آینده</div>
+                  <div class="block-hint">دو گزینه سریع + دلخواه</div>
                 </div>
                 <div
                   id="date-chips"
@@ -313,7 +357,7 @@
               <div class="block">
                 <div class="block-head">
                   <div class="block-title">انتخاب ساعت</div>
-                  <div class="block-hint">زمان‌های پیشنهادی</div>
+                  <div class="block-hint">نزدیک‌ترین زمان یا دلخواه</div>
                 </div>
                 <div
                   id="time-chips"
@@ -506,12 +550,16 @@
           </div>
         </div>
         <div class="footer-copy">
-          © <span id="footer-year"></span> تمامی حقوق محفوظ است | طراحی شده با
+          © <span id="footer-year"></span> تمامی حقوق محفوظ است | ساخته شده با
           <i class="fa-solid fa-heart heart-icon"></i>
+          توسط
+          <a href="https://hesamcode.github.io/" target="_blank" rel="noopener"
+            >HesamCode</a
+          >
         </div>
       </footer>
     </div>
 
-    <script src="assets/js/script.js?v=24" defer></script>
+    <script src="assets/js/script.js?v=29" defer></script>
   </body>
 </html>

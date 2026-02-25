@@ -2,17 +2,22 @@
   "use strict";
 
   const PHONE = "989150667527"; // wa.me
+  const THEME_STORAGE_KEY = "hediynailart-theme";
+  const APP_INSTALLED_STORAGE_KEY = "hediynailart-installed";
+  const THEME_META_COLORS = {
+    light: "#fffaf8",
+    dark: "#16141f",
+  };
+  const IOS_INSTALL_HELP =
+    "برای نصب در آیفون: Safari را باز کن، Share را بزن و Add to Home Screen را انتخاب کن.";
 
   const SERVICES = [
-    { id: "gelish_natural", name: "ژلیش ناخن طبیعی" },
-    { id: "laminate_gelish", name: "لمینیت و ژلیش" },
-    { id: "extension_gelish", name: "کاشت اولیه و ژلیش" },
-    { id: "repair_powder_gelish", name: "ترمیم پودر و ژلیش" },
-    { id: "repair_gel_gelish", name: "ترمیم ژل و ژلیش" },
-    { id: "manicure_wet", name: "مانیکور خیس" },
-    { id: "manicure_dry", name: "مانیکور خشک" },
-    { id: "pedicure_vip", name: "پدیکور VIP" },
-    { id: "design", name: "طراحی" },
+    { id: "gelish", name: "ژلیش" },
+    { id: "laminate", name: "لمینیت" },
+    { id: "extension", name: "کاشت" },
+    { id: "repair", name: "ترمیم" },
+    { id: "manicure", name: "مانیکور" },
+    { id: "pedicure", name: "پدیکور" },
   ];
 
   // Gallery (16 images)
@@ -34,15 +39,17 @@
   const dom = {
     app: $("app"),
 
-    focusBooking: $("focus-booking"),
     heroCta: $("hero-cta"),
+    heroFastCta: $("hero-fast-cta"),
     bookingPanel: $("booking-panel"),
 
     toggleHelp: $("toggle-help"),
     helpPanel: $("help-panel"),
 
-    focusFooter: $("focus-footer"),
-    footer: $("footer"),
+    installApp: $("install-app"),
+    themeToggle: $("theme-toggle"),
+    themeToggleIcon: $("theme-toggle-icon"),
+    themeColorMeta: $("theme-color-meta"),
 
     servicesInline: $("services-inline"),
     dateChips: $("date-chips"),
@@ -69,9 +76,15 @@
     selectedServiceIds: new Set(),
     selectedDayKey: "",
     selectedTimeMin: null, // minute-of-day | null
+    dateMode: "today",
+    timeMode: "nearest",
+    customDayKey: "",
 
     galleryIndex: 0,
     autoTimer: null,
+    theme: "light",
+    deferredInstallPrompt: null,
+    isAppInstalled: false,
 
     swipe: { active: false, startX: 0, startY: 0, locked: false },
     toastTimer: null,
@@ -105,6 +118,17 @@
     return { weekday, md };
   }
 
+  function weekdayFaLong(dayKey) {
+    return fromDayKey(dayKey).toLocaleDateString("fa-IR", { weekday: "long" });
+  }
+
+  function dayKeyWithOffset(offset) {
+    const d = new Date();
+    d.setHours(0, 0, 0, 0);
+    d.setDate(d.getDate() + offset);
+    return toDayKey(d);
+  }
+
   function dateFromDayKeyAndMinute(dayKey, minute) {
     const d = fromDayKey(dayKey);
     d.setHours(Math.floor(minute / 60), minute % 60, 0, 0);
@@ -135,6 +159,213 @@
     }, 2600);
   }
 
+  function normalizeTheme(theme) {
+    return theme === "dark" ? "dark" : "light";
+  }
+
+  function syncThemeControls(theme) {
+    const isDark = theme === "dark";
+
+    if (dom.themeToggle) {
+      dom.themeToggle.setAttribute("aria-pressed", isDark ? "true" : "false");
+      dom.themeToggle.setAttribute(
+        "aria-label",
+        isDark ? "فعال‌سازی تم روشن" : "فعال‌سازی تم تاریک",
+      );
+      dom.themeToggle.setAttribute("title", isDark ? "تم روشن" : "تم تاریک");
+    }
+
+    if (dom.themeToggleIcon) {
+      dom.themeToggleIcon.className = `fa-solid ${isDark ? "fa-sun" : "fa-moon"}`;
+    }
+
+    if (dom.themeColorMeta) {
+      dom.themeColorMeta.setAttribute(
+        "content",
+        isDark ? THEME_META_COLORS.dark : THEME_META_COLORS.light,
+      );
+    }
+  }
+
+  function applyTheme(theme, options = {}) {
+    const { persist = true } = options;
+    const nextTheme = normalizeTheme(theme);
+
+    state.theme = nextTheme;
+    document.documentElement.setAttribute("data-theme", nextTheme);
+    document.documentElement.style.colorScheme = nextTheme;
+    syncThemeControls(nextTheme);
+
+    if (persist) {
+      try {
+        localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+      } catch {}
+    }
+  }
+
+  function initTheme() {
+    const systemTheme =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+    const initial = normalizeTheme(
+      document.documentElement.getAttribute("data-theme") || systemTheme,
+    );
+
+    applyTheme(initial, { persist: false });
+  }
+
+  function isStandaloneMode() {
+    return (
+      (window.matchMedia &&
+        window.matchMedia("(display-mode: standalone)").matches) ||
+      window.navigator.standalone === true
+    );
+  }
+
+  function isIosDevice() {
+    const ua = window.navigator.userAgent.toLowerCase();
+    return /iphone|ipad|ipod/.test(ua);
+  }
+
+  function saveInstalledState(value) {
+    state.isAppInstalled = Boolean(value);
+    try {
+      localStorage.setItem(APP_INSTALLED_STORAGE_KEY, value ? "1" : "0");
+    } catch {}
+  }
+
+  function syncInstallButtonMode(mode) {
+    if (!dom.installApp) return;
+
+    if (mode === "open") {
+      dom.installApp.classList.add("open-mode");
+      dom.installApp.setAttribute("aria-label", "باز کردن اپلیکیشن");
+      dom.installApp.setAttribute("title", "Open");
+      dom.installApp.innerHTML = `
+        <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+        <span class="install-label">Open</span>
+      `;
+      return;
+    }
+
+    dom.installApp.classList.remove("open-mode");
+    dom.installApp.setAttribute("aria-label", "نصب اپلیکیشن");
+    dom.installApp.setAttribute("title", "نصب اپلیکیشن");
+    dom.installApp.innerHTML =
+      '<i class="fa-solid fa-download" aria-hidden="true"></i>';
+  }
+
+  function syncInstallButton() {
+    if (!dom.installApp) return;
+
+    const standalone = isStandaloneMode();
+    const showOpen = state.isAppInstalled && !standalone;
+    const showInstall =
+      !standalone &&
+      (Boolean(state.deferredInstallPrompt) || isIosDevice());
+    const shouldShow = showOpen || showInstall;
+
+    syncInstallButtonMode(showOpen ? "open" : "install");
+    dom.installApp.classList.toggle("app-hidden", !shouldShow);
+  }
+
+  async function installApp() {
+    if (state.isAppInstalled && !isStandaloneMode()) {
+      window.location.href = "./?source=open-app";
+      return;
+    }
+
+    if (isStandaloneMode()) {
+      showToast("اپلیکیشن همین الان نصب است.");
+      return;
+    }
+
+    if (state.deferredInstallPrompt) {
+      const promptEvent = state.deferredInstallPrompt;
+      state.deferredInstallPrompt = null;
+      syncInstallButton();
+
+      try {
+        await promptEvent.prompt();
+        const choice = await promptEvent.userChoice;
+        if (choice?.outcome === "accepted") {
+          saveInstalledState(true);
+          syncInstallButton();
+          showToast("نصب اپلیکیشن انجام شد.");
+        } else {
+          showToast("هر زمان خواستی می‌تونی از دکمه نصب استفاده کنی.");
+        }
+      } catch {
+        showToast("باز شدن پنجره نصب ممکن نشد.");
+      }
+      return;
+    }
+
+    if (isIosDevice()) {
+      showToast(IOS_INSTALL_HELP);
+      return;
+    }
+
+    showToast("از منوی مرورگر، گزینه Install app را انتخاب کن.");
+  }
+
+  function initInstallFlow() {
+    if (isStandaloneMode()) {
+      saveInstalledState(true);
+    } else {
+      try {
+        state.isAppInstalled =
+          localStorage.getItem(APP_INSTALLED_STORAGE_KEY) === "1";
+      } catch {}
+    }
+
+    if (dom.installApp) {
+      dom.installApp.addEventListener("click", () => {
+        void installApp();
+      });
+    }
+
+    window.addEventListener("beforeinstallprompt", (event) => {
+      event.preventDefault();
+      state.deferredInstallPrompt = event;
+      syncInstallButton();
+    });
+
+    window.addEventListener("appinstalled", () => {
+      saveInstalledState(true);
+      state.deferredInstallPrompt = null;
+      syncInstallButton();
+      showToast("اپلیکیشن به صفحه اصلی اضافه شد.");
+    });
+
+    syncInstallButton();
+  }
+
+  function registerServiceWorker() {
+    if (!("serviceWorker" in navigator)) return;
+
+    navigator.serviceWorker
+      .register("./sw.js")
+      .then((registration) => {
+        registration.addEventListener("updatefound", () => {
+          const worker = registration.installing;
+          if (!worker) return;
+
+          worker.addEventListener("statechange", () => {
+            if (
+              worker.state === "installed" &&
+              navigator.serviceWorker.controller
+            ) {
+              showToast("نسخه جدید آماده است. یک بار صفحه را رفرش کن.");
+            }
+          });
+        });
+      })
+      .catch(() => {});
+  }
+
   // Generic scroll helper (DRY)
   function scrollToEl(el, options = {}) {
     if (!el) return;
@@ -157,8 +388,18 @@
   }
 
   function selectedDatetimeLabel() {
-    if (!state.selectedDayKey || state.selectedTimeMin == null) return "—";
+    if (!state.selectedDayKey) return "—";
+
     const { weekday, md } = dateFaShort(state.selectedDayKey);
+
+    if (state.timeMode === "nearest") {
+      return `${weekday} ${md} - نزدیک‌ترین زمان ممکن`;
+    }
+
+    if (state.selectedTimeMin == null) {
+      return `${weekday} ${md} - زمان دلخواه`;
+    }
+
     const dt = dateFromDayKeyAndMinute(
       state.selectedDayKey,
       state.selectedTimeMin,
@@ -188,7 +429,13 @@
 
       chip.addEventListener("click", () => {
         if (selected) state.selectedServiceIds.delete(service.id);
-        else state.selectedServiceIds.add(service.id);
+        else {
+          if (state.selectedServiceIds.size >= 3) {
+            showToast("حداکثر ۳ خدمت قابل انتخاب است.");
+            return;
+          }
+          state.selectedServiceIds.add(service.id);
+        }
 
         renderServicesInline();
         syncSummary();
@@ -241,7 +488,7 @@
   }
 
   // Show next N working days; if today has no slots, start from next day
-  function computeNextDays() {
+  function computeWorkingDayKeys() {
     const base = new Date();
     base.setHours(0, 0, 0, 0);
 
@@ -260,11 +507,39 @@
       const d = new Date(base);
       d.setDate(base.getDate() + offset);
 
-      if (isWorkingDay(d)) days.push(toDayKey(d));
+      if (isWorkingDay(d)) {
+        const dayKey = toDayKey(d);
+        if (buildSlotsForDay(dayKey).length) days.push(dayKey);
+      }
       offset += 1;
     }
 
     return days;
+  }
+
+  function buildPrimaryDateChoices(dayKeys) {
+    const todayKey = dayKeyWithOffset(0);
+    const tomorrowKey = dayKeyWithOffset(1);
+
+    const firstKey = dayKeys[0] || "";
+    const secondKey = dayKeys[1] || firstKey;
+
+    const firstLabel = firstKey
+      ? firstKey === todayKey
+        ? "امروز"
+        : weekdayFaLong(firstKey)
+      : "—";
+    const secondLabel = secondKey
+      ? secondKey === tomorrowKey
+        ? "فردا"
+        : weekdayFaLong(secondKey)
+      : "—";
+
+    return [
+      { mode: "today", label: firstLabel, dayKey: firstKey },
+      { mode: "tomorrow", label: secondLabel, dayKey: secondKey },
+      { mode: "custom", label: "تاریخ دلخواه", dayKey: state.customDayKey },
+    ];
   }
 
   // =========================
@@ -272,39 +547,95 @@
   // =========================
   function renderDateChips() {
     if (!dom.dateChips) return;
-
-    const days = computeNextDays();
+    const days = computeWorkingDayKeys();
     dom.dateChips.innerHTML = "";
 
-    if (!state.selectedDayKey || !days.includes(state.selectedDayKey)) {
-      state.selectedDayKey = days[0];
+    if (!days.length) {
+      dom.dateChips.innerHTML = `<div class="helper-text">فعلاً زمان کاری در دسترس نیست.</div>`;
+      state.selectedDayKey = "";
       state.selectedTimeMin = null;
+      renderTimeChips();
+      return;
     }
 
-    days.forEach((dayKey) => {
-      const selected = state.selectedDayKey === dayKey;
-      const { weekday, md } = dateFaShort(dayKey);
+    if (!state.customDayKey || !days.includes(state.customDayKey)) {
+      state.customDayKey = days[0];
+    }
 
+    if (!["today", "tomorrow", "custom"].includes(state.dateMode)) {
+      state.dateMode = "today";
+    }
+
+    const choices = buildPrimaryDateChoices(days);
+
+    if (state.dateMode === "today") {
+      state.selectedDayKey = choices[0].dayKey;
+    } else if (state.dateMode === "tomorrow") {
+      state.selectedDayKey = choices[1].dayKey;
+    } else {
+      state.selectedDayKey = state.customDayKey;
+    }
+
+    if (!state.selectedDayKey || !days.includes(state.selectedDayKey)) {
+      state.dateMode = "today";
+      state.selectedDayKey = choices[0].dayKey;
+    }
+
+    choices.slice(0, 2).forEach((choice) => {
+      const selected = state.dateMode === choice.mode;
       const chip = document.createElement("button");
       chip.type = "button";
       chip.className = "chip date-chip" + (selected ? " selected" : "");
+      chip.setAttribute("aria-pressed", selected ? "true" : "false");
 
       chip.innerHTML = `
         <span class="chip-icon" aria-hidden="true"><i class="fa-solid fa-calendar-days"></i></span>
-        <span class="date-title">${weekday} ${md}</span>
+        <span class="date-title">${choice.label}</span>
       `;
 
       chip.addEventListener("click", () => {
-        state.selectedDayKey = dayKey;
+        state.dateMode = choice.mode;
+        state.timeMode = "nearest";
         state.selectedTimeMin = null;
         renderDateChips();
-        renderTimeChips();
-        syncSummary();
       });
 
       dom.dateChips.appendChild(chip);
     });
 
+    const customDateSelect = document.createElement("select");
+    customDateSelect.className =
+      "chip-select" + (state.dateMode === "custom" ? " selected" : "");
+    customDateSelect.setAttribute("aria-label", "انتخاب تاریخ دلخواه");
+
+    const placeholder = document.createElement("option");
+    placeholder.value = "";
+    placeholder.textContent = "تاریخ دلخواه";
+    customDateSelect.appendChild(placeholder);
+
+    days.forEach((dayKey) => {
+      const { weekday, md } = dateFaShort(dayKey);
+      const option = document.createElement("option");
+      option.value = dayKey;
+      option.textContent = `${weekday} ${md}`;
+      customDateSelect.appendChild(option);
+    });
+
+    customDateSelect.value =
+      state.dateMode === "custom" ? state.customDayKey : "";
+    customDateSelect.addEventListener("change", (event) => {
+      const nextDay = event.target.value;
+      if (!nextDay) return;
+
+      state.customDayKey = nextDay;
+      state.dateMode = "custom";
+      state.selectedDayKey = nextDay;
+      state.timeMode = "nearest";
+      state.selectedTimeMin = null;
+      renderDateChips();
+    });
+
+    dom.dateChips.appendChild(customDateSelect);
     renderTimeChips();
   }
 
@@ -317,6 +648,8 @@
 
     if (!state.selectedDayKey) {
       dom.timeChips.innerHTML = `<div class="helper-text">ابتدا تاریخ را انتخاب کن.</div>`;
+      state.selectedTimeMin = null;
+      syncSummary();
       return;
     }
 
@@ -325,39 +658,75 @@
     if (!slots.length) {
       dom.timeChips.innerHTML = `<div class="helper-text">برای این روز، زمان پیشنهادی موجود نیست. روز دیگری انتخاب کن.</div>`;
       state.selectedTimeMin = null;
+      syncSummary();
       return;
     }
 
-    // ensure selection (store minute-of-day)
     const slotMins = slots.map((s) => s.getHours() * 60 + s.getMinutes());
-    if (
-      state.selectedTimeMin == null ||
-      !slotMins.includes(state.selectedTimeMin)
-    ) {
-      state.selectedTimeMin = slotMins[0];
+    if (!["nearest", "custom"].includes(state.timeMode)) {
+      state.timeMode = "nearest";
     }
 
-    slots.forEach((start) => {
-      const minute = start.getHours() * 60 + start.getMinutes();
-      const selected = state.selectedTimeMin === minute;
+    if (
+      state.timeMode === "custom" &&
+      (state.selectedTimeMin == null ||
+        !slotMins.includes(state.selectedTimeMin))
+    ) {
+      state.selectedTimeMin = null;
+    }
 
-      const chip = document.createElement("button");
-      chip.type = "button";
-      chip.className = "chip time-chip" + (selected ? " selected" : "");
-
-      chip.innerHTML = `
-        <span class="chip-icon" aria-hidden="true"><i class="fa-solid fa-clock"></i></span>
-        <span>${timeFa(start)}</span>
-      `;
-
-      chip.addEventListener("click", () => {
-        state.selectedTimeMin = minute;
-        renderTimeChips();
-        syncSummary();
-      });
-
-      dom.timeChips.appendChild(chip);
+    const nearestChip = document.createElement("button");
+    nearestChip.type = "button";
+    nearestChip.className =
+      "chip time-chip" + (state.timeMode === "nearest" ? " selected" : "");
+    nearestChip.setAttribute(
+      "aria-pressed",
+      state.timeMode === "nearest" ? "true" : "false",
+    );
+    nearestChip.innerHTML = `
+      <span class="chip-icon" aria-hidden="true"><i class="fa-solid fa-clock"></i></span>
+      <span>نزدیک‌ترین زمان</span>
+    `;
+    nearestChip.addEventListener("click", () => {
+      state.timeMode = "nearest";
+      renderTimeChips();
     });
+
+    const customTimeSelect = document.createElement("select");
+    customTimeSelect.className =
+      "chip-select" + (state.timeMode === "custom" ? " selected" : "");
+    customTimeSelect.setAttribute("aria-label", "انتخاب زمان دلخواه");
+
+    const placeholder = document.createElement("option");
+    placeholder.value = "";
+    placeholder.textContent = "زمان دلخواه";
+    customTimeSelect.appendChild(placeholder);
+
+    slots.forEach((slot) => {
+      const minute = slot.getHours() * 60 + slot.getMinutes();
+      const option = document.createElement("option");
+      option.value = String(minute);
+      option.textContent = timeFa(slot);
+      customTimeSelect.appendChild(option);
+    });
+
+    customTimeSelect.value =
+      state.timeMode === "custom" && state.selectedTimeMin != null
+        ? String(state.selectedTimeMin)
+        : "";
+
+    customTimeSelect.addEventListener("change", (event) => {
+      const minute = Number(event.target.value);
+      if (!Number.isFinite(minute)) return;
+
+      state.timeMode = "custom";
+      state.selectedTimeMin = minute;
+      renderTimeChips();
+    });
+
+    dom.timeChips.appendChild(nearestChip);
+    dom.timeChips.appendChild(customTimeSelect);
+    syncSummary();
   }
 
   // =========================
@@ -373,16 +742,22 @@
   function buildWhatsappMessage() {
     const services = selectedServicesLabel();
     if (services === "—") return null;
-    if (!state.selectedDayKey || state.selectedTimeMin == null) return null;
+    if (!state.selectedDayKey) return null;
+    if (state.timeMode === "custom" && state.selectedTimeMin == null)
+      return null;
 
     const { weekday, md } = dateFaShort(state.selectedDayKey);
     const dateLabel = `${weekday} ${md}`;
 
-    const dt = dateFromDayKeyAndMinute(
-      state.selectedDayKey,
-      state.selectedTimeMin,
-    );
-    const timeLabel = timeFa(dt);
+    const timeLabel =
+      state.timeMode === "nearest"
+        ? "نزدیک‌ترین زمان ممکن"
+        : timeFa(
+            dateFromDayKeyAndMinute(
+              state.selectedDayKey,
+              state.selectedTimeMin,
+            ),
+          );
 
     const note = (dom.bookingNote?.value || "").trim();
 
@@ -398,12 +773,43 @@ ${note ? `\n📝 ${note}` : ""}
 مرسی ❤️`;
   }
 
+  function buildFastWhatsappMessage() {
+    const dayKeys = computeWorkingDayKeys();
+    const fastLabel = buildPrimaryDateChoices(dayKeys)[0]?.label || "امروز";
+    return `سلام عزیزم
+
+برای ${fastLabel} وقت میخواستم`;
+  }
+
   function openWhatsapp() {
-    const msg = buildWhatsappMessage();
-    if (!msg) {
+    if (!state.selectedServiceIds.size) {
       showToast("لطفاً حداقل یک خدمت رو انتخاب کن.");
       return;
     }
+
+    if (!state.selectedDayKey) {
+      showToast("لطفاً تاریخ را انتخاب کن.");
+      return;
+    }
+
+    if (state.timeMode === "custom" && state.selectedTimeMin == null) {
+      showToast("لطفاً زمان دلخواه را انتخاب کن.");
+      return;
+    }
+
+    const msg = buildWhatsappMessage();
+    if (!msg) {
+      showToast("لطفاً اطلاعات رزرو را کامل کن.");
+      return;
+    }
+    window.open(
+      `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`,
+      "_blank",
+    );
+  }
+
+  function openFastWhatsapp() {
+    const msg = buildFastWhatsappMessage();
     window.open(
       `https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`,
       "_blank",
@@ -527,11 +933,12 @@ ${note ? `\n📝 ${note}` : ""}
     dom.helpPanel?.classList.toggle("app-hidden");
   });
 
-  dom.focusFooter?.addEventListener("click", () => scrollToEl(dom.footer));
-  dom.focusBooking?.addEventListener("click", () =>
-    scrollToEl(dom.bookingPanel),
-  );
   dom.heroCta?.addEventListener("click", () => scrollToEl(dom.bookingPanel));
+  dom.heroFastCta?.addEventListener("click", openFastWhatsapp);
+  dom.themeToggle?.addEventListener("click", () => {
+    const nextTheme = state.theme === "dark" ? "light" : "dark";
+    applyTheme(nextTheme);
+  });
 
   dom.startWhatsapp?.addEventListener("click", openWhatsapp);
 
@@ -563,6 +970,9 @@ ${note ? `\n📝 ${note}` : ""}
   if (dom.footerYear)
     dom.footerYear.textContent = String(new Date().getFullYear());
 
+  initTheme();
+  initInstallFlow();
+  registerServiceWorker();
   dom.app?.scrollTo({ top: 0 });
 
   renderServicesInline();
