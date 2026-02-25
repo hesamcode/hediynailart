@@ -12,6 +12,7 @@ export function createAppState() {
 
     theme: "light",
     deferredInstallPrompt: null,
+    isAppInstalled: false,
 
     swipe: { active: false, startX: 0, startY: 0, locked: false },
     toastTimer: null,

@@ -1,5 +1,7 @@
 import { IOS_INSTALL_HELP } from "./config.js";
 
+const APP_INSTALLED_STORAGE_KEY = "hediynailart-installed";
+
 function isStandaloneMode() {
   return (
     (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
@@ -12,13 +14,31 @@ function isIosDevice() {
   return /iphone|ipad|ipod/.test(userAgent);
 }
 
+function loadInstalledState() {
+  try {
+    return localStorage.getItem(APP_INSTALLED_STORAGE_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function saveInstalledState(state, value) {
+  state.isAppInstalled = Boolean(value);
+  try {
+    localStorage.setItem(APP_INSTALLED_STORAGE_KEY, value ? "1" : "0");
+  } catch {}
+}
+
 function syncInstallButton({ dom, state }) {
   if (!dom.installApp) {
     return;
   }
 
+  const standalone = isStandaloneMode();
   const shouldShow =
-    !isStandaloneMode() && (Boolean(state.deferredInstallPrompt) || isIosDevice());
+    !standalone &&
+    !state.isAppInstalled &&
+    (Boolean(state.deferredInstallPrompt) || isIosDevice());
 
   dom.installApp.classList.toggle("app-hidden", !shouldShow);
   dom.installApp.setAttribute("aria-label", "نصب اپلیکیشن");
@@ -28,6 +48,8 @@ function syncInstallButton({ dom, state }) {
 
 async function triggerInstall({ dom, state, showToast }) {
   if (isStandaloneMode()) {
+    saveInstalledState(state, true);
+    syncInstallButton({ dom, state });
     showToast("اپلیکیشن همین الان نصب است.");
     return;
   }
@@ -41,6 +63,8 @@ async function triggerInstall({ dom, state, showToast }) {
       await promptEvent.prompt();
       const choice = await promptEvent.userChoice;
       if (choice?.outcome === "accepted") {
+        saveInstalledState(state, true);
+        syncInstallButton({ dom, state });
         showToast("نصب اپلیکیشن انجام شد.");
       } else {
         showToast("هر زمان خواستی میتونی از دکمه نصب استفاده کنی.");
@@ -60,17 +84,24 @@ async function triggerInstall({ dom, state, showToast }) {
 }
 
 export function initInstallFlow({ dom, state, showToast }) {
+  state.isAppInstalled = loadInstalledState();
+  if (isStandaloneMode()) {
+    saveInstalledState(state, true);
+  }
+
   dom.installApp?.addEventListener("click", () => {
     void triggerInstall({ dom, state, showToast });
   });
 
   window.addEventListener("beforeinstallprompt", (event) => {
     event.preventDefault();
+    saveInstalledState(state, false);
     state.deferredInstallPrompt = event;
     syncInstallButton({ dom, state });
   });
 
   window.addEventListener("appinstalled", () => {
+    saveInstalledState(state, true);
     state.deferredInstallPrompt = null;
     syncInstallButton({ dom, state });
     showToast("اپلیکیشن به صفحه اصلی اضافه شد.");
