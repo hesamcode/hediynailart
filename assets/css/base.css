@@ -88,6 +88,21 @@ body {
   overflow: hidden;
 }
 
+/* RTL (فارسی) */
+html[dir="rtl"] * {
+  direction: rtl;
+  font-family: "Vazirmatn", "Manrope", sans-serif;
+}
+
+/* LTR (انگلیسی) */
+html[dir="ltr"] * {
+  direction: ltr;
+  font-family:
+    "Inter",
+    -apple-system,
+    sans-serif;
+}
+
 a,
 button,
 input,
@@ -125,6 +140,23 @@ button:active {
   font-size: 15px;
   overflow-y: auto;
   position: relative;
+}
+
+i,
+.fas,
+.far,
+.fab,
+[class*="fa-"] {
+  font-family: "Font Awesome 6 Free" !important;
+}
+
+.fab {
+  font-family: "Font Awesome 6 Brands" !important;
+}
+
+html[dir="ltr"] .help-list,
+html[dir="ltr"] .policy-list {
+  padding-left: 18px;
 }
 
 .app-hidden {

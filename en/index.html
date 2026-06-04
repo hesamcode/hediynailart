@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Search Console -->
+    <meta
+      name="google-site-verification"
+      content="G6x4wcwWULu7ZJJ99wQbBe8lARnmcbmXgsiZ3veW-hw"
+    />
+
+    <title>Nail Extension & Gelish in Zafaraniyeh Tehran | hediynailart</title>
+    <meta
+      name="description"
+      content="Nail extension, gelish, repair and nail design in Zafaraniyeh Tehran. Quick appointment booking via WhatsApp. Professional and calm space in Behzadi Blvd."
+    />
+
+    <!-- Theme / iOS PWA -->
+    <meta name="theme-color" content="#fffaf8" id="theme-color-meta" />
+
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="hediynailart" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="default"
+      id="apple-status-bar-meta"
+    />
+
+    <!-- Icons / PWA -->
+    <link rel="icon" href="/assets/images/favicon-32.png" type="image/png" />
+    <link
+      rel="icon"
+      href="/assets/images/favicon-32.png"
+      sizes="32x32"
+      type="image/png"
+    />
+    <link
+      rel="icon"
+      href="/assets/images/favicon-192.png"
+      sizes="192x192"
+      type="image/png"
+    />
+    <link
+      rel="apple-touch-icon"
+      href="/assets/images/apple-touch-icon-180.png"
+    />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <!-- Canonical + hreflang -->
+    <link rel="canonical" href="https://hediynailart.ir/en/" />
+    <link rel="alternate" hreflang="fa" href="https://hediynailart.ir/fa/" />
+    <link rel="alternate" hreflang="en" href="https://hediynailart.ir/en/" />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://hediynailart.ir/en/"
+    />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="fa_IR" />
+    <meta
+      property="og:title"
+      content="Nail Extension & Gelish in Zafaraniyeh Tehran | hediynailart"
+    />
+    <meta
+      property="og:description"
+      content="Nail extension, gelish, repair and nail design in Zafaraniyeh Tehran. Book via WhatsApp."
+    />
+    <meta
+      property="og:image"
+      content="https://hediynailart.ir/assets/images/og-image.jpg"
+    />
+    <meta property="og:url" content="https://hediynailart.ir/en/" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Nail Extension & Gelish in Zafaraniyeh Tehran | hediynailart"
+    />
+    <meta
+      name="twitter:description"
+      content="Nail extension, gelish, repair and nail design in Zafaraniyeh Tehran. Book via WhatsApp."
+    />
+    <meta
+      name="twitter:image"
+      content="https://hediynailart.ir/assets/images/og-image.jpg"
+    />
+
+    <!-- Local SEO Schema (English) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BeautySalon",
+        "@id": "https://www.instagram.com/hediynailart",
+        "name": "hediynailart",
+        "url": "https://hediynailart.ir/en/",
+        "telephone": "+989150667527",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "IR",
+          "addressRegion": "Tehran",
+          "addressLocality": "Zafaraniyeh",
+          "streetAddress": "Behzadi Blvd"
+        },
+        "areaServed": {
+          "@type": "Place",
+          "name": "Tehran, Zafaraniyeh"
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Sunday",
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday"
+            ],
+            "opens": "08:00",
+            "closes": "18:00"
+          }
+        ],
+        "sameAs": ["https://www.instagram.com/hediynailart"]
+      }
+    </script>
+
+    <script src="/assets/js/theme-bootstrap.js?v=30"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/base.css?v=30" />
+    <link rel="stylesheet" href="/assets/css/layout.css?v=30" />
+    <link rel="stylesheet" href="/assets/css/components.css?v=30" />
+    <link rel="stylesheet" href="/assets/css/footer.css?v=30" />
+    <link rel="stylesheet" href="/assets/css/fontawesome/all.min.css" />
+    <link rel="stylesheet" href="/assets/fonts/inter/index.css" />
+  </head>
+
+  <body>
+    <div id="app" class="app">
+      <!-- Toast -->
+      <div
+        id="app-toast"
+        class="app-toast app-hidden"
+        role="status"
+        aria-live="polite"
+      >
+        <div class="toast-content">
+          <span class="toast-icon" aria-hidden="true">
+            <i class="fa-solid fa-circle-info"></i>
+          </span>
+          <p id="toast-text" class="toast-text"></p>
+        </div>
+        <button
+          id="toast-close"
+          class="icon-button"
+          type="button"
+          aria-label="Close message"
+        >
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Header (Glass) -->
+      <header class="page-header">
+        <div class="brand-area">
+          <img
+            src="/assets/images/nail-logo.png"
+            class="brand-logo"
+            alt="Logo"
+          />
+          <div class="brand-meta">
+            <div class="brand-title">hediynailart</div>
+            <div class="brand-subtitle">
+              Nail Services Booking in Zafaraniyeh
+            </div>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <button
+            id="install-app"
+            class="soft-button install-button app-hidden"
+            type="button"
+            aria-label="Install app"
+            title="Install app"
+          >
+            <i class="fa-solid fa-download" aria-hidden="true"></i>
+          </button>
+          <button
+            id="theme-toggle"
+            class="soft-button theme-toggle"
+            type="button"
+            aria-label="Enable dark mode"
+            aria-pressed="false"
+          >
+            <i
+              id="theme-toggle-icon"
+              class="fa-solid fa-moon"
+              aria-hidden="true"
+            ></i>
+          </button>
+          <a
+            id="lang-switch"
+            class="soft-button"
+            href="/fa/"
+            aria-label="نسخه فارسی"
+          >
+            FA
+          </a>
+        </div>
+      </header>
+
+      <!-- Quick Actions (pro) -->
+      <nav class="quick-actions" aria-label="Quick contact">
+        <div class="qa-card">
+          <a
+            class="qa-item qa-instagram"
+            href="https://www.instagram.com/hediynailart"
+            target="_blank"
+            rel="noopener"
+          >
+            <i class="fab fa-instagram"></i>
+          </a>
+
+          <a
+            class="qa-item qa-whatsapp"
+            href="https://wa.me/989150667527"
+            target="_blank"
+            rel="noopener"
+          >
+            <i class="fab fa-whatsapp"></i>
+          </a>
+
+          <a class="qa-item qa-phone" href="tel:09150667527">
+            <i class="fa-solid fa-phone"></i>
+          </a>
+
+          <a
+            class="qa-item qa-location"
+            href="https://www.google.com/maps/search/?api=1&query=Tehran+Zafaraniyeh+Behzadi+Blvd"
+            target="_blank"
+            rel="noopener"
+          >
+            <i class="fa-solid fa-location-dot"></i>
+          </a>
+        </div>
+      </nav>
+
+      <main class="page-main">
+        <div class="stack">
+          <!-- Hero -->
+          <section class="panel hero">
+            <h1 class="hero-title">
+              Nail Extension & Gelish in Zafaraniyeh Tehran
+            </h1>
+            <p class="hero-text">
+              Professional nail extension, gelish, repair and nail design
+              services in Zafaraniyeh Tehran (Behzadi Blvd and nearby areas like
+              Elahieh and Velenjak). View the portfolio and send your booking
+              request via WhatsApp.
+            </p>
+
+            <div class="hero-actions">
+              <button id="hero-cta" class="cta-button" type="button">
+                Book Appointment <i class="fa-solid fa-arrow-down"></i>
+              </button>
+              <button id="hero-fast-cta" class="cta-button" type="button">
+                Quick Booking <i class="fa-solid fa-up-right-from-square"></i>
+              </button>
+            </div>
+          </section>
+
+          <!-- Gallery -->
+          <section class="panel">
+            <div class="gallery-head">
+              <h2 class="panel-title">Real Portfolio</h2>
+              <span class="section-hint">Swipe to browse</span>
+            </div>
+
+            <div class="gallery-card" id="gallery-card">
+              <img
+                id="gallery-image"
+                class="gallery-image"
+                src=""
+                alt="Nail art portfolio"
+                loading="lazy"
+              />
+              <div
+                id="gallery-dots"
+                class="gallery-dots"
+                aria-label="Slide indicator"
+              ></div>
+            </div>
+          </section>
+
+          <!-- Booking -->
+          <section class="panel booking-panel" id="booking-panel">
+            <div class="section-head">
+              <h2 class="panel-title">Book Appointment</h2>
+              <button id="toggle-help" class="link-button" type="button">
+                Help
+              </button>
+            </div>
+
+            <div id="help-panel" class="help-panel app-hidden">
+              <ul class="help-list">
+                <li>You can select up to 3 services.</li>
+                <li>Select date and time directly from the lists below.</li>
+                <li>WhatsApp will open with a pre-written message.</li>
+              </ul>
+            </div>
+
+            <div class="form-panel" id="booking-form" tabindex="-1">
+              <div class="block">
+                <div class="block-head">
+                  <div class="block-title">Select Services</div>
+                  <div class="block-hint">Maximum 3</div>
+                </div>
+                <div
+                  id="services-inline"
+                  class="chips-services"
+                  aria-label="Services"
+                ></div>
+              </div>
+
+              <div class="block">
+                <div class="block-head">
+                  <div class="block-title">Select Date</div>
+                  <div class="block-hint">Quick options + custom</div>
+                </div>
+                <div
+                  id="date-chips"
+                  class="chips-dates"
+                  aria-label="Dates"
+                ></div>
+              </div>
+
+              <div class="block">
+                <div class="block-head">
+                  <div class="block-title">Select Time</div>
+                  <div class="block-hint">Nearest or custom</div>
+                </div>
+                <div
+                  id="time-chips"
+                  class="chips-times"
+                  aria-label="Times"
+                ></div>
+              </div>
+
+              <label class="field-group">
+                <span class="field-label">Short note (optional)</span>
+                <textarea
+                  id="booking-note"
+                  class="text-input text-area-input"
+                  placeholder="e.g. simple design, specific color, or any details..."
+                ></textarea>
+              </label>
+
+              <div class="summary-panel">
+                <div class="summary-row">
+                  <span class="summary-label">Selected Services</span>
+                  <strong id="summary-services">—</strong>
+                </div>
+                <div class="summary-row">
+                  <span class="summary-label">Selected Time</span>
+                  <strong id="summary-datetime">—</strong>
+                </div>
+              </div>
+
+              <button id="start-whatsapp" class="cta-button" type="button">
+                Send request via WhatsApp
+                <i class="fab fa-whatsapp"></i>
+              </button>
+
+              <p class="helper-text">
+                <i class="fa-solid fa-shield-heart"></i>
+                Final booking will be confirmed via WhatsApp.
+              </p>
+            </div>
+          </section>
+
+          <!-- FAQ -->
+          <section class="panel faq">
+            <h2 class="panel-title">FAQ</h2>
+
+            <div class="faq-list">
+              <details class="faq-item">
+                <summary>
+                  <span class="faq-q">
+                    <i class="fa-solid fa-circle-question"></i>
+                    How does booking work?
+                  </span>
+                  <i
+                    class="fa-solid fa-chevron-down faq-chevron"
+                    aria-hidden="true"
+                  ></i>
+                </summary>
+                <p>
+                  Select services and time, then send the request via WhatsApp.
+                  Final coordination happens there.
+                </p>
+              </details>
+
+              <details class="faq-item">
+                <summary>
+                  <span class="faq-q">
+                    <i class="fa-solid fa-clock"></i>
+                    What are your working hours?
+                  </span>
+                  <i
+                    class="fa-solid fa-chevron-down faq-chevron"
+                    aria-hidden="true"
+                  ></i>
+                </summary>
+                <p>
+                  Usually 8 AM to 6 PM. If you need a different time, just
+                  message me on WhatsApp.
+                </p>
+              </details>
+
+              <details class="faq-item">
+                <summary>
+                  <span class="faq-q">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    What if my preferred time isn't available?
+                  </span>
+                  <i
+                    class="fa-solid fa-chevron-down faq-chevron"
+                    aria-hidden="true"
+                  ></i>
+                </summary>
+                <p>
+                  I'll suggest the closest available time to coordinate quickly.
+                </p>
+              </details>
+
+              <details class="faq-item">
+                <summary>
+                  <span class="faq-q">
+                    <i class="fa-solid fa-location-dot"></i>
+                    Where is your location?
+                  </span>
+                  <i
+                    class="fa-solid fa-chevron-down faq-chevron"
+                    aria-hidden="true"
+                  ></i>
+                </summary>
+                <p>Tehran, Zafaraniyeh, Behzadi Blvd.</p>
+              </details>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="page-footer" id="footer">
+        <div class="footer-stack">
+          <div class="footer-head">
+            <div class="footer-brand">
+              <div class="footer-title">hediynailart</div>
+              <div class="footer-note">
+                Nail Services Booking in Zafaraniyeh
+              </div>
+            </div>
+
+            <button
+              id="scroll-top"
+              class="icon-button"
+              type="button"
+              aria-label="Back to top"
+            >
+              <i class="fa-solid fa-arrow-up"></i>
+            </button>
+          </div>
+
+          <div class="footer-grid">
+            <section class="footer-card">
+              <h3 class="footer-card-title">Contact</h3>
+              <div class="footer-links">
+                <a class="footer-link footer-link-phone" href="tel:09150667527">
+                  <i class="fa-solid fa-phone footer-icon"></i> Call
+                </a>
+
+                <a
+                  class="footer-link footer-link-whatsapp"
+                  href="https://wa.me/989150667527"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <i class="fab fa-whatsapp footer-icon"></i> WhatsApp
+                </a>
+
+                <a
+                  class="footer-link footer-link-instagram"
+                  href="https://www.instagram.com/hediynailart"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <i class="fab fa-instagram footer-icon"></i> Instagram
+                </a>
+              </div>
+            </section>
+
+            <section class="footer-card">
+              <h3 class="footer-card-title">Location - Tehran, Zafaraniyeh</h3>
+              <iframe
+                class="map-container-iframe"
+                src="https://www.google.com/maps?q=تهران،زعفرانیه،بهزادی&output=embed"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Map"
+              ></iframe>
+            </section>
+
+            <section class="footer-card">
+              <h3 class="footer-card-title">Simple Policies</h3>
+              <ul class="policy-list">
+                <li>Booking is confirmed via WhatsApp.</li>
+                <li>Alternative times will be suggested if busy.</li>
+                <li>Final coordination is done by you.</li>
+              </ul>
+            </section>
+
+            <section class="footer-card">
+              <h3 class="footer-card-title">About Us</h3>
+              <p class="footer-text">
+                A calm and professional space for nail design and care.
+              </p>
+              <p class="footer-text">
+                Focused on quality, attention to detail, and a simple booking
+                experience.
+              </p>
+            </section>
+          </div>
+        </div>
+        <div class="footer-sign">
+          Made with
+          <i class="fa-solid fa-heart heart-icon"></i>
+          by
+          <a href="https://hesamcode.ir/" target="_blank" rel="noopener"
+            >Hesam</a
+          >
+        </div>
+        <div class="footer-copy">
+          © <span id="footer-year"></span> All rights reserved
+        </div>
+      </footer>
+    </div>
+
+    <script type="module" src="/assets/js/main.js?v=30"></script>
+  </body>
+</html>

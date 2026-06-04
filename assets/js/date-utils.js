@@ -1,3 +1,10 @@
+// date-utils.js
+// ============================================================
+// HediyeNailArt - Date Utilities (Bilingual)
+// ============================================================
+
+import { LANG } from "./config.js";
+
 export function pad2(value) {
   return String(value).padStart(2, "0");
 }
@@ -15,18 +22,18 @@ export function fromDayKey(dayKey) {
 
 export function dateFaShort(dayKey) {
   const date = fromDayKey(dayKey);
+  const locale = LANG === "en" ? "en-US" : "fa-IR";
 
   return {
-    weekday: date.toLocaleDateString("fa-IR", { weekday: "short" }),
-    md: date.toLocaleDateString("fa-IR", {
-      month: "short",
-      day: "numeric",
-    }),
+    weekday: date.toLocaleDateString(locale, { weekday: "short" }),
+    md: date.toLocaleDateString(locale, { month: "short", day: "numeric" }),
   };
 }
 
 export function weekdayFaLong(dayKey) {
-  return fromDayKey(dayKey).toLocaleDateString("fa-IR", { weekday: "long" });
+  const date = fromDayKey(dayKey);
+  const locale = LANG === "en" ? "en-US" : "fa-IR";
+  return date.toLocaleDateString(locale, { weekday: "long" });
 }
 
 export function dayKeyWithOffset(offset) {
@@ -43,7 +50,8 @@ export function dateFromDayKeyAndMinute(dayKey, minute) {
 }
 
 export function timeFa(date) {
-  return date.toLocaleTimeString("fa-IR", {
+  const locale = LANG === "en" ? "en-US" : "fa-IR";
+  return date.toLocaleTimeString(locale, {
     hour: "2-digit",
     minute: "2-digit",
   });
@@ -134,14 +142,17 @@ export function buildPrimaryDateChoices(dayKeys) {
   const firstKey = dayKeys[0] || "";
   const secondKey = dayKeys[1] || firstKey;
 
+  const todayLabel = LANG === "en" ? "Today" : "امروز";
+  const tomorrowLabel = LANG === "en" ? "Tomorrow" : "فردا";
+
   const firstLabel = firstKey
     ? firstKey === todayKey
-      ? "امروز"
+      ? todayLabel
       : weekdayFaLong(firstKey)
     : "—";
   const secondLabel = secondKey
     ? secondKey === tomorrowKey
-      ? "فردا"
+      ? tomorrowLabel
       : weekdayFaLong(secondKey)
     : "—";
 

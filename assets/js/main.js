@@ -40,3 +40,16 @@ initBooking({ dom, state, showToast: ui.showToast });
 initGallery({ dom, state });
 
 dom.app?.scrollTo({ top: 0 });
+
+// Language switch handler
+const langSwitch = document.getElementById("lang-switch");
+if (langSwitch) {
+  langSwitch.addEventListener("click", (e) => {
+    const targetLang = langSwitch.getAttribute("href")?.includes("/fa/")
+      ? "fa"
+      : "en";
+    try {
+      localStorage.setItem("preferredLang", targetLang);
+    } catch (e) {}
+  });
+}

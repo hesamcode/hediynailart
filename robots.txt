@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://hesamcode.github.io/hediynailart/sitemap.xml
+Sitemap: https://hediynailart.ir/sitemap.xml

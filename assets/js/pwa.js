@@ -1,10 +1,16 @@
-import { IOS_INSTALL_HELP } from "./config.js";
+// pwa.js
+// ============================================================
+// HediyeNailArt - PWA Installation (Bilingual)
+// ============================================================
+
+import { IOS_INSTALL_HELP, getUIText } from "./config.js";
 
 const APP_INSTALLED_STORAGE_KEY = "hediynailart-installed";
 
 function isStandaloneMode() {
   return (
-    (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
+    (window.matchMedia &&
+      window.matchMedia("(display-mode: standalone)").matches) ||
     window.navigator.standalone === true
   );
 }
@@ -41,16 +47,17 @@ function syncInstallButton({ dom, state }) {
     (Boolean(state.deferredInstallPrompt) || isIosDevice());
 
   dom.installApp.classList.toggle("app-hidden", !shouldShow);
-  dom.installApp.setAttribute("aria-label", "نصب اپلیکیشن");
-  dom.installApp.setAttribute("title", "نصب اپلیکیشن");
-  dom.installApp.innerHTML = '<i class="fa-solid fa-download" aria-hidden="true"></i>';
+  dom.installApp.setAttribute("aria-label", "Install app");
+  dom.installApp.setAttribute("title", "Install app");
+  dom.installApp.innerHTML =
+    '<i class="fa-solid fa-download" aria-hidden="true"></i>';
 }
 
 async function triggerInstall({ dom, state, showToast }) {
   if (isStandaloneMode()) {
     saveInstalledState(state, true);
     syncInstallButton({ dom, state });
-    showToast("اپلیکیشن همین الان نصب است.");
+    showToast(getUIText("appInstalled"));
     return;
   }
 
@@ -65,12 +72,12 @@ async function triggerInstall({ dom, state, showToast }) {
       if (choice?.outcome === "accepted") {
         saveInstalledState(state, true);
         syncInstallButton({ dom, state });
-        showToast("نصب اپلیکیشن انجام شد.");
+        showToast(getUIText("installSuccess"));
       } else {
-        showToast("هر زمان خواستی میتونی از دکمه نصب استفاده کنی.");
+        showToast(getUIText("installLater"));
       }
     } catch {
-      showToast("باز شدن پنجره نصب ممکن نشد.");
+      showToast(getUIText("installFailed"));
     }
     return;
   }
@@ -80,7 +87,7 @@ async function triggerInstall({ dom, state, showToast }) {
     return;
   }
 
-  showToast("از منوی مرورگر، گزینه Install app را انتخاب کن.");
+  showToast(getUIText("installFromMenu"));
 }
 
 export function initInstallFlow({ dom, state, showToast }) {
@@ -104,7 +111,7 @@ export function initInstallFlow({ dom, state, showToast }) {
     saveInstalledState(state, true);
     state.deferredInstallPrompt = null;
     syncInstallButton({ dom, state });
-    showToast("اپلیکیشن به صفحه اصلی اضافه شد.");
+    showToast(getUIText("installSuccess"));
   });
 
   syncInstallButton({ dom, state });
@@ -125,8 +132,11 @@ export function registerServiceWorker(showToast) {
         }
 
         worker.addEventListener("statechange", () => {
-          if (worker.state === "installed" && navigator.serviceWorker.controller) {
-            showToast("نسخه جدید آماده است. یک بار صفحه را رفرش کن.");
+          if (
+            worker.state === "installed" &&
+            navigator.serviceWorker.controller
+          ) {
+            showToast(getUIText("newVersionReady"));
           }
         });
       });

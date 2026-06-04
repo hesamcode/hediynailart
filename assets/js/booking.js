@@ -1,4 +1,17 @@
-import { PHONE, SERVICES, SLOT_CONFIG } from "./config.js";
+// booking.js
+// ============================================================
+// HediyeNailArt - Booking Logic (Bilingual)
+// ============================================================
+
+import {
+  PHONE,
+  SERVICES,
+  SLOT_CONFIG,
+  getServices,
+  LANG,
+  getUIText,
+  saveLanguagePreference,
+} from "./config.js";
 import {
   buildPrimaryDateChoices,
   buildSlotsForDay,
@@ -9,11 +22,15 @@ import {
 } from "./date-utils.js";
 
 export function initBooking({ dom, state, showToast }) {
-  function selectedServicesLabel() {
-    const names = SERVICES.filter((service) =>
-      state.selectedServiceIds.has(service.id),
-    ).map((service) => service.name);
+  function getCurrentServices() {
+    return getServices();
+  }
 
+  function selectedServicesLabel() {
+    const serviceList = getCurrentServices();
+    const names = serviceList
+      .filter((service) => state.selectedServiceIds.has(service.id))
+      .map((service) => service.name);
     return names.length ? names.join(" + ") : "—";
   }
 
@@ -25,11 +42,11 @@ export function initBooking({ dom, state, showToast }) {
     const { weekday, md } = dateFaShort(state.selectedDayKey);
 
     if (state.timeMode === "nearest") {
-      return `${weekday} ${md} - نزدیکترین زمان ممکن`;
+      return `${weekday} ${md} - ${getUIText("nearestTime")}`;
     }
 
     if (state.selectedTimeMin == null) {
-      return `${weekday} ${md} - زمان دلخواه`;
+      return `${weekday} ${md} - ${getUIText("customTime")}`;
     }
 
     const dateTime = dateFromDayKeyAndMinute(
@@ -54,8 +71,9 @@ export function initBooking({ dom, state, showToast }) {
     }
 
     dom.servicesInline.innerHTML = "";
+    const serviceList = getCurrentServices();
 
-    SERVICES.forEach((service) => {
+    serviceList.forEach((service) => {
       const selected = state.selectedServiceIds.has(service.id);
       const chip = document.createElement("button");
       chip.type = "button";
@@ -72,7 +90,7 @@ export function initBooking({ dom, state, showToast }) {
           state.selectedServiceIds.delete(service.id);
         } else {
           if (state.selectedServiceIds.size >= 3) {
-            showToast("حداکثر ۳ خدمت قابل انتخاب است.");
+            showToast(getUIText("maxServices"));
             return;
           }
           state.selectedServiceIds.add(service.id);
@@ -94,8 +112,10 @@ export function initBooking({ dom, state, showToast }) {
     dom.timeChips.innerHTML = "";
 
     if (!state.selectedDayKey) {
-      dom.timeChips.innerHTML =
-        '<div class="helper-text">ابتدا تاریخ را انتخاب کن.</div>';
+      const hintText = document.createElement("div");
+      hintText.className = "helper-text";
+      hintText.textContent = getUIText("selectDateFirstHint");
+      dom.timeChips.appendChild(hintText);
       state.selectedTimeMin = null;
       syncSummary();
       return;
@@ -104,14 +124,18 @@ export function initBooking({ dom, state, showToast }) {
     const slots = buildSlotsForDay(state.selectedDayKey, SLOT_CONFIG);
 
     if (!slots.length) {
-      dom.timeChips.innerHTML =
-        '<div class="helper-text">برای این روز، زمان پیشنهادی موجود نیست. روز دیگری انتخاب کن.</div>';
+      const noTimeText = document.createElement("div");
+      noTimeText.className = "helper-text";
+      noTimeText.textContent = getUIText("noTimeForDay");
+      dom.timeChips.appendChild(noTimeText);
       state.selectedTimeMin = null;
       syncSummary();
       return;
     }
 
-    const slotMinutes = slots.map((slot) => slot.getHours() * 60 + slot.getMinutes());
+    const slotMinutes = slots.map(
+      (slot) => slot.getHours() * 60 + slot.getMinutes(),
+    );
 
     if (!["nearest", "custom"].includes(state.timeMode)) {
       state.timeMode = "nearest";
@@ -119,11 +143,13 @@ export function initBooking({ dom, state, showToast }) {
 
     if (
       state.timeMode === "custom" &&
-      (state.selectedTimeMin == null || !slotMinutes.includes(state.selectedTimeMin))
+      (state.selectedTimeMin == null ||
+        !slotMinutes.includes(state.selectedTimeMin))
     ) {
       state.selectedTimeMin = null;
     }
 
+    // Nearest time chip
     const nearestChip = document.createElement("button");
     nearestChip.type = "button";
     nearestChip.className = `chip time-chip${
@@ -136,7 +162,7 @@ export function initBooking({ dom, state, showToast }) {
 
     nearestChip.innerHTML = `
       <span class="chip-icon" aria-hidden="true"><i class="fa-solid fa-clock"></i></span>
-      <span>نزدیکترین زمان</span>
+      <span>${getUIText("nearestTime")}</span>
     `;
 
     nearestChip.addEventListener("click", () => {
@@ -144,15 +170,16 @@ export function initBooking({ dom, state, showToast }) {
       renderTimeChips();
     });
 
+    // Custom time select
     const customTimeSelect = document.createElement("select");
     customTimeSelect.className = `chip-select${
       state.timeMode === "custom" ? " selected" : ""
     }`;
-    customTimeSelect.setAttribute("aria-label", "انتخاب زمان دلخواه");
+    customTimeSelect.setAttribute("aria-label", getUIText("customTime"));
 
     const placeholder = document.createElement("option");
     placeholder.value = "";
-    placeholder.textContent = "زمان دلخواه";
+    placeholder.textContent = getUIText("customTime");
     customTimeSelect.appendChild(placeholder);
 
     slots.forEach((slot) => {
@@ -193,8 +220,10 @@ export function initBooking({ dom, state, showToast }) {
     dom.dateChips.innerHTML = "";
 
     if (!dayKeys.length) {
-      dom.dateChips.innerHTML =
-        '<div class="helper-text">فعلاً زمان کاری در دسترس نیست.</div>';
+      const noDateText = document.createElement("div");
+      noDateText.className = "helper-text";
+      noDateText.textContent = "فعلاً زمان کاری در دسترس نیست.";
+      dom.dateChips.appendChild(noDateText);
       state.selectedDayKey = "";
       state.selectedTimeMin = null;
       renderTimeChips();
@@ -224,6 +253,7 @@ export function initBooking({ dom, state, showToast }) {
       state.selectedDayKey = choices[0].dayKey;
     }
 
+    // Today & Tomorrow chips
     choices.forEach((choice) => {
       const selected = state.dateMode === choice.mode;
       const chip = document.createElement("button");
@@ -246,15 +276,16 @@ export function initBooking({ dom, state, showToast }) {
       dom.dateChips.appendChild(chip);
     });
 
+    // Custom date select
     const customDateSelect = document.createElement("select");
     customDateSelect.className = `chip-select${
       state.dateMode === "custom" ? " selected" : ""
     }`;
-    customDateSelect.setAttribute("aria-label", "انتخاب تاریخ دلخواه");
+    customDateSelect.setAttribute("aria-label", getUIText("customDate"));
 
     const placeholder = document.createElement("option");
     placeholder.value = "";
-    placeholder.textContent = "تاریخ دلخواه";
+    placeholder.textContent = getUIText("customDate");
     customDateSelect.appendChild(placeholder);
 
     dayKeys.forEach((dayKey) => {
@@ -288,31 +319,38 @@ export function initBooking({ dom, state, showToast }) {
 
   function buildWhatsappMessage() {
     const services = selectedServicesLabel();
-    if (services === "—") {
+    if (services === "—") return null;
+    if (!state.selectedDayKey) return null;
+    if (state.timeMode === "custom" && state.selectedTimeMin == null)
       return null;
-    }
-
-    if (!state.selectedDayKey) {
-      return null;
-    }
-
-    if (state.timeMode === "custom" && state.selectedTimeMin == null) {
-      return null;
-    }
 
     const { weekday, md } = dateFaShort(state.selectedDayKey);
     const dateLabel = `${weekday} ${md}`;
-
     const timeLabel =
       state.timeMode === "nearest"
-        ? "نزدیکترین زمان ممکن"
+        ? getUIText("nearestTime")
         : timeFa(
-            dateFromDayKeyAndMinute(state.selectedDayKey, state.selectedTimeMin),
+            dateFromDayKeyAndMinute(
+              state.selectedDayKey,
+              state.selectedTimeMin,
+            ),
           );
 
     const note = (dom.bookingNote?.value || "").trim();
 
-    return `سلام عزیزم 🌸
+    if (LANG === "en") {
+      return `Hello dear 🌸
+
+I'd like to book an appointment for ${services} 💅
+
+📅 ${dateLabel}
+🕒 ${timeLabel}
+${note ? `\n📝 ${note}` : ""}
+
+Please let me know if this works 🤍
+Thanks ❤️`;
+    } else {
+      return `سلام عزیزم 🌸
 
 برای ${services} می‌خواستم وقت بگیرم 💅
 
@@ -322,36 +360,44 @@ ${note ? `\n📝 ${note}` : ""}
 
 اگه اوکیه لطفاً خبرم کن 🤍
 مرسی ❤️`;
+    }
   }
 
   function buildFastWhatsappMessage() {
     const dayKeys = computeWorkingDayKeys(SLOT_CONFIG);
-    const fastLabel = buildPrimaryDateChoices(dayKeys)[0]?.label || "امروز";
+    const choices = buildPrimaryDateChoices(dayKeys);
+    const fastLabel = choices[0]?.label || (LANG === "en" ? "today" : "امروز");
 
-    return `سلام عزیزم
+    if (LANG === "en") {
+      return `Hello dear
+
+I'd like to book an appointment for ${fastLabel}`;
+    } else {
+      return `سلام عزیزم
 
 برای ${fastLabel} وقت میخواستم`;
+    }
   }
 
   function openWhatsapp() {
     if (!state.selectedServiceIds.size) {
-      showToast("لطفاً حداقل یک خدمت رو انتخاب کن.");
+      showToast(getUIText("selectServiceFirst"));
       return;
     }
 
     if (!state.selectedDayKey) {
-      showToast("لطفاً تاریخ را انتخاب کن.");
+      showToast(getUIText("selectDateFirst"));
       return;
     }
 
     if (state.timeMode === "custom" && state.selectedTimeMin == null) {
-      showToast("لطفاً زمان دلخواه را انتخاب کن.");
+      showToast(getUIText("selectTimeFirst"));
       return;
     }
 
     const message = buildWhatsappMessage();
     if (!message) {
-      showToast("لطفاً اطلاعات رزرو را کامل کن.");
+      showToast(getUIText("selectDateTimeFirst"));
       return;
     }
 
@@ -369,9 +415,11 @@ ${note ? `\n📝 ${note}` : ""}
     );
   }
 
+  // Event listeners
   dom.startWhatsapp?.addEventListener("click", openWhatsapp);
   dom.heroFastCta?.addEventListener("click", openFastWhatsapp);
 
+  // Initial render
   renderServicesInline();
   renderDateChips();
   syncSummary();
