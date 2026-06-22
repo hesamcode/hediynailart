@@ -3,6 +3,7 @@
   margin: 0;
   padding: 0;
   border: 0;
+  scroll-margin-top: 74px;
   text-decoration: none;
   font-family: "Vazirmatn", "Manrope", sans-serif;
   -webkit-tap-highlight-color: transparent;

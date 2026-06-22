@@ -11,14 +11,6 @@ export const THEME_META_COLORS = {
   dark: "#16141f",
 };
 
-// config.js
-export function IOS_INSTALL_HELP() {
-  if (LANG === "en") {
-    return "To install on iPhone: Open Safari, tap Share, then select Add to Home Screen.";
-  }
-  return "برای نصب در آیفون: Safari را باز کن، Share را بزن و Add to Home Screen را انتخاب کن.";
-}
-
 // ============================================================
 // Language Detection
 // ============================================================
@@ -83,6 +75,16 @@ export const SLOT_CONFIG = {
 };
 
 // ============================================================
+// iOS Install Help
+// ============================================================
+export function IOS_INSTALL_HELP() {
+  if (LANG === "en") {
+    return "To install on iPhone: Open Safari, tap Share, then select Add to Home Screen.";
+  }
+  return "برای نصب در آیفون: Safari را باز کن، Share را بزن و Add to Home Screen را انتخاب کن.";
+}
+
+// ============================================================
 // UI Texts (for dynamic elements)
 // ============================================================
 export const UI_TEXTS = {
@@ -121,6 +123,8 @@ export const UI_TEXTS = {
     installFailed: "باز شدن پنجره نصب ممکن نشد.",
     installFromMenu: "از منوی مرورگر، گزینه Install app را انتخاب کن.",
     newVersionReady: "نسخه جدید آماده است. یک بار صفحه را رفرش کن.",
+    // Post (جدید)
+    linkCopied: "لینک کپی شد!",
   },
   en: {
     // Toast messages
@@ -157,6 +161,8 @@ export const UI_TEXTS = {
     installFailed: "Could not open installation window.",
     installFromMenu: "Select 'Install app' from your browser menu.",
     newVersionReady: "New version is ready. Please refresh the page.",
+    // Post (جدید)
+    linkCopied: "Link copied!",
   },
 };
 

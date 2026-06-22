@@ -1,3 +1,8 @@
+// theme.js
+// ============================================================
+// HediyeNailArt - Theme Management (یکپارچه)
+// ============================================================
+
 import { THEME_META_COLORS, THEME_STORAGE_KEY } from "./config.js";
 
 function normalizeTheme(theme) {
@@ -5,7 +10,8 @@ function normalizeTheme(theme) {
 }
 
 function getSystemTheme() {
-  return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+  return window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches
     ? "dark"
     : "light";
 }
@@ -69,11 +75,12 @@ export function applyTheme({ dom, state, theme, persist = true }) {
 }
 
 export function initTheme({ dom, state }) {
-  const initialTheme =
-    document.documentElement.getAttribute("data-theme") ||
-    getSavedTheme() ||
-    getSystemTheme();
+  // ابتدا از localStorage، سپس از system، و در آخر از data-theme
+  const savedTheme = getSavedTheme();
+  const systemTheme = getSystemTheme();
+  const initialTheme = savedTheme || systemTheme || "light";
 
+  // اعمال تم
   applyTheme({
     dom,
     state,
@@ -81,19 +88,22 @@ export function initTheme({ dom, state }) {
     persist: false,
   });
 
-  const hasSavedTheme = getSavedTheme() !== null;
-  if (hasSavedTheme || !window.matchMedia) {
+  // گوش دادن به تغییرات سیستم
+  if (!window.matchMedia) {
     return;
   }
 
   const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
   const handleSystemThemeChange = (event) => {
-    applyTheme({
-      dom,
-      state,
-      theme: event.matches ? "dark" : "light",
-      persist: false,
-    });
+    // فقط اگر کاربر تم را ذخیره نکرده باشه، تغییر کن
+    if (!getSavedTheme()) {
+      applyTheme({
+        dom,
+        state,
+        theme: event.matches ? "dark" : "light",
+        persist: false,
+      });
+    }
   };
 
   if (typeof mediaQuery.addEventListener === "function") {
