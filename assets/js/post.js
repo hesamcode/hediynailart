@@ -1,34 +1,89 @@
 // post.js
 // ============================================================
-// امکانات تعاملی مقالات (اشتراک‌گذاری، TOC و...)
+// امکانات تعاملی مقالات (TOC, Share, Reading Time)
 // ============================================================
-
 import { LANG, getUIText } from "./config.js";
-import { getDomRefs } from "./dom.js";
-import { createAppState } from "./state.js";
-import { createUiHelpers } from "./ui.js";
+import { ui } from "./main.js";
 
 (function () {
   "use strict";
 
-  // ========== استفاده از toast استاندارد ==========
-  let uiHelpers = null;
+  // ========== 0. تابع تبدیل فارسی به فینگلیش (بدون علائم) ==========
+  function toFinglish(text) {
+    const map = {
+      // حروف فارسی
+      آ: "a",
+      ا: "a",
+      ب: "b",
+      پ: "p",
+      ت: "t",
+      ث: "s",
+      ج: "j",
+      چ: "ch",
+      ح: "h",
+      خ: "kh",
+      د: "d",
+      ذ: "z",
+      ر: "r",
+      ز: "z",
+      ژ: "zh",
+      س: "s",
+      ش: "sh",
+      ص: "s",
+      ض: "z",
+      ط: "t",
+      ظ: "z",
+      ع: "a",
+      غ: "gh",
+      ف: "f",
+      ق: "gh",
+      ک: "k",
+      گ: "g",
+      ل: "l",
+      م: "m",
+      ن: "n",
+      و: "v",
+      ه: "h",
+      ی: "y",
+      // حروف عربی
+      أ: "a",
+      إ: "a",
+      ة: "h",
+      // اعداد فارسی
+      "۰": "0",
+      "۱": "1",
+      "۲": "2",
+      "۳": "3",
+      "۴": "4",
+      "۵": "5",
+      "۶": "6",
+      "۷": "7",
+      "۸": "8",
+      "۹": "9",
+    };
 
-  function getToast() {
-    if (!uiHelpers) {
-      const dom = getDomRefs();
-      const state = createAppState();
-      uiHelpers = createUiHelpers({ dom, state });
-    }
-    return uiHelpers;
+    return (
+      text
+        .trim()
+        .toLowerCase()
+        // حذف تمام علائم نگارشی (، . ; : ! ? " ' ( ) [ ] { } < > / \ | @ # $ % ^ & * + =)
+        .replace(/[،؛:!؟\.\-"'()\[\]{}<>\/\\|@#$%^&*+=]/g, "")
+        // حذف کاراکترهای غیرمجاز (فقط حروف، اعداد و فاصله مجاز است)
+        .replace(/[^\w\s\u0600-\u06FF]/g, "")
+        // تبدیل هر کاراکتر
+        .split("")
+        .map((char) => map[char] || char)
+        .join("")
+        // جایگزینی فاصله با خط تیره
+        .replace(/\s+/g, "-")
+        // حذف خط تیره‌های تکراری
+        .replace(/-+/g, "-")
+        // حذف خط تیره از ابتدا و انتها
+        .replace(/^-|-$/g, "")
+    );
   }
 
-  function showToastMessage(message) {
-    const { showToast } = getToast();
-    showToast(message);
-  }
-
-  // ========== 1. ساخت جدول محتوا ==========
+  // ========== 1. ساخت جدول محتوا (TOC) با اسکرول نرم ==========
   function generateTableOfContents() {
     const content = document.querySelector(".post-content");
     if (!content) return;
@@ -36,26 +91,66 @@ import { createUiHelpers } from "./ui.js";
     const headings = content.querySelectorAll("h2");
     if (headings.length < 2) return;
 
+    // ساخت id به صورت فینگلیش بر اساس متن عنوان
+    headings.forEach((heading) => {
+      if (!heading.id) {
+        // استفاده از تابع toFinglish برای تبدیل عنوان به فینگلیش
+        const slug = toFinglish(heading.textContent);
+        heading.id = slug;
+      }
+    });
+
+    // ایجاد ساختار TOC
     const tocContainer = document.createElement("div");
     tocContainer.className = "post-toc";
-    tocContainer.innerHTML = `
+
+    const tocHeader = document.createElement("div");
+    tocHeader.className = "post-toc-header";
+    tocHeader.innerHTML = `
       <div class="post-toc-title">
         <i class="fa-solid fa-list-ul"></i>
         <span>${LANG === "fa" ? "آنچه در این مقاله می‌خوانید" : "What You'll Read"}</span>
       </div>
-      <ul class="post-toc-list"></ul>
+      <button class="post-toc-toggle" aria-expanded="false" type="button">
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
     `;
 
-    const tocList = tocContainer.querySelector(".post-toc-list");
+    const tocList = document.createElement("ul");
+    tocList.className = "post-toc-list";
+    tocList.style.display = "none";
 
-    headings.forEach((heading, index) => {
-      if (!heading.id) {
-        heading.id = `heading-${index}`;
-      }
-
+    headings.forEach((heading) => {
       const li = document.createElement("li");
-      li.innerHTML = `<a href="#${heading.id}">${heading.textContent}</a>`;
+      const a = document.createElement("a");
+      a.href = `#${heading.id}`;
+      a.textContent = heading.textContent;
+      a.className = "toc-link";
+
+      // اسکرول نرم هنگام کلیک روی لینک TOC
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
+        const target = document.getElementById(heading.id);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+          history.pushState(null, "", `#${heading.id}`);
+        }
+      });
+
+      li.appendChild(a);
       tocList.appendChild(li);
+    });
+
+    tocContainer.appendChild(tocHeader);
+    tocContainer.appendChild(tocList);
+
+    // رویداد باز/بسته کردن TOC
+    const toggleBtn = tocHeader.querySelector(".post-toc-toggle");
+    toggleBtn.addEventListener("click", () => {
+      const isExpanded = toggleBtn.getAttribute("aria-expanded") === "true";
+      const newState = !isExpanded;
+      toggleBtn.setAttribute("aria-expanded", newState);
+      tocList.style.display = newState ? "block" : "none";
     });
 
     const firstElement = content.firstChild;
@@ -67,7 +162,6 @@ import { createUiHelpers } from "./ui.js";
     const container = document.querySelector(".post-share");
     if (!container) return;
 
-    const url = encodeURIComponent(window.location.href);
     const title = encodeURIComponent(document.title);
 
     const buttons = [
@@ -96,11 +190,11 @@ import { createUiHelpers } from "./ui.js";
     const buttonsHtml = buttons
       .map(
         (btn) => `
-      <button class="share-btn" data-share-type="${btn.name.toLowerCase()}" data-share-url="${btn.url !== "copy" ? btn.url : ""}">
-        <i class="${btn.icon}"></i>
-        <span>${btn.name}</span>
-      </button>
-    `,
+        <button class="share-btn" data-share-type="${btn.name.toLowerCase()}" data-share-url="${btn.url !== "copy" ? btn.url : ""}">
+          <i class="${btn.icon}"></i>
+          <span>${btn.name}</span>
+        </button>
+      `,
       )
       .join("");
 
@@ -114,14 +208,15 @@ import { createUiHelpers } from "./ui.js";
       </div>
     `;
 
-    // رویداد کپی لینک - استفاده از toast استاندارد
+    // رویداد کپی لینک
     const copyBtn = container.querySelector(
       '[data-share-type="copy link"], [data-share-type="کپی لینک"]',
     );
     if (copyBtn) {
       copyBtn.addEventListener("click", () => {
-        navigator.clipboard.writeText(window.location.href);
-        showToastMessage(LANG === "fa" ? "لینک کپی شد!" : "Link copied!");
+        navigator.clipboard.writeText(window.location.href).then(() => {
+          ui.showToast(getUIText("linkCopied"));
+        });
       });
     }
 
@@ -163,16 +258,14 @@ import { createUiHelpers } from "./ui.js";
     updateReadingTime();
   }
 
-  // ========== صبر برای لود شدن محتوای داینامیک ==========
+  // ========== 5. صبر برای لود شدن محتوا ==========
   function waitForContent() {
-    // اگر محتوا از قبل وجود داره
     const content = document.querySelector(".post-content");
     if (content && content.innerHTML.trim() !== "") {
       init();
       return;
     }
 
-    // منتظر لود شدن محتوا باش
     const observer = new MutationObserver(() => {
       const content = document.querySelector(".post-content");
       if (content && content.innerHTML.trim() !== "") {
@@ -186,7 +279,6 @@ import { createUiHelpers } from "./ui.js";
       subtree: true,
     });
 
-    // تایم‌اوت برای جلوگیری از حلقه بی‌نهایت
     setTimeout(() => {
       observer.disconnect();
       const content = document.querySelector(".post-content");
@@ -196,7 +288,7 @@ import { createUiHelpers } from "./ui.js";
     }, 5000);
   }
 
-  // ========== شروع ==========
+  // ========== 6. شروع ==========
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", waitForContent);
   } else {

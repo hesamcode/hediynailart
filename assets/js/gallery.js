@@ -1,7 +1,8 @@
-import { GALLERY } from "./config.js";
+import { LANG, GALLERY } from "./config.js";
 
 function swipeDirFromDx(dx) {
-  return dx < 0 ? -1 : 1;
+  if (LANG === "fa") return dx < 0 ? -1 : 1;
+  return dx < 0 ? 1 : -1;
 }
 
 export function initGallery({ dom, state }) {
@@ -35,7 +36,10 @@ export function initGallery({ dom, state }) {
     const total = GALLERY.length;
     state.galleryIndex = ((state.galleryIndex % total) + total) % total;
 
-    dom.galleryImage.setAttribute("src", encodeURI(GALLERY[state.galleryIndex]));
+    dom.galleryImage.setAttribute(
+      "src",
+      encodeURI(GALLERY[state.galleryIndex]),
+    );
     renderDots(total, state.galleryIndex);
   }
 

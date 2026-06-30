@@ -2,8 +2,6 @@ const $ = (id) => document.getElementById(id);
 
 export function getDomRefs() {
   return {
-    app: $("app"),
-
     heroCta: $("hero-cta"),
     heroFastCta: $("hero-fast-cta"),
     bookingPanel: $("booking-panel"),

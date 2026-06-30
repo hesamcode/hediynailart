@@ -46,7 +46,7 @@ function syncInstallButton({ dom, state }) {
     !state.isAppInstalled &&
     (Boolean(state.deferredInstallPrompt) || isIosDevice());
 
-  dom.installApp.classList.toggle("app-hidden", !shouldShow);
+  dom.installApp.classList.toggle("hidden", !shouldShow);
   dom.installApp.setAttribute("aria-label", "Install app");
   dom.installApp.setAttribute("title", "Install app");
   dom.installApp.innerHTML =

@@ -84,6 +84,8 @@
 }
 
 .gallery-card {
+  max-width: 550px;
+  margin: 0 auto;
   background: var(--bg-page);
   border-radius: 12px;
   border: 1px solid var(--border-color);
