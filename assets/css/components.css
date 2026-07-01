@@ -1,6 +1,6 @@
 .app-toast {
   width: calc(100% - 24px);
-  max-width: 776px;
+  max-width: 576px;
   height: auto;
   padding: 12px;
   background: var(--bg-page);
@@ -81,6 +81,27 @@
   font-weight: bold;
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+.booking-actions {
+  display: grid;
+  gap: 8px;
+}
+
+.booking-actions .cta-button {
+  width: 100%;
+}
+
+.cta-button-whatsapp {
+  background: var(--social-whatsapp-bg);
+  color: var(--social-whatsapp-fg);
+  border-color: var(--social-whatsapp-border);
+}
+
+.cta-button-telegram {
+  background: var(--social-telegram-bg);
+  color: var(--social-telegram-fg);
+  border-color: var(--social-telegram-border);
 }
 
 .gallery-card {

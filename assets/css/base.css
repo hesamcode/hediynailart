@@ -38,6 +38,15 @@
   --social-whatsapp-bg: #e9faef;
   --social-whatsapp-fg: #12965a;
   --social-whatsapp-border: #ace5c6;
+  --social-telegram-bg: #eaf5ff;
+  --social-telegram-fg: #2a7de1;
+  --social-telegram-border: #b9d9ff;
+  --social-rubika-bg: rgba(255, 128, 0, 0.16);
+  --social-rubika-fg: #ff7b00;
+  --social-rubika-border: rgba(255, 111, 0, 0.35);
+  --social-twitter-bg: rgba(147, 147, 147, 0.306);
+  --social-twitter-fg: #1c1c1c;
+  --social-twitter-border: #6b6b6b;
   --social-phone-bg: #ffecf6;
   --social-phone-fg: #ce4c80;
   --social-phone-border: #f4c3d9;
@@ -53,6 +62,15 @@
   --text-muted: rgba(242, 233, 255, 0.68);
   --text-strong: rgba(242, 233, 255, 0.82);
   --text-high: rgba(242, 233, 255, 0.92);
+  --social-telegram-bg: rgba(42, 125, 225, 0.16);
+  --social-telegram-fg: #8ec2ff;
+  --social-telegram-border: rgba(125, 186, 255, 0.35);
+  --social-twitter-bg: rgba(32, 32, 32, 0.415);
+  --social-twitter-fg: #e0e0e0;
+  --social-twitter-border: rgba(213, 213, 213, 0.35);
+  --social-rubika-bg: rgba(255, 126, 0, 0.16);
+  --social-rubika-fg: #ffb36b;
+  --social-rubika-border: rgba(255, 161, 88, 0.35);
   --border-color: rgba(242, 233, 255, 0.2);
   --surface-subtle: rgba(242, 233, 255, 0.08);
   --header-glass: rgba(22, 20, 31, 0.74);
@@ -81,10 +99,15 @@ html {
   width: 100%;
   height: auto;
   background: var(--bg-page);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 body {
   width: 100%;
+  max-width: 600px;
   height: auto;
   background: var(--bg-page);
   color: var(--text-primary);
@@ -157,4 +180,11 @@ html[dir="ltr"] .policy-list {
 
 .hidden {
   display: none !important;
+}
+
+@media (min-width: 700px) {
+  body {
+    border-right: 1px solid var(--border-color);
+    border-left: 1px solid var(--border-color);
+  }
 }

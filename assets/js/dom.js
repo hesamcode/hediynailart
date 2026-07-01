@@ -23,6 +23,7 @@ export function getDomRefs() {
     summaryServices: $("summary-services"),
     summaryDatetime: $("summary-datetime"),
     startWhatsapp: $("start-whatsapp"),
+    startTelegram: $("start-telegram"),
 
     galleryCard: $("gallery-card"),
     galleryImage: $("gallery-image"),

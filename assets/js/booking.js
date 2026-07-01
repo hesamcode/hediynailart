@@ -415,8 +415,34 @@ I'd like to book an appointment for ${fastLabel}`;
     );
   }
 
+  function openTelegram() {
+    if (!state.selectedServiceIds.size) {
+      showToast(getUIText("selectServiceFirst"));
+      return;
+    }
+
+    if (!state.selectedDayKey) {
+      showToast(getUIText("selectDateFirst"));
+      return;
+    }
+
+    if (state.timeMode === "custom" && state.selectedTimeMin == null) {
+      showToast(getUIText("selectTimeFirst"));
+      return;
+    }
+
+    const message = buildWhatsappMessage();
+    if (!message) {
+      showToast(getUIText("selectDateTimeFirst"));
+      return;
+    }
+
+    window.open(`https://t.me/hediynail?text=${encodeURIComponent(message)}`);
+  }
+
   // Event listeners
   dom.startWhatsapp?.addEventListener("click", openWhatsapp);
+  dom.startTelegram?.addEventListener("click", openTelegram);
   dom.heroFastCta?.addEventListener("click", openFastWhatsapp);
 
   // Initial render

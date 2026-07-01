@@ -59,9 +59,8 @@
 }
 
 .footer-links {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
 }
 
@@ -89,6 +88,30 @@
   background: var(--social-whatsapp-bg);
   color: var(--social-whatsapp-fg);
   border-color: var(--social-whatsapp-border);
+}
+
+.footer-link-telegram {
+  background: var(--social-telegram-bg);
+  color: var(--social-telegram-fg);
+  border-color: var(--social-telegram-border);
+}
+
+.footer-link-telegram {
+  background: var(--social-telegram-bg);
+  color: var(--social-telegram-fg);
+  border-color: var(--social-telegram-border);
+}
+
+.footer-link-twitter {
+  background: var(--social-twitter-bg);
+  color: var(--social-twitter-fg);
+  border-color: var(--social-twitter-border);
+}
+
+.footer-link-rubika {
+  background: var(--social-rubika-bg);
+  color: var(--social-rubika-fg);
+  border-color: var(--social-rubika-border);
 }
 
 .footer-link-instagram {
