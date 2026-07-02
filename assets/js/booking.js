@@ -363,7 +363,7 @@ ${note ? `\n📝 ${note}` : ""}
     }
   }
 
-  function buildFastWhatsappMessage() {
+  function buildFastSmsMessage() {
     const dayKeys = computeWorkingDayKeys(SLOT_CONFIG);
     const choices = buildPrimaryDateChoices(dayKeys);
     const fastLabel = choices[0]?.label || (LANG === "en" ? "today" : "امروز");
@@ -407,12 +407,10 @@ I'd like to book an appointment for ${fastLabel}`;
     );
   }
 
-  function openFastWhatsapp() {
-    const message = buildFastWhatsappMessage();
-    window.open(
-      `https://wa.me/${PHONE}?text=${encodeURIComponent(message)}`,
-      "_blank",
-    );
+  function openFastSmsApp() {
+    const message = buildFastSmsMessage();
+
+    window.location.href = `sms:${PHONE}?body=${encodeURIComponent(message)}`;
   }
 
   function openTelegram() {
@@ -443,7 +441,7 @@ I'd like to book an appointment for ${fastLabel}`;
   // Event listeners
   dom.startWhatsapp?.addEventListener("click", openWhatsapp);
   dom.startTelegram?.addEventListener("click", openTelegram);
-  dom.heroFastCta?.addEventListener("click", openFastWhatsapp);
+  dom.heroFastCta?.addEventListener("click", openFastSmsApp);
 
   // Initial render
   renderServicesInline();
