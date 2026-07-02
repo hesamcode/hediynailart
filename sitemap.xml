@@ -1,8 +1,204 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  
+  <!-- ========================================================== -->
+  <!-- MAIN PAGES -->
+  <!-- ========================================================== -->
+  
+  <!-- Homepage Persian -->
   <url>
     <loc>https://hediynailart.ir/</loc>
+    <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://hediynailart.ir/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hediynailart.ir/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hediynailart.ir/en/" />
+    <image:image>
+      <image:loc>https://hediynailart.ir/assets/images/og-image-fa.jpg</image:loc>
+      <image:title>کاشت و ژلیش ناخن در زعفرانیه تهران</image:title>
+    </image:image>
   </url>
+
+  <!-- Homepage English -->
+  <url>
+    <loc>https://hediynailart.ir/en/</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://hediynailart.ir/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hediynailart.ir/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hediynailart.ir/en/" />
+    <image:image>
+      <image:loc>https://hediynailart.ir/assets/images/og-image-en.jpg</image:loc>
+      <image:title>Nail Extension &amp; Gelish in Zafaraniyeh Tehran</image:title>
+    </image:image>
+  </url>
+
+  <!-- ========================================================== -->
+  <!-- BLOG PAGES -->
+  <!-- ========================================================== -->
+
+  <!-- Blog Persian -->
+  <url>
+    <loc>https://hediynailart.ir/blog/</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://hediynailart.ir/blog/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hediynailart.ir/en/blog/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hediynailart.ir/en/blog/" />
+    <image:image>
+      <image:loc>https://hediynailart.ir/assets/images/blog/blog-og-image-fa.jpg</image:loc>
+      <image:title>وبلاگ تخصصی کاشت و ژلیش ناخن</image:title>
+    </image:image>
+  </url>
+
+  <!-- Blog English -->
+  <url>
+    <loc>https://hediynailart.ir/en/blog/</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://hediynailart.ir/blog/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hediynailart.ir/en/blog/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hediynailart.ir/en/blog/" />
+    <image:image>
+      <image:loc>https://hediynailart.ir/assets/images/blog/blog-og-image-en.jpg</image:loc>
+      <image:title>Nail Extension &amp; Gelish Blog</image:title>
+    </image:image>
+  </url>
+
+  <!-- ========================================================== -->
+  <!-- BLOG POSTS - PERSIAN -->
+  <!-- ========================================================== -->
+
+  <!-- Post 1: راهنمای کامل کاشت ناخن -->
+  <url>
+    <loc>https://hediynailart.ir/blog/rahnamaie-kamel-kaasht-e-nakhan/</loc>
+    <lastmod>2026-06-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://hediynailart.ir/blog/rahnamaie-kamel-kaasht-e-nakhan/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hediynailart.ir/en/blog/complete-guide-to-nail-extension/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hediynailart.ir/en/blog/complete-guide-to-nail-extension/" />
+    <image:image>
+      <image:loc>https://hediynailart.ir/assets/images/blog/gallery/rahnamaie-kamel-kaasht-e-nakhan.jpg</image:loc>
+      <image:title>راهنمای کامل کاشت ناخن: از صفر تا صد</image:title>
+    </image:image>
+  </url>
+
+  <!-- Post 2: تفاوت ژلیش و کاشت ناخن -->
+  <url>
+    <loc>https://hediynailart.ir/blog/tafavat-gelish-va-kaasht-e-nakhan/</loc>
+    <lastmod>2026-06-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://hediynailart.ir/blog/tafavat-gelish-va-kaasht-e-nakhan/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hediynailart.ir/en/blog/difference-between-gelish-and-nail-extension/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hediynailart.ir/en/blog/difference-between-gelish-and-nail-extension/" />
+    <image:image>
+      <image:loc>https://hediynailart.ir/assets/images/blog/gallery/tafavat-gelish-va-kaasht-e-nakhan.jpg</image:loc>
+      <image:title>تفاوت ژلیش و کاشت ناخن چیست؟</image:title>
+    </image:image>
+  </url>
+
+  <!-- Post 3: مراقبت‌های بعد از کاشت ناخن -->
+  <url>
+    <loc>https://hediynailart.ir/blog/moraghebat-haye-baad-az-kaasht-e-nakhan/</loc>
+    <lastmod>2026-06-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://hediynailart.ir/blog/moraghebat-haye-baad-az-kaasht-e-nakhan/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hediynailart.ir/en/blog/post-nail-extension-care/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hediynailart.ir/en/blog/post-nail-extension-care/" />
+    <image:image>
+      <image:loc>https://hediynailart.ir/assets/images/blog/gallery/moraghebat-haye-baad-az-kaasht-e-nakhan.jpg</image:loc>
+      <image:title>مراقبت‌های بعد از کاشت ناخن</image:title>
+    </image:image>
+  </url>
+
+  <!-- Post 4: ترندهای جدید طراحی ناخن ۲۰۲۶ -->
+  <url>
+    <loc>https://hediynailart.ir/blog/tarandehaye-jadid-tarahi-nakhan-2026/</loc>
+    <lastmod>2026-06-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://hediynailart.ir/blog/tarandehaye-jadid-tarahi-nakhan-2026/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hediynailart.ir/en/blog/new-nail-design-trends-2026/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hediynailart.ir/en/blog/new-nail-design-trends-2026/" />
+    <image:image>
+      <image:loc>https://hediynailart.ir/assets/images/blog/gallery/tarandehaye-jadid-tarahi-nakhan-2026.jpg</image:loc>
+      <image:title>ترندهای جدید طراحی ناخن در سال ۲۰۲۶</image:title>
+    </image:image>
+  </url>
+
+  <!-- ========================================================== -->
+  <!-- BLOG POSTS - ENGLISH -->
+  <!-- ========================================================== -->
+
+  <!-- Post 1: Complete Guide to Nail Extension -->
+  <url>
+    <loc>https://hediynailart.ir/en/blog/complete-guide-to-nail-extension/</loc>
+    <lastmod>2026-06-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://hediynailart.ir/blog/rahnamaie-kamel-kaasht-e-nakhan/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hediynailart.ir/en/blog/complete-guide-to-nail-extension/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hediynailart.ir/en/blog/complete-guide-to-nail-extension/" />
+    <image:image>
+      <image:loc>https://hediynailart.ir/assets/images/blog/gallery/complete-guide-to-nail-extension.jpg</image:loc>
+      <image:title>Complete Guide to Nail Extension: From Zero to Hero</image:title>
+    </image:image>
+  </url>
+
+  <!-- Post 2: Difference Between Gelish and Nail Extension -->
+  <url>
+    <loc>https://hediynailart.ir/en/blog/difference-between-gelish-and-nail-extension/</loc>
+    <lastmod>2026-06-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://hediynailart.ir/blog/tafavat-gelish-va-kaasht-e-nakhan/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hediynailart.ir/en/blog/difference-between-gelish-and-nail-extension/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hediynailart.ir/en/blog/difference-between-gelish-and-nail-extension/" />
+    <image:image>
+      <image:loc>https://hediynailart.ir/assets/images/blog/gallery/difference-between-gelish-and-nail-extension.jpg</image:loc>
+      <image:title>Difference Between Gelish and Nail Extension</image:title>
+    </image:image>
+  </url>
+
+  <!-- Post 3: Post-Nail Extension Care -->
+  <url>
+    <loc>https://hediynailart.ir/en/blog/post-nail-extension-care/</loc>
+    <lastmod>2026-06-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://hediynailart.ir/blog/moraghebat-haye-baad-az-kaasht-e-nakhan/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hediynailart.ir/en/blog/post-nail-extension-care/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hediynailart.ir/en/blog/post-nail-extension-care/" />
+    <image:image>
+      <image:loc>https://hediynailart.ir/assets/images/blog/gallery/post-nail-extension-care.jpg</image:loc>
+      <image:title>Post-Nail Extension Care</image:title>
+    </image:image>
+  </url>
+
+  <!-- Post 4: New Nail Design Trends in 2026 -->
+  <url>
+    <loc>https://hediynailart.ir/en/blog/new-nail-design-trends-2026/</loc>
+    <lastmod>2026-06-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://hediynailart.ir/blog/tarandehaye-jadid-tarahi-nakhan-2026/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hediynailart.ir/en/blog/new-nail-design-trends-2026/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hediynailart.ir/en/blog/new-nail-design-trends-2026/" />
+    <image:image>
+      <image:loc>https://hediynailart.ir/assets/images/blog/gallery/new-nail-design-trends-2026.jpg</image:loc>
+      <image:title>New Nail Design Trends in 2026</image:title>
+    </image:image>
+  </url>
+
 </urlset>

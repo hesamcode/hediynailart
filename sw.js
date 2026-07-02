@@ -1,62 +1,186 @@
 /*
-  Production-ready service worker for hediynailart
-  - Versioned caches: hediynailart-v4 + resource-specific caches
-  - Strategies: Cache First (with SWR), Network First for HTML navigation
-  - Cache expiration and size limits implemented
-  - Push notification skeleton included
+  Production-ready Service Worker for hediynailart (هنر ناخن هدیه)
+  - کش کردن ALL فایل‌های پروژه (CSS, JS, Images, Fonts, HTML)
+  - Versioned caches با استراتژی‌های مختلف
+  - پشتیبانی کامل از آفلاین
 */
 
-const APP_VERSION = 4;
+const APP_VERSION = 5;
 const PREFIX = `hediynailart-v${APP_VERSION}`;
 const CACHE_STATIC = `${PREFIX}-static-v1`;
 const CACHE_IMAGES = `${PREFIX}-images-v1`;
 const CACHE_FONTS = `${PREFIX}-fonts-v1`;
 const CACHE_PAGES = `${PREFIX}-pages-v1`;
+const CACHE_WEBDATA = `${PREFIX}-webdata-v1`;
 
 const MAX_ENTRIES = {
-  [CACHE_STATIC]: 200,
-  [CACHE_IMAGES]: 200,
-  [CACHE_FONTS]: 20,
-  [CACHE_PAGES]: 50,
+  [CACHE_STATIC]: 300,
+  [CACHE_IMAGES]: 500,
+  [CACHE_FONTS]: 50,
+  [CACHE_PAGES]: 100,
+  [CACHE_WEBDATA]: 200,
 };
 
 const MAX_AGE = {
-  static: 30 * 24 * 60 * 60, // 30 days in seconds
-  images: 30 * 24 * 60 * 60,
+  static: 30 * 24 * 60 * 60, // 30 days
+  images: 30 * 24 * 60 * 60, // 30 days
   pages: 7 * 24 * 60 * 60, // 7 days
   fonts: 365 * 24 * 60 * 60, // 1 year
+  webdata: 30 * 24 * 60 * 60, // 30 days
 };
 
-// App shell & critical assets to pre-cache
+// ============================================================
+// ALL FILES TO CACHE - Complete list based on tree structure
+// ============================================================
+
 const APP_SHELL = [
+  // ===== ROOT =====
   "/",
   "/index.html",
   "/manifest.webmanifest",
+  "/sw.js",
+  "/robots.txt",
+  "/sitemap.xml",
+
+  // ===== ENGLISH ROOT =====
+  "/en/",
+  "/en/index.html",
+  "/en/manifest.webmanifest",
+
+  // ===== BLOG PAGES (Persian) =====
+  "/blog/",
+  "/blog/index.html",
+  "/blog/rahnamaie-kamel-kaasht-e-nakhan/",
+  "/blog/rahnamaie-kamel-kaasht-e-nakhan/index.html",
+  "/blog/tafavat-gelish-va-kaasht-e-nakhan/",
+  "/blog/tafavat-gelish-va-kaasht-e-nakhan/index.html",
+  "/blog/moraghebat-haye-baad-az-kaasht-e-nakhan/",
+  "/blog/moraghebat-haye-baad-az-kaasht-e-nakhan/index.html",
+  "/blog/tarandehaye-jadid-tarahi-nakhan-2026/",
+  "/blog/tarandehaye-jadid-tarahi-nakhan-2026/index.html",
+
+  // ===== BLOG PAGES (English) =====
+  "/en/blog/",
+  "/en/blog/index.html",
+  "/en/blog/complete-guide-to-nail-extension/",
+  "/en/blog/complete-guide-to-nail-extension/index.html",
+  "/en/blog/difference-between-gelish-and-nail-extension/",
+  "/en/blog/difference-between-gelish-and-nail-extension/index.html",
+  "/en/blog/post-nail-extension-care/",
+  "/en/blog/post-nail-extension-care/index.html",
+  "/en/blog/new-nail-design-trends-2026/",
+  "/en/blog/new-nail-design-trends-2026/index.html",
+
+  // ===== CSS FILES =====
+  "/assets/css/base.css",
+  "/assets/css/layout.css",
+  "/assets/css/components.css",
+  "/assets/css/footer.css",
+  "/assets/css/blog.css",
+  "/assets/css/post.css",
+  "/assets/css/fontawesome/all.min.css",
+
+  // ===== FONTAWESOME WEBFONTS =====
+  "/assets/css/webfonts/fa-brands-400.woff2",
+  "/assets/css/webfonts/fa-regular-400.woff2",
+  "/assets/css/webfonts/fa-solid-900.woff2",
+  "/assets/css/webfonts/fa-v4compatibility.woff2",
+
+  // ===== VAZIR FONTS (Persian) =====
+  "/assets/fonts/vazir/Vazirmatn-font-face.css",
+  "/assets/fonts/vazir/Vazirmatn-Regular.woff2",
+  "/assets/fonts/vazir/Vazirmatn-Bold.woff2",
+  "/assets/fonts/vazir/Vazirmatn-Medium.woff2",
+  "/assets/fonts/vazir/Vazirmatn-Light.woff2",
+  "/assets/fonts/vazir/Vazirmatn-SemiBold.woff2",
+  "/assets/fonts/vazir/Vazirmatn-ExtraBold.woff2",
+  "/assets/fonts/vazir/Vazirmatn-Black.woff2",
+  "/assets/fonts/vazir/Vazirmatn-Thin.woff2",
+  "/assets/fonts/vazir/Vazirmatn-ExtraLight.woff2",
+
+  // ===== INTER FONTS (English) =====
+  "/assets/fonts/inter/index.css",
+  "/assets/fonts/inter/files/inter-latin-400-normal.woff2",
+  "/assets/fonts/inter/files/inter-latin-ext-400-normal.woff2",
+  "/assets/fonts/inter/files/inter-cyrillic-400-normal.woff2",
+  "/assets/fonts/inter/files/inter-cyrillic-ext-400-normal.woff2",
+  "/assets/fonts/inter/files/inter-greek-400-normal.woff2",
+  "/assets/fonts/inter/files/inter-greek-ext-400-normal.woff2",
+  "/assets/fonts/inter/files/inter-vietnamese-400-normal.woff2",
+
+  // ===== JAVASCRIPT FILES =====
+  "/assets/js/main.js",
+  "/assets/js/config.js",
+  "/assets/js/dom.js",
+  "/assets/js/state.js",
+  "/assets/js/ui.js",
+  "/assets/js/theme.js",
+  "/assets/js/pwa.js",
+  "/assets/js/date-utils.js",
+  "/assets/js/gallery.js",
+  "/assets/js/booking.js",
+  "/assets/js/blog.js",
+  "/assets/js/post.js",
+
+  // ===== IMAGES - Root Icons =====
   "/assets/images/nail-logo.png",
   "/assets/images/favicon-32.png",
   "/assets/images/favicon-192.png",
   "/assets/images/favicon-512.png",
   "/assets/images/apple-touch-icon-180.png",
-  "/assets/css/base.css",
-  "/assets/css/layout.css",
-  "/assets/css/components.css",
-  "/assets/css/footer.css",
-  "/assets/js/main.js",
-  "/assets/js/config.js",
-  "/assets/js/dom.js",
-  "/assets/js/ui.js",
-  "/assets/js/state.js",
-  "/assets/js/theme.js",
+  "/assets/images/og-image-fa.jpg",
+  "/assets/images/og-image-en.jpg",
+
+  // ===== IMAGES - Blog Icons =====
+  "/assets/images/blog/blog-nail-logo.png",
+  "/assets/images/blog/favicon-32.png",
+  "/assets/images/blog/favicon-192.png",
+  "/assets/images/blog/favicon-512.png",
+  "/assets/images/blog/apple-touch-icon-180.png",
+  "/assets/images/blog/blog-og-image-fa.jpg",
+  "/assets/images/blog/blog-og-image-en.jpg",
 ];
 
-// Helper: open cache and trim entries by count and max age
+// ============================================================
+// GALLERY IMAGES (All 16 nail images)
+// ============================================================
+
+const GALLERY_IMAGES = Array.from(
+  { length: 16 },
+  (_, i) => `/assets/images/gallery/nail-${i + 1}.webp`,
+);
+
+// ============================================================
+// BLOG GALLERY IMAGES (All 8 blog post images)
+// ============================================================
+
+const BLOG_IMAGES = [
+  "/assets/images/blog/gallery/complete-guide-to-nail-extension.jpg",
+  "/assets/images/blog/gallery/difference-between-gelish-and-nail-extension.jpg",
+  "/assets/images/blog/gallery/moraghebat-haye-baad-az-kaasht-e-nakhan.jpg",
+  "/assets/images/blog/gallery/new-nail-design-trends-2026.jpg",
+  "/assets/images/blog/gallery/post-nail-extension-care.jpg",
+  "/assets/images/blog/gallery/rahnamaie-kamel-kaasht-e-nakhan.jpg",
+  "/assets/images/blog/gallery/tafavat-gelish-va-kaasht-e-nakhan.jpg",
+  "/assets/images/blog/gallery/tarandehaye-jadid-tarahi-nakhan-2026.jpg",
+];
+
+// ============================================================
+// ALL IMAGES combined
+// ============================================================
+
+const ALL_IMAGES = [...GALLERY_IMAGES, ...BLOG_IMAGES];
+
+// ============================================================
+// Helper Functions
+// ============================================================
+
 async function trimCache(cacheName, maxEntries, maxAgeSeconds) {
   try {
     const cache = await caches.open(cacheName);
     const requests = await cache.keys();
     if (requests.length === 0) return;
 
-    // Trim by number of entries
     while (requests.length > maxEntries) {
       await cache.delete(requests.shift());
     }
@@ -65,216 +189,254 @@ async function trimCache(cacheName, maxEntries, maxAgeSeconds) {
 
     const now = Date.now();
     for (const request of requests) {
-      const resp = await cache.match(request);
-      if (!resp) continue;
+      const response = await cache.match(request);
+      if (!response) continue;
+
       const dateHeader =
-        resp.headers.get("sw-fetched-on") || resp.headers.get("date");
+        response.headers.get("sw-fetched-on") || response.headers.get("date");
       if (!dateHeader) continue;
+
       const fetched = new Date(dateHeader).getTime();
       if ((now - fetched) / 1000 > maxAgeSeconds) {
         await cache.delete(request);
       }
     }
-  } catch (err) {
-    console.warn("trimCache error", cacheName, err);
+  } catch {
+    // Silently fail
   }
 }
 
-// Append a header to response indicating fetch time (so we can expire by date)
 function addFetchedHeader(response) {
   try {
     const cloned = response.clone();
     const headers = new Headers(cloned.headers);
     headers.set("sw-fetched-on", new Date().toUTCString());
+
     return cloned.blob().then(
-      (bodyBlob) =>
-        new Response(bodyBlob, {
+      (body) =>
+        new Response(body, {
           status: cloned.status,
           statusText: cloned.statusText,
-          headers,
+          headers: headers,
         }),
     );
-  } catch (err) {
+  } catch {
     return Promise.resolve(response);
   }
 }
 
-// Utility: is same-origin
 function isSameOrigin(request) {
   try {
     const url = new URL(request.url);
     return url.origin === self.location.origin;
-  } catch (e) {
+  } catch {
     return false;
   }
 }
 
-// Patterns
+// ============================================================
+// URL Patterns
+// ============================================================
+
 const STATIC_REGEX = /\/assets\/(css|js)\//;
 const FONT_REGEX = /\/assets\/fonts\/.*\.(?:woff2|woff|ttf)$/i;
-const IMAGE_GALLERY_REGEX = /\/assets\/images\/gallery\/.*\.webp$/i;
-const IMAGE_BLOG_REGEX =
-  /\/assets\/images\/blog\/gallery\/.*\.(?:jpg|jpeg|png)$/i;
-const FAVICON_REGEX = /favicon-(?:32|192|512)\.png$/i;
+const FONTAWESOME_REGEX = /\/assets\/css\/webfonts\/.*\.(?:woff2|ttf)$/i;
+const IMAGE_REGEX = /\/assets\/images\/.*\.(?:webp|jpg|jpeg|png)$/i;
+const GALLERY_REGEX = /\/assets\/images\/gallery\/.*\.webp$/i;
+const BLOG_IMAGE_REGEX = /\/assets\/images\/blog\/.*\.(?:jpg|jpeg|png)$/i;
+const HTML_REGEX = /\.html$/i;
+
+// ============================================================
+// Install Event - Cache EVERYTHING
+// ============================================================
 
 self.addEventListener("install", (event) => {
   self.skipWaiting();
+
   event.waitUntil(
     (async () => {
-      const cache = await caches.open(CACHE_STATIC);
+      // Cache all static assets (HTML, CSS, JS, fonts, icons)
+      const staticCache = await caches.open(CACHE_STATIC);
       try {
-        await cache.addAll(
-          APP_SHELL.map((p) => new Request(p, { cache: "reload" })),
+        await staticCache.addAll(
+          APP_SHELL.map((url) => new Request(url, { cache: "reload" })),
         );
       } catch (err) {
-        console.warn(
-          "Some app shell resources failed to cache on install",
-          err,
+        console.warn("Some static assets failed to cache:", err);
+      }
+
+      // Cache ALL images
+      const imageCache = await caches.open(CACHE_IMAGES);
+      try {
+        await imageCache.addAll(
+          ALL_IMAGES.map((url) => new Request(url, { cache: "reload" })),
         );
+      } catch (err) {
+        console.warn("Some images failed to cache:", err);
+      }
+
+      // Cache fonts
+      const fontCache = await caches.open(CACHE_FONTS);
+      try {
+        // Fonts are already in APP_SHELL, but we'll cache any additional ones
+        const fontRequests = APP_SHELL.filter(
+          (url) => url.match(/\.(woff2|woff|ttf)$/i) || url.includes("/fonts/"),
+        );
+        await fontCache.addAll(
+          fontRequests.map((url) => new Request(url, { cache: "reload" })),
+        );
+      } catch (err) {
+        console.warn("Some fonts failed to cache:", err);
       }
     })(),
   );
 });
 
+// ============================================================
+// Activate Event
+// ============================================================
+
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     (async () => {
-      // Delete old caches that do not match current prefix
+      // Delete old caches
       const keys = await caches.keys();
       await Promise.all(
         keys.map((key) => {
           if (!key.startsWith(PREFIX)) {
             return caches.delete(key);
           }
-          return Promise.resolve(true);
+          return Promise.resolve();
         }),
       );
+
       await self.clients.claim();
     })(),
   );
 });
 
-// Cache First with Stale-While-Revalidate helper
+// ============================================================
+// Cache First with Stale-While-Revalidate
+// ============================================================
+
 async function cacheFirstSWR(request, cacheName, maxEntries, maxAgeSeconds) {
   const cache = await caches.open(cacheName);
-  const ignoreSearch = { ignoreSearch: true };
-  const cached =
-    (await cache.match(request)) || (await cache.match(request, ignoreSearch));
-
-  const network = fetch(request)
-    .then(async (res) => {
-      // only cache successful responses (200) or opaque ones
-      if (res && (res.status === 200 || res.type === "opaque")) {
-        try {
-          const resWithHeader = await addFetchedHeader(res);
-          await cache.put(request, resWithHeader.clone());
-          trimCache(cacheName, maxEntries, maxAgeSeconds);
-        } catch (err) {
-          console.warn("Failed to cache network response", err);
-        }
-      }
-      return res;
-    })
-    .catch((err) => {
-      // network failed
-      return null;
-    });
-
-  // return cached immediately if exists, otherwise await network
-  return cached || (await network);
-}
-
-// Cache First for fonts (aggressive caching)
-async function fontCache(request) {
-  const cache = await caches.open(CACHE_FONTS);
   const cached =
     (await cache.match(request)) ||
     (await cache.match(request, { ignoreSearch: true }));
-  if (cached) return cached;
-  try {
-    const res = await fetch(request);
-    if (res && (res.status === 200 || res.type === "opaque")) {
-      const resWithHeader = await addFetchedHeader(res);
-      await cache.put(request, resWithHeader.clone());
-      trimCache(CACHE_FONTS, MAX_ENTRIES[CACHE_FONTS], MAX_AGE.fonts);
-    }
-    return res;
-  } catch (err) {
-    return null;
-  }
+
+  const networkPromise = fetch(request)
+    .then(async (response) => {
+      if (response && (response.status === 200 || response.type === "opaque")) {
+        try {
+          const withHeader = await addFetchedHeader(response);
+          await cache.put(request, withHeader.clone());
+          trimCache(cacheName, maxEntries, maxAgeSeconds);
+        } catch {
+          // Ignore
+        }
+      }
+      return response;
+    })
+    .catch(() => null);
+
+  return cached || (await networkPromise);
 }
 
-// Network First for navigation (pages) with fallback to cache then index.html
+// ============================================================
+// Network First for HTML pages
+// ============================================================
+
 async function networkFirst(request) {
   const cache = await caches.open(CACHE_PAGES);
+
   try {
     const response = await fetch(request);
     if (response && response.ok) {
-      const respWithHeader = await addFetchedHeader(response);
-      await cache.put(request, respWithHeader.clone());
+      const withHeader = await addFetchedHeader(response);
+      await cache.put(request, withHeader.clone());
       trimCache(CACHE_PAGES, MAX_ENTRIES[CACHE_PAGES], MAX_AGE.pages);
     }
     return response;
-  } catch (err) {
+  } catch {
     const cached =
-      (await cache.match(request)) || (await caches.match("/index.html"));
+      (await cache.match(request)) ||
+      (await cache.match(request, { ignoreSearch: true })) ||
+      (await caches.match("/index.html"));
+
     return (
       cached ||
       new Response(
-        "<h1>Offline</h1><p>The app is offline and no cached page is available.</p>",
+        "<!DOCTYPE html><html><head><title>آفلاین</title></head><body><h1>🔴 آفلاین</h1><p>لطفاً اتصال اینترنت خود را بررسی کنید.</p></body></html>",
         { headers: { "Content-Type": "text/html" } },
       )
     );
   }
 }
 
-// Stale-While-Revalidate for cross-origin images / external resources
+// ============================================================
+// Stale-While-Revalidate for external resources
+// ============================================================
+
 async function staleWhileRevalidateExternal(request) {
   const cache = await caches.open(CACHE_IMAGES);
   const cached =
     (await cache.match(request)) ||
     (await cache.match(request, { ignoreSearch: true }));
+
   fetch(request)
-    .then(async (res) => {
-      if (res && (res.status === 200 || res.type === "opaque")) {
+    .then(async (response) => {
+      if (response && (response.status === 200 || response.type === "opaque")) {
         try {
-          const resWithHeader = await addFetchedHeader(res);
-          await cache.put(request, resWithHeader.clone());
+          const withHeader = await addFetchedHeader(response);
+          await cache.put(request, withHeader.clone());
           trimCache(CACHE_IMAGES, MAX_ENTRIES[CACHE_IMAGES], MAX_AGE.images);
-        } catch (err) {
-          // ignore cache errors
+        } catch {
+          // Ignore
         }
       }
     })
     .catch(() => {
-      /* ignore */
+      // Ignore
     });
+
   return cached || fetch(request).catch(() => null);
 }
 
+// ============================================================
+// Fetch Event
+// ============================================================
+
 self.addEventListener("fetch", (event) => {
   const { request } = event;
+
   if (request.method !== "GET") return;
 
   const url = new URL(request.url);
 
-  // Network only for Google Maps embeds or iframes
-  if (url.origin.includes("maps.google") || url.pathname.includes("/maps")) {
-    return; // let network handle it
+  // ===== NETWORK ONLY =====
+  if (
+    url.origin.includes("maps.google") ||
+    url.origin.includes("google.com/maps") ||
+    url.pathname.includes("/maps")
+  ) {
+    return;
   }
 
-  // Navigation requests (HTML pages)
+  // ===== NAVIGATION (HTML pages) =====
   if (request.mode === "navigate") {
     event.respondWith(networkFirst(request));
     return;
   }
 
-  // Same-origin static assets: CSS, JS, manifest, icons
+  // ===== STATIC ASSETS (CSS, JS, manifest, robots, sitemap) =====
   if (
     isSameOrigin(request) &&
     (STATIC_REGEX.test(url.pathname) ||
-      FAVICON_REGEX.test(url.pathname) ||
-      url.pathname === "/manifest.webmanifest")
+      url.pathname === "/manifest.webmanifest" ||
+      url.pathname === "/robots.txt" ||
+      url.pathname === "/sitemap.xml" ||
+      url.pathname === "/sw.js")
   ) {
     event.respondWith(
       cacheFirstSWR(
@@ -287,12 +449,8 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // Images: gallery and blog images
-  if (
-    isSameOrigin(request) &&
-    (IMAGE_GALLERY_REGEX.test(url.pathname) ||
-      IMAGE_BLOG_REGEX.test(url.pathname))
-  ) {
+  // ===== ALL IMAGES (gallery, blog, icons, og) =====
+  if (isSameOrigin(request) && IMAGE_REGEX.test(url.pathname)) {
     event.respondWith(
       cacheFirstSWR(
         request,
@@ -304,53 +462,74 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // Fonts
-  if (isSameOrigin(request) && FONT_REGEX.test(url.pathname)) {
-    event.respondWith(fontCache(request));
+  // ===== FONTS (Vazir + Inter + FontAwesome) =====
+  if (
+    isSameOrigin(request) &&
+    (FONT_REGEX.test(url.pathname) || FONTAWESOME_REGEX.test(url.pathname))
+  ) {
+    event.respondWith(
+      cacheFirstSWR(
+        request,
+        CACHE_FONTS,
+        MAX_ENTRIES[CACHE_FONTS],
+        MAX_AGE.fonts,
+      ),
+    );
     return;
   }
 
-  // External images (og images, social images) - SWR in images cache
+  // ===== EXTERNAL IMAGES =====
   if (
     !isSameOrigin(request) &&
     (request.destination === "image" ||
-      request.url.match(/\.(png|jpg|jpeg|webp)$/i))
+      request.url.match(/\.(png|jpg|jpeg|webp|gif|svg)$/i))
   ) {
     event.respondWith(staleWhileRevalidateExternal(request));
     return;
   }
 
-  // Fallback: try network first, then cache
+  // ===== FALLBACK =====
   event.respondWith(
     fetch(request)
-      .then((res) => {
-        return res;
-      })
+      .then((response) => response)
       .catch(async () => {
         const cache = await caches.open(CACHE_STATIC);
         return (
-          cache.match(request) ||
-          cache.match(request, { ignoreSearch: true }) ||
-          Promise.reject("no-match")
+          (await cache.match(request)) ||
+          (await cache.match(request, { ignoreSearch: true })) ||
+          new Response("Resource not found", { status: 404 })
         );
       }),
   );
 });
 
-// Basic push notification handling skeleton
+// ============================================================
+// Push Notifications
+// ============================================================
+
 self.addEventListener("push", (event) => {
-  let data = { title: "hediynailart", body: "New message", url: "/" };
+  let data = {
+    title: "هنر ناخن هدیه",
+    body: "پیام جدید",
+    url: "/",
+    icon: "/assets/images/favicon-192.png",
+  };
+
   try {
-    if (event.data) data = event.data.json();
-  } catch (err) {
+    if (event.data) {
+      const parsed = event.data.json();
+      data = { ...data, ...parsed };
+    }
+  } catch {
     data.body = event.data ? event.data.text() : data.body;
   }
 
   const options = {
     body: data.body,
-    icon: "/assets/images/favicon-192.png",
+    icon: data.icon || "/assets/images/favicon-192.png",
     badge: "/assets/images/favicon-32.png",
-    data: { url: data.url },
+    data: { url: data.url || "/" },
+    vibrate: [200, 100, 200],
   };
 
   event.waitUntil(self.registration.showNotification(data.title, options));
@@ -358,22 +537,32 @@ self.addEventListener("push", (event) => {
 
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
-  const url =
-    event.notification.data && event.notification.data.url
-      ? event.notification.data.url
-      : "/";
+
+  const url = event.notification.data?.url || "/";
+
   event.waitUntil(
-    clients.matchAll({ type: "window" }).then((clientList) => {
-      for (const client of clientList) {
-        if (client.url === url && "focus" in client) return client.focus();
-      }
-      if (clients.openWindow) return clients.openWindow(url);
-      return null;
-    }),
+    clients
+      .matchAll({ type: "window", includeUncontrolled: true })
+      .then((clientList) => {
+        for (const client of clientList) {
+          if (client.url === url && "focus" in client) {
+            return client.focus();
+          }
+        }
+        if (clients.openWindow) {
+          return clients.openWindow(url);
+        }
+        return null;
+      }),
   );
 });
 
-/*
-  Note: Service workers cannot compress responses themselves. Compression should be handled by the server.
-  This sw includes cache expiration via headers and trimming to limit growth.
-*/
+// ============================================================
+// Message Handling
+// ============================================================
+
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
+});

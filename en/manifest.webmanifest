@@ -1,12 +1,12 @@
 {
-  "id": "/",
-  "name": "هنر ناخن هدیه",
-  "short_name": "هنر ناخن هدیه",
-  "description": "رزرو تخصصی کاشت، ژلیش، ترمیم و طراحی ناخن در زعفرانیه تهران با هنر ناخن هدیه",
-  "dir": "rtl",
-  "lang": "fa",
-  "start_url": "/?source=pwa",
-  "scope": "/",
+  "id": "/en/",
+  "name": "hediynailart",
+  "short_name": "hediynailart",
+  "description": "Professional nail extension, gelish, repair and nail design services in Zafaraniyeh Tehran",
+  "dir": "ltr",
+  "lang": "en",
+  "start_url": "/en/?source=pwa",
+  "scope": "/en/",
   "orientation": "portrait-primary",
   "display_override": ["standalone", "minimal-ui"],
   "display": "standalone",
@@ -14,22 +14,6 @@
   "theme_color": "#fffaf8",
   "categories": ["beauty", "lifestyle", "business", "health"],
   "prefer_related_applications": false,
-  "screenshots": [
-    {
-      "src": "/assets/images/screenshots/mobile-home.png",
-      "sizes": "1080x1920",
-      "type": "image/png",
-      "platform": "narrow",
-      "label": "صفحه اصلی هنر ناخن هدیه"
-    },
-    {
-      "src": "/assets/images/screenshots/mobile-booking.png",
-      "sizes": "1080x1920",
-      "type": "image/png",
-      "platform": "narrow",
-      "label": "رزرو وقت در هنر ناخن هدیه"
-    }
-  ],
   "icons": [
     {
       "src": "/assets/images/favicon-32.png",
@@ -76,10 +60,10 @@
   ],
   "shortcuts": [
     {
-      "name": "رزرو وقت",
-      "short_name": "رزرو",
-      "description": "رفتن مستقیم به بخش رزرو",
-      "url": "/#booking-panel",
+      "name": "Book Appointment",
+      "short_name": "Booking",
+      "description": "Go directly to booking section",
+      "url": "/en/#booking-panel",
       "icons": [
         {
           "src": "/assets/images/favicon-192.png",
@@ -89,10 +73,10 @@
       ]
     },
     {
-      "name": "نمونه کارها",
-      "short_name": "گالری",
-      "description": "مشاهده نمونه کارهای واقعی",
-      "url": "/#gallery-card",
+      "name": "Portfolio",
+      "short_name": "Gallery",
+      "description": "View real portfolio",
+      "url": "/en/#gallery-card",
       "icons": [
         {
           "src": "/assets/images/favicon-192.png",
@@ -102,10 +86,10 @@
       ]
     },
     {
-      "name": "وبلاگ",
-      "short_name": "وبلاگ",
-      "description": "مطالعه مقالات تخصصی",
-      "url": "/blog/",
+      "name": "Blog",
+      "short_name": "Blog",
+      "description": "Read specialized articles",
+      "url": "/en/blog/",
       "icons": [
         {
           "src": "/assets/images/favicon-192.png",
@@ -115,10 +99,10 @@
       ]
     },
     {
-      "name": "ارتباط سریع",
-      "short_name": "ارتباط",
-      "description": "تماس از طریق واتساپ و اینستاگرام",
-      "url": "/#footer",
+      "name": "Contact",
+      "short_name": "Contact",
+      "description": "Contact via WhatsApp and Instagram",
+      "url": "/en/#footer",
       "icons": [
         {
           "src": "/assets/images/favicon-192.png",
@@ -129,7 +113,7 @@
     }
   ],
   "share_target": {
-    "action": "/?share=",
+    "action": "/en/?share=",
     "method": "GET",
     "enctype": "application/x-www-form-urlencoded",
     "params": {
@@ -138,24 +122,9 @@
       "url": "url"
     }
   },
-  "related_applications": [],
-  "prefer_related_applications": false,
   "launch_handler": {
     "client_mode": ["navigate-existing", "auto"]
   },
-  "edge_side_panel": {
-    "preferred_width": 400
-  },
   "handle_links": "preferred",
-  "note_taking": {
-    "new_note_url": "/?note="
-  },
-  "color_scheme": "light dark",
-  "display_override": ["window-controls-overlay", "standalone"],
-  "protocol_handlers": [
-    {
-      "protocol": "web+hediynailart",
-      "url": "/?booking=%s"
-    }
-  ]
+  "color_scheme": "light dark"
 }

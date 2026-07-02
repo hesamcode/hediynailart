@@ -1,4 +1,111 @@
+# ============================================================
+# robots.txt - hediynailart (هنر ناخن هدیه)
+# ============================================================
+# Allow all crawlers access
+# Block admin, private, and temporary paths
+# Specify sitemap location
+# ============================================================
+
 User-agent: *
 Allow: /
 
+# ============================================================
+# Block access to sensitive/admin paths
+# ============================================================
+Disallow: /admin/
+Disallow: /wp-admin/
+Disallow: /cgi-bin/
+Disallow: /tmp/
+Disallow: /temp/
+Disallow: /backup/
+Disallow: /backups/
+Disallow: /private/
+Disallow: /includes/
+Disallow: /inc/
+Disallow: /config/
+Disallow: /database/
+Disallow: /logs/
+Disallow: /error_log
+Disallow: /error.log
+Disallow: /.htaccess
+Disallow: /.htpasswd
+Disallow: /.*.sql$
+Disallow: /.*.log$
+Disallow: /.*.ini$
+Disallow: /.*.yml$
+Disallow: /.*.yaml$
+Disallow: /.*.json$
+
+# ============================================================
+# Block crawling of asset files (not needed for SEO)
+# ============================================================
+Disallow: /assets/css/
+Disallow: /assets/js/
+Disallow: /assets/fonts/
+Disallow: /assets/images/
+Disallow: /assets/webfonts/
+Disallow: /webfonts/
+
+# ============================================================
+# Block crawling of PWA/Service Worker files
+# ============================================================
+Disallow: /sw.js
+Disallow: /manifest.webmanifest
+Disallow: /offline.html
+
+# ============================================================
+# Allow crawling of blog and English versions
+# ============================================================
+Allow: /blog/
+Allow: /en/
+
+# ============================================================
+# Crawl Delay (respect server resources)
+# ============================================================
+Crawl-delay: 2
+
+# ============================================================
+# Sitemap Location
+# ============================================================
 Sitemap: https://hediynailart.ir/sitemap.xml
+
+# ============================================================
+# Google-Specific Rules (Optional)
+# ============================================================
+# Googlebot (Main crawler)
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+# Googlebot Images (for image search)
+User-agent: Googlebot-Image
+Allow: /assets/images/
+Allow: /assets/images/blog/
+Allow: /assets/images/gallery/
+Crawl-delay: 0
+
+# ============================================================
+# Bing-Specific Rules (Optional)
+# ============================================================
+User-agent: bingbot
+Allow: /
+Crawl-delay: 2
+
+# ============================================================
+# Other Major Crawlers
+# ============================================================
+User-agent: Slurp
+Allow: /
+Crawl-delay: 3
+
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 3
+
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 5
+
+User-agent: Yandex
+Allow: /
+Crawl-delay: 2
